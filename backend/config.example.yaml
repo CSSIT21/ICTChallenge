@@ -1,0 +1,5 @@
+environment: 1
+log_level: 6
+address: :8080
+cors:
+  - http://localhost:3000
