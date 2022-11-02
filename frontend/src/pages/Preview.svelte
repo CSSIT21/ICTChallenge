@@ -29,7 +29,7 @@
 
 <main  class="bg-preview-bg w-screen h-screen relative bg-cover bg-no-repeat flex justify-center items-center flex-col" >
     <img class="absolute top-7 left-28" width="256px" src={sit_logo} alt="sit-logo">
-    <h1 class="absolute top-7 right-28  text-zinc-50 text-2xl">{formattedTime}</h1>
+    <h1 class="absolute top-12 right-24  text-zinc-50 text-4xl">{formattedTime}</h1>
     <h1 class="text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#24DECC] to-[#FFFFFF]">SIT ICT CHALLENGE</h1>
     <div class="flex justify-evenly gap-40 flex-wrap p-44">
         {#each teams as team, i (i)}
