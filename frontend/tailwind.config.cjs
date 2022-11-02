@@ -2,7 +2,11 @@ const config = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 
 	theme: {
-		extend: {},
+		extend: {
+			backgroundImage: {
+				'preview-bg': "url('/src/assets/images/preview-bg.svg')",
+			},
+		},
 	},
 
 	plugins: [],
