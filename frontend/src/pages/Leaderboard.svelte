@@ -13,6 +13,7 @@
     ]
 
     function randomTeam() {
+        clearInterval(random)
         var random = setInterval(() => {
             let random = Math.floor(Math.random() * teams.length)
             teams.forEach(element => {
@@ -27,9 +28,9 @@
 </script>
 
 <main class="bg-[#1B2D51] h-screen w-screen px-24 py-12">
-    <button on:click={randomTeam}>test</button>
     <Navbar />
-    <p class="text-white text-5xl font-semibold text-center mt-5">Leaderboard</p>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <p on:click={randomTeam} class="text-white text-5xl font-semibold text-center mt-5">Leaderboard</p>
     {#each teams as team, i (i)}
         <LeaderboardCard name={team.name} order={team.order} score={team.score} isHighlighted={team.isHighlighted} />
     {/each}
