@@ -4,6 +4,7 @@
 	import Home from './pages/Home.svelte'
 	import Leaderboard from './pages/Leaderboard.svelte'
 	import Preview from './pages/Preview.svelte'
+	import Questions from './pages/Questions.svelte'
 </script>
 
 <Router>
@@ -18,5 +19,8 @@
 	</Route>
 	<Route path="/leaderboard">
 		<Leaderboard />
+	</Route>
+	<Route>
+		<Questions />
 	</Route>
 </Router>
