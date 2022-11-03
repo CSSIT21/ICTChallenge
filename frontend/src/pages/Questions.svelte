@@ -117,8 +117,6 @@
 
 <main class="bg-[#1B2D51] h-screen w-screen px-24 py-12">
 	<Navbar />
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-
 	<div class="flex justify-between px-12 mt-3">
 		{#each questions.topics as question, i (i)}
 			<QuestionSection {question} index={i} {openCard} />

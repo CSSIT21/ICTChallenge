@@ -19,16 +19,16 @@
 	onMount(() => {
 		if (index == 0) {
 			icon = iconsTopic1
-			topicColor = 'topicColor1'
+			topicColor = 'topic-color-1'
 		} else if (index == 1) {
 			icon = iconsTopic2
-			topicColor = 'topicColor2'
+			topicColor = 'topic-color-2'
 		} else if (index == 2) {
 			icon = iconsTopic3
-			topicColor = 'topicColor3'
+			topicColor = 'topic-color-3'
 		} else if (index == 3) {
 			icon = iconsTopic4
-			topicColor = 'topicColor4'
+			topicColor = 'topic-color-4'
 		}
 	})
 </script>
@@ -45,7 +45,7 @@
 				<QuestionCard
 					img={icon}
 					score={card.score}
-					textColor={'textColor' + (index + 1)}
+					textColor={'text-color-' + (index + 1)}
 					{openCard}
 					cardCol={index}
 					cardIndex={i}
@@ -58,22 +58,22 @@
 </div>
 
 <style>
-	.topicColor1 {
+	.topic-color-1 {
 		background: -webkit-linear-gradient(0deg, #48a3fa, #5ad2f3);
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}
-	.topicColor2 {
+	.topic-color-2 {
 		background: -webkit-linear-gradient(0deg, #ac77e7, #ead7fe);
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}
-	.topicColor3 {
+	.topic-color-3 {
 		background: -webkit-linear-gradient(0deg, #ffb34c, #ffe155);
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}
-	.topicColor4 {
+	.topic-color-4 {
 		background: -webkit-linear-gradient(0deg, #fc6cb9, #ffc7e5);
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
