@@ -3,6 +3,7 @@
 	import About from './pages/About.svelte'
 	import Home from './pages/Home.svelte'
 	import Preview from './pages/Preview.svelte'
+	import Podium from './pages/Podium.svelte'
 </script>
 
 <Router>
@@ -14,5 +15,8 @@
 	</Route>
 	<Route path="/preview">
 		<Preview />
+	</Route>
+	<Route path="/podium">
+		<Podium />
 	</Route>
 </Router>
