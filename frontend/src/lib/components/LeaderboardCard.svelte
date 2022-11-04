@@ -20,7 +20,6 @@
         }
     })
 </script>
-<!-- bg-gradient-to-r from-[#097FFE] to-[#8534E8] -->
 
 <div class="flex gap-4 m-10 items-center">
     <p class="text-white text-5xl font-semibold">{order}</p>
