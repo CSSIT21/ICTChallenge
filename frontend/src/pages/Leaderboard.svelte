@@ -16,9 +16,7 @@
         clearInterval(random)
         var random = setInterval(() => {
             let random = Math.floor(Math.random() * teams.length)
-            teams.forEach(element => {
-                element.isHighlighted = false
-            });
+            teams[teams.findIndex(element => element.isHighlighted)].isHighlighted = false;
             teams[random].isHighlighted = true
         }, 250)
         setTimeout(() => {
