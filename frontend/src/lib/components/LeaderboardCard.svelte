@@ -10,6 +10,7 @@
     export let isHighlighted: boolean
 
     let medal: string = ""
+    let init = true
     onMount(() => {
         if (order == 1) {
             medal = icons1st
@@ -19,9 +20,12 @@
             medal = icons3rd
         }
     })
+    setTimeout(() => {
+        init = false
+    }, 2000)
 </script>
 
-<div class="flex gap-4 m-10 items-center">
+<div style={`animation-duration: ${Math.sqrt(order*0.5)}s;`} class="flex gap-4 m-10 items-center {init&&"teamCard"}" > 
     <p class="text-white text-5xl font-semibold">{order}</p>
     <div class="bg-opacity-20 w-full py-4 pl-16 pr-10 rounded-2xl shadow flex justify-between items-center relative transition-colors {isHighlighted ? "color" : "bg-white bg-opacity-20"}">
         <div class="text-4xl text-white">
@@ -35,6 +39,9 @@
 </div>
 
 <style>
+    .teamCard {
+        animation: scaleUp;
+    }
     .color {
         background-image: linear-gradient(to right,#097FFE, #8534E8);
         background-color: rgb(255, 255, 255, 0.2);
@@ -50,6 +57,15 @@
             background-image: linear-gradient(to right,#097FFE, #8534E8);
             opacity: 1;
             background-color: rgb(255, 255, 255, 0.2);
+        }
+    }
+
+    @keyframes scaleUp {
+        0% {
+            transform: scale(0.8);
+        }
+        100% {
+            transform: scale(1);
         }
     }
 </style>
