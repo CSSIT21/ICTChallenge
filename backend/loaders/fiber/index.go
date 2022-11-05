@@ -1,12 +1,15 @@
 package fiber
 
 import (
+	"time"
+
+	"github.com/gofiber/fiber/v2"
+
 	"backend/loaders/fiber/middleware"
+	"backend/loaders/websocket"
 	"backend/router"
 	"backend/types/response"
 	"backend/utils/config"
-	"github.com/gofiber/fiber/v2"
-	"time"
 )
 
 var app *fiber.App
@@ -37,6 +40,8 @@ func Init() {
 	apiGroup.Use(middleware.Cors)
 
 	router.Init(apiGroup)
+
+	websocket.Init(app.Group("ws/"))
 
 	// Register not found handler
 	app.Use(notfoundHandler)

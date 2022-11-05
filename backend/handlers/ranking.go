@@ -1,9 +1,11 @@
 package handlers
 
 import (
+	"github.com/gofiber/fiber/v2"
+
+	"backend/hub"
 	"backend/services"
 	"backend/types/response"
-	"github.com/gofiber/fiber/v2"
 )
 
 type rankingHandler struct {
@@ -20,5 +22,10 @@ func (h rankingHandler) GetAllRankings(c *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
+
+	hub.Conn.WriteJSON(map[string]any{
+		"hello": "world",
+	})
+
 	return c.JSON(response.New(accessories))
 }

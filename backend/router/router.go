@@ -1,21 +1,24 @@
 package router
 
 import (
+	"github.com/gofiber/fiber/v2"
+
 	"backend/handlers"
 	"backend/repository"
 	"backend/services"
-	"github.com/gofiber/fiber/v2"
 )
 
 func Init(router fiber.Router) {
-	// * Register -----------
+	// * Registrations
 
-	// * Ranking
+	// Ranking
 	rankingRepository := repository.NewRankingEvent()
 	rankingService := services.NewRankingService(rankingRepository)
 	rankingHandler := handlers.NewRankingHandler(rankingService)
 
-	// * Paths --------------
+	// * Paths
+
+	// Ranking
 	ranking := router.Group("ranking/")
 	ranking.Get("all", rankingHandler.GetAllRankings)
 }
