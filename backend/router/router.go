@@ -1,6 +1,7 @@
 package router
 
 import (
+	"backend/hub"
 	"github.com/gofiber/fiber/v2"
 
 	"backend/handlers"
@@ -10,9 +11,9 @@ import (
 
 func Init(router fiber.Router) {
 	// * Registrations
-
+	
 	// Ranking
-	rankingRepository := repository.NewRankingEvent()
+	rankingRepository := repository.NewRankingEvent(hub.Hub)
 	rankingService := services.NewRankingService(rankingRepository)
 	rankingHandler := handlers.NewRankingHandler(rankingService)
 

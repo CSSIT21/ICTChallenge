@@ -1,6 +1,9 @@
 package services
 
-import "backend/repository"
+import (
+	"backend/repository"
+	"backend/types/database"
+)
 
 type rankingService struct {
 	rankingEvent repository.RankingRepository
@@ -10,7 +13,7 @@ func NewRankingService(rankingRepository repository.RankingRepository) rankingSe
 	return rankingService{rankingEvent: rankingRepository}
 }
 
-func (r rankingService) GetAllRankings() (repository.Rankings, error) {
+func (r rankingService) GetAllRankings() ([]database.Ranking, error) {
 	a, _ := r.rankingEvent.GetAll()
 	return a, nil
 }

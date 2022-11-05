@@ -1,16 +1,20 @@
 package repository
 
+import (
+	"backend/hub"
+	"backend/types/database"
+)
+
 type rankingEvent struct {
-	// event
+	hub *hub.Model
 }
 
-func NewRankingEvent() rankingEvent {
-	return rankingEvent{}
+func NewRankingEvent(hub *hub.Model) rankingEvent {
+	return rankingEvent{hub: hub}
 }
 
-func (r rankingEvent) GetAll() (Rankings, error) {
-	// TODO: implement
-	return Rankings{
+func (r rankingEvent) GetAll() ([]database.Ranking, error) {
+	return []database.Ranking{
 		{
 			Id:    1,
 			Name:  "Mixko",

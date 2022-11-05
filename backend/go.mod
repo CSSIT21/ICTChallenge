@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/davecgh/go-spew v1.1.1
+	github.com/fsnotify/fsnotify v1.6.0
 	github.com/go-playground/validator/v10 v10.11.1
 	github.com/gofiber/fiber/v2 v2.39.0
 	github.com/gofiber/websocket/v2 v2.1.1

@@ -1,7 +1,9 @@
 package services
 
-import "backend/repository"
+import (
+	"backend/types/database"
+)
 
 type RankingService interface {
-	GetAllRankings() (repository.Rankings, error)
+	GetAllRankings() ([]database.Ranking, error)
 }
