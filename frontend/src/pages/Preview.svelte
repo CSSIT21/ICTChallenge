@@ -33,7 +33,7 @@
     <h1 class="text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#24DECC] to-[#FFFFFF]">SIT ICT CHALLENGE</h1>
     <div class="flex justify-evenly gap-40 flex-wrap p-44">
         {#each teams as team, i (i)}
-            <div class="flex flex-col items-center">
+            <div class="animate-floating flex flex-col items-center" style="animation-delay: {Math.random()*1500}ms;">
                 <h1 class="text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-b from-[#FFD303] to-[#E67E22]">{team.name}</h1>
                 <h1 class="text-4xl text-zinc-50">{team.school}</h1>
             </div>        
