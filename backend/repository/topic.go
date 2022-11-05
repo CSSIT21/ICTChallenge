@@ -3,5 +3,6 @@ package repository
 import "backend/types/database"
 
 type TopicRepository interface {
-	GetAll() ([]*database.Topic, error)
+	OpenCard(card *database.Question) (string, error)
+	GetTopics() ([]*database.Topic, error)
 }
