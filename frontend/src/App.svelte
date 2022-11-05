@@ -2,6 +2,7 @@
 	import { Route, Router } from 'svelte-navigator'
 	import About from './pages/About.svelte'
 	import Home from './pages/Home.svelte'
+	import Leaderboard from './pages/Leaderboard.svelte'
 	import Preview from './pages/Preview.svelte'
 </script>
 
@@ -14,5 +15,8 @@
 	</Route>
 	<Route path="/preview">
 		<Preview />
+	</Route>
+	<Route path="/leaderboard">
+		<Leaderboard />
 	</Route>
 </Router>
