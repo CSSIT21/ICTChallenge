@@ -4,3 +4,9 @@
 # IDE
 /.idea
 /.vscode
+
+# config
+/config.yaml
+
+# temp
+/tmp
