@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { Team } from "src/types/leaderboard"
-	import { onMount } from "svelte"
         import PodiumComponent from "./PodiumComponent.svelte";
         export let teams: Array<Team>
 </script>
@@ -12,7 +11,8 @@
                 <div class="bg-gradient-to-b from-[rgb(255,255,255,0.08)] to-[rgb(255,255,255,0)] absolute bottom-0 left-1/2 -translate-x-1/2 h-[512px] w-[1024px] rounded-t-[768px]" />
                 <div class="bg-gradient-to-b from-[rgb(255,255,255,0.08)] to-[rgb(255,255,255,0)] absolute bottom-0 left-1/2 -translate-x-1/2 h-[640px] w-[1280px] rounded-t-[960px]" />
         </div>
-        {#each teams as team (team.name)}
+        
+        {#each teams as team (team.rank)}
                 <PodiumComponent team={team.name} order={team.rank} score={team.score} />
         {/each}
         

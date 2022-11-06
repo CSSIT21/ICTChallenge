@@ -16,19 +16,23 @@
         {name:"axxn1", school:"hello", score:200, isHighlighted:false,  rank: 6}];
 
         teamsPodium = [teams[1], teams[0], teams[2]];
-        var insert = setInterval(()=>{if (teamsBoard.length === teams.length-3) {
+        var insert = setInterval(()=>{
+            if (teamsBoard.length === teams.length-4) {
                 clearInterval(insert)
             }
             teamsBoard = [ ...teamsBoard,teams[3+teamsBoard.length]]
+            console.log(teamsBoard);
         },1000)
+        
     })
+    
 </script>
 
 <main class="h-screen w-screen overflow-hidden bg-gradient-to-b from-[#3DC3B6] via-[#4F68BF] to-[#1B2D51]">
     <PodiumSection teams={teamsPodium} />
     <div class="p-2 mx-24 bg-[rgb(255,255,255,0.3)] rounded-t-3xl h-[421px]">
         <div class="py-10 px-32 flex flex-col gap-10 h-full">
-            {#each teamsBoard as team (team.name)}
+            {#each teamsBoard as team}
                 <PodiumBoard name={team.name} order={team.rank} score={team.score} />
             {/each}
         </div>
