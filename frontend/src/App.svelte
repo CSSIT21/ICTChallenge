@@ -19,6 +19,7 @@
 	</Route>
 	<Route path="/podium">
 		<Podium />
+	</Route>
 	<Route path="/leaderboard">
 		<Leaderboard />
 	</Route>
