@@ -21,7 +21,7 @@
 	<Route path="/leaderboard">
 		<Leaderboard />
 	</Route>
-	<Route>
+	<Route path="/question">
 		<Questions />
 	</Route>
 	<Route path="/student">

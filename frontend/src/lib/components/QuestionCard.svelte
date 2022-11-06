@@ -7,6 +7,10 @@
 	export let textColor: string
 	export let cardCol: number
 	export let cardIndex: number
+	export let widthCard: string
+	export let heightCard: string
+	export let widthImg: string
+	export let textSize: string
 	export let openCard: (cardCol: number, cardIndex: number) => void
 	let showModal = false
 	const handleToggleModal = () => {
@@ -21,15 +25,15 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 
 <div
-	class="bg-white w-[324px] h-[180px] rounded-2xl flex flex-col justify-center items-center"
+	class="bg-white w-[{widthCard}] h-[{heightCard}] rounded-2xl flex flex-col justify-center items-center"
 	on:click={() => {
 		handleToggleModal()
 	}}
 >
-	<img src={img} alt="logo" class="w-[88px] mb-1" />
+	<img src={img} alt="logo" class="w-[{widthImg}] mb-1" />
 	<div class="flex items-center">
-		<img src={iconsCrystal} alt="" class="w-[40px] h-[40px]" />
-		<p class="text-[40px] font-semibold {textColor}">{score}</p>
+		<img src={iconsCrystal} alt="" class="w-[{textSize}] h-[{textSize}]" />
+		<p class="text-[{textSize}] font-semibold {textColor}">{score}</p>
 	</div>
 	<Modal open={showModal} {handleCloseModal} {cardCol} {cardIndex} />
 </div>

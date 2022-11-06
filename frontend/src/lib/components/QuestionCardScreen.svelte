@@ -15,6 +15,11 @@
 	export let openCard: (cardCol: number, cardIndex: number) => void
 
 	let icon: string = ''
+	const widthCard: string = '224px'
+	const heightCard: string = '124px'
+	const widthImg: string = '60.3px'
+	const textSize: string = '27px'
+	const iconSize: string = '80px'
 
 	onMount(() => {
 		if (selectedId == 0) {
@@ -29,10 +34,10 @@
 	})
 </script>
 
-<div class="h-[390px] flex flex-col justify-between items-center">
-	{#each question.cards as card, i (i)}
-		{#if card.opened == true}
-			<div class="h-[224px] w-[124px]">
+<div class="mt-11">
+	<div class="h-[592px] w-[390px] flex flex-col justify-between items-center">
+		{#each question.cards as card, i (i)}
+			{#if card.opened == true}
 				<QuestionCard
 					img={icon}
 					score={card.score}
@@ -40,10 +45,14 @@
 					{openCard}
 					cardCol={selectedId}
 					cardIndex={i}
+					{widthCard}
+					{heightCard}
+					{widthImg}
+					{textSize}
 				/>
-			</div>
-		{:else}
-			<FlippedCard />
-		{/if}
-	{/each}
+			{:else}
+				<FlippedCard {widthCard} {heightCard} {iconSize} />
+			{/if}
+		{/each}
+	</div>
 </div>
