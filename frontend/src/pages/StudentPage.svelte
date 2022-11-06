@@ -6,20 +6,20 @@
 	import type { Team } from 'src/types/preview'
 
 	let current: boolean = true
-	let selected: boolean = true
+	let selected: boolean = false
 	let team: Team = {
 		name: 'muumel Team',
 		school: 'KMUTT',
 	}
 
 	const handleSelected = (selected: boolean) => {
-		selected = true
+		selected = !selected
 		console.log(selected)
 	}
 </script>
 
 <main class=" flex justify-center items-center flex-col">
-	<div class=" w-[390px] h-[844px] bg-[#1B2D51]">
+	<div class=" w-[390px] h-[750px] pt-1 bg-[#1B2D51]">
 		<TopBar {selected} {team} {handleSelected} />
 
 		<div>

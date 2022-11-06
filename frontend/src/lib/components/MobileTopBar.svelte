@@ -9,7 +9,7 @@
 </script>
 
 <div
-	class="w-full h-11 pl-[30px] pr-[30px] flex justify-between items-center bg-[#1B2D51] font-semibold text-lg"
+	class="w-full h-11 pl-[30px] pr-[58px] flex justify-between items-center bg-[#1B2D51] font-semibold text-lg"
 >
 	<div class="flex justify-center items-center w-9">
 		{#if selected == true}

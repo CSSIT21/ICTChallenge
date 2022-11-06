@@ -126,7 +126,7 @@
 			{openCard}
 		/>
 	{:else}
-		<div class="h-[55px] px-11 mt-12 mb-8 space-y-1.5">
+		<div class="h-[55px] px-11 mt-10 mb-8 space-y-1.5">
 			<h1 class="font-semibold text-lg text-[#4279E8]">
 				Question Categories
 			</h1>
