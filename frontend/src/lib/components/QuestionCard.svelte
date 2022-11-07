@@ -9,10 +9,12 @@
 	export let cardCol: number
 	export let cardIndex: number
 	export let openQuestion: string
-
-	export let openedCard: (cardCol: number, cardIndex: number) => void
 	export let getQuestion: (questionId: number) => void
-
+	export let widthCard: string
+	export let heightCard: string
+	export let widthImg: string
+	export let textSize: string
+	export let openCard: (cardCol: number, cardIndex: number) => void
 	let showModal = false
 	const handleOpenModal = () => {
 		showModal = true
@@ -20,22 +22,22 @@
 	}
 	const handleCloseModal = (cardCol: number, cardIndex: number) => {
 		showModal = false
-		openedCard(cardCol, cardIndex)
+		openCard(cardCol, cardIndex)
 	}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 
 <div
-	class="bg-white w-[324px] h-[180px] rounded-2xl flex flex-col justify-center items-center cursor-pointer"
+	class="bg-white w-[{widthCard}] h-[{heightCard}] rounded-2xl flex flex-col justify-center items-center"
 	on:click={() => {
 		handleOpenModal()
 	}}
 >
-	<img src={img} alt="logo" class="w-[88px] mb-1" />
+	<img src={img} alt="logo" class="w-[{widthImg}] mb-1" />
 	<div class="flex items-center">
-		<img src={iconsCrystal} alt="" class="w-[40px] h-[40px]" />
-		<p class="text-[40px] font-semibold {textColor}">{score}</p>
+		<img src={iconsCrystal} alt="" class="w-[{textSize}] h-[{textSize}]" />
+		<p class="text-[{textSize}] font-semibold {textColor}">{score}</p>
 	</div>
 </div>
 <Modal

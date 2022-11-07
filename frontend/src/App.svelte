@@ -5,6 +5,7 @@
 	import Leaderboard from './pages/Leaderboard.svelte'
 	import Preview from './pages/Preview.svelte'
 	import Questions from './pages/Questions.svelte'
+	import StudentPage from './pages/StudentPage.svelte'
 </script>
 
 <Router>
@@ -20,7 +21,10 @@
 	<Route path="/leaderboard">
 		<Leaderboard />
 	</Route>
-	<Route>
+	<Route path="/question">
 		<Questions />
+	</Route>
+	<Route path="/student">
+		<StudentPage />
 	</Route>
 </Router>
