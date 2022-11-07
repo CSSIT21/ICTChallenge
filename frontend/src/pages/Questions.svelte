@@ -131,7 +131,7 @@
 		{#each questions.topics as question, i (i)}
 			<QuestionSection
 				{question}
-				index={i}
+				colIndex={i}
 				{openCard}
 				{getQuestion}
 				openQuestion={openQuestion.question}

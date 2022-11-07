@@ -4,49 +4,36 @@
 
 	export let img: string
 	export let score: number
-	export let questionId: number = 0
 	export let textColor: string
-	export let cardCol: number
-	export let cardIndex: number
-	export let openQuestion: string = ''
-	export let getQuestion: (questionId: number) => void = () => {}
 	export let widthCard: string
 	export let heightCard: string
 	export let widthImg: string
 	export let textSize: string
-	export let openCard: (cardCol: number, cardIndex: number) => void
-	let showModal = false
-	const handleOpenModal = () => {
-		showModal = true
-		getQuestion(questionId)
-	}
-	const handleCloseModal = (cardCol: number, cardIndex: number) => {
-		showModal = false
-		openCard(cardCol, cardIndex)
-	}
+	export let cardId: number
+	export let cardIndex: number
+	export let handleOpenModal: (id: number, index: number) => void
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 
-<div
-	class="bg-white w-[{widthCard}] h-[{heightCard}] rounded-2xl flex flex-col justify-center items-center"
-	on:click={() => {
-		handleOpenModal()
-	}}
->
-	<img src={img} alt="logo" class="w-[{widthImg}] mb-1" />
-	<div class="flex items-center">
-		<img src={iconsCrystal} alt="" class="w-[{textSize}] h-[{textSize}]" />
-		<p class="text-[{textSize}] font-semibold {textColor}">{score}</p>
+<div id="s">
+	<div
+		class="bg-white w-[{widthCard}] h-[{heightCard}] rounded-2xl flex flex-col justify-center items-center"
+		on:click={() => {
+			handleOpenModal(cardId, cardIndex)
+		}}
+	>
+		<img src={img} alt="logo" class="w-[{widthImg}] mb-1" />
+		<div class="flex items-center">
+			<img
+				src={iconsCrystal}
+				alt=""
+				class="w-[{textSize}] h-[{textSize}]"
+			/>
+			<p class="text-[{textSize}] font-semibold {textColor}">{score}</p>
+		</div>
 	</div>
 </div>
-<Modal
-	open={showModal}
-	{handleCloseModal}
-	{cardCol}
-	{cardIndex}
-	{openQuestion}
-/>
 
 <style>
 	.text-color-1 {

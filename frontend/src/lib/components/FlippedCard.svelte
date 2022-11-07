@@ -3,10 +3,18 @@
 	export let widthCard: string
 	export let heightCard: string
 	export let iconSize: string
+	export let cardId: number
+	export let cardIndex: number
+	export let handleOpenModal: (id: number, index: number) => void
 </script>
+
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 
 <div
 	class="w-[{widthCard}] h-[{heightCard}] rounded-2xl bgColor flex justify-center items-center"
+	on:click={() => {
+		handleOpenModal(cardId, cardIndex)
+	}}
 >
 	<img
 		src={CheckCircleIcon}
