@@ -2,6 +2,7 @@ package services
 
 import (
 	"backend/repository"
+	"backend/types"
 	"backend/types/database"
 )
 
@@ -35,4 +36,8 @@ func (s teamService) GetPodium() ([]*database.Podium, error) {
 func (s teamService) GetRanking() ([]*database.Ranking, error) {
 	a, _ := s.teamEvent.GetRanking()
 	return a, nil
+}
+
+func (s teamService) GetTeamInfo(team *database.Team) (*types.TeamInfo, error) {
+	return nil, nil
 }

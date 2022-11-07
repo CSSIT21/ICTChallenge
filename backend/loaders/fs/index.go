@@ -1,12 +1,9 @@
 package fs
 
 import (
-	"backend/types/database"
-	"encoding/json"
-	"github.com/davecgh/go-spew/spew"
+	"backend/utils/info"
 	"github.com/fsnotify/fsnotify"
 	"log"
-	"os"
 )
 
 func Init() {
@@ -27,16 +24,9 @@ func Init() {
 				log.Println("event:", event)
 				if event.Has(fsnotify.Write) {
 					log.Println("modified file:", event.Name)
-
-					// * Unmarshal file
-					raw := new(database.Raw)
-					file, _ := os.ReadFile("./data.json")
-					err = json.Unmarshal(file, &raw)
-					if err != nil {
+					if err := info.Init(); err != nil {
 						log.Fatal(err)
 					}
-					spew.Dump(raw)
-
 				}
 			case err, ok := <-watcher.Errors:
 				if !ok {

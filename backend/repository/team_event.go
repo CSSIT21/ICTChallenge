@@ -25,7 +25,7 @@ func (r teamEvent) GetPodium() ([]*database.Podium, error) {
 	return nil, nil
 }
 
-func (r teamEvent) ChangeTeamScore(id uint64, score int) error {
+func (r teamEvent) ChangeTeamScore(id uint64, score float64) error {
 	return nil
 }
 
