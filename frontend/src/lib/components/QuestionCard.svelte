@@ -4,26 +4,32 @@
 
 	export let img: string
 	export let score: number
+	export let questionId: number
 	export let textColor: string
 	export let cardCol: number
 	export let cardIndex: number
-	export let openCard: (cardCol: number, cardIndex: number) => void
+	export let openQuestion: string
+
+	export let openedCard: (cardCol: number, cardIndex: number) => void
+	export let getQuestion: (questionId: number) => void
+
 	let showModal = false
-	const handleToggleModal = () => {
-		showModal = !showModal
+	const handleOpenModal = () => {
+		showModal = true
+		getQuestion(questionId)
 	}
 	const handleCloseModal = (cardCol: number, cardIndex: number) => {
 		showModal = false
-		openCard(cardCol, cardIndex)
+		openedCard(cardCol, cardIndex)
 	}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 
 <div
-	class="bg-white w-[324px] h-[180px] rounded-2xl flex flex-col justify-center items-center"
+	class="bg-white w-[324px] h-[180px] rounded-2xl flex flex-col justify-center items-center cursor-pointer"
 	on:click={() => {
-		handleToggleModal()
+		handleOpenModal()
 	}}
 >
 	<img src={img} alt="logo" class="w-[88px] mb-1" />
@@ -31,8 +37,14 @@
 		<img src={iconsCrystal} alt="" class="w-[40px] h-[40px]" />
 		<p class="text-[40px] font-semibold {textColor}">{score}</p>
 	</div>
-	<Modal open={showModal} {handleCloseModal} {cardCol} {cardIndex} />
 </div>
+<Modal
+	open={showModal}
+	{handleCloseModal}
+	{cardCol}
+	{cardIndex}
+	{openQuestion}
+/>
 
 <style>
 	.text-color-1 {

@@ -10,11 +10,13 @@
 	import type { Topic } from 'src/types/question'
 	import FlippedCard from './FlippedCard.svelte'
 
-	export let question: Topic
-	export let index: number
 	let icon: string = ''
 	let topicColor: string = ''
-	export let openCard: (cardCol: number, cardIndex: number) => void
+	export let question: Topic
+	export let index: number
+	export let openQuestion: string
+	export let openedCard: (cardCol: number, cardIndex: number) => void
+	export let getQuestion: (questionId: number) => void
 
 	onMount(() => {
 		if (index == 0) {
@@ -41,12 +43,15 @@
 	</div>
 	<div class="h-[772px] flex flex-col justify-between items-center">
 		{#each question.cards as card, i (i)}
-			{#if card.opened == true}
+			{#if card.opened == false}
 				<QuestionCard
 					img={icon}
 					score={card.score}
+					questionId={card.id}
 					textColor={'text-color-' + (index + 1)}
-					{openCard}
+					{openQuestion}
+					{openedCard}
+					{getQuestion}
 					cardCol={index}
 					cardIndex={i}
 				/>

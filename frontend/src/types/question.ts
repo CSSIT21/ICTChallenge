@@ -12,3 +12,8 @@ export interface Card {
 	score: number
 	opened: boolean
 }
+
+export interface OpenQuestion {
+	question_id: number
+	question: string
+}
