@@ -85,7 +85,7 @@
 
     .winner {
         transition: 0.25s;
-        animation: wiggling 1.5s infinite ease-in-out;
+        animation: wiggling 2.5s ease-in-out;
     }
 
     .text-intro {
@@ -114,11 +114,14 @@
     }
 
     @keyframes wiggling {
-        0%, 100%{
+        0%{
             transform: scale(1.2) rotate(-10deg) translateX(-50%);
         }
         50% {
             transform: scale(1.2) rotate(10deg) translateX(50%);
+        }
+        100% {
+            transform: scale(1) rotate(0deg) translateX(0);
         }
     }
 </style>
