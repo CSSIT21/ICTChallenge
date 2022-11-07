@@ -15,7 +15,7 @@
 	export let question: Topic
 	export let index: number
 	export let openQuestion: string
-	export let openedCard: (cardCol: number, cardIndex: number) => void
+	export let openCard: (cardCol: number, cardIndex: number) => void
 	export let getQuestion: (questionId: number) => void
 
 	onMount(() => {
@@ -50,13 +50,21 @@
 					questionId={card.id}
 					textColor={'text-color-' + (index + 1)}
 					{openQuestion}
-					{openedCard}
+					{openCard}
 					{getQuestion}
 					cardCol={index}
 					cardIndex={i}
+					widthCard={'324px'}
+					heightCard={'180px'}
+					widthImg={'88px'}
+					textSize={'40px'}
 				/>
 			{:else}
-				<FlippedCard />
+				<FlippedCard
+					heightCard={'180px'}
+					widthCard={'324px'}
+					iconSize={'120px'}
+				/>
 			{/if}
 		{/each}
 	</div>

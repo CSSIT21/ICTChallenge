@@ -4,12 +4,12 @@
 
 	export let img: string
 	export let score: number
-	export let questionId: number
+	export let questionId: number = 0
 	export let textColor: string
 	export let cardCol: number
 	export let cardIndex: number
-	export let openQuestion: string
-	export let getQuestion: (questionId: number) => void
+	export let openQuestion: string = ''
+	export let getQuestion: (questionId: number) => void = () => {}
 	export let widthCard: string
 	export let heightCard: string
 	export let widthImg: string

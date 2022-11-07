@@ -119,7 +119,7 @@
 		console.log(id)
 	}
 
-	function openedCard(cardCol: number, cardIndex: number) {
+	function openCard(cardCol: number, cardIndex: number) {
 		questions.topics[cardCol].cards[cardIndex].opened =
 			!questions.topics[cardCol].cards[cardIndex].opened
 	}
@@ -132,7 +132,7 @@
 			<QuestionSection
 				{question}
 				index={i}
-				{openedCard}
+				{openCard}
 				{getQuestion}
 				openQuestion={openQuestion.question}
 			/>
