@@ -3,6 +3,8 @@
     import iconsMedieval from "../../assets/images/icons-medieval-crown.png";
     import icons2nd from "../../assets/images/icons-2ndmedal-64.png";
     import icons3rd from "../../assets/images/icons-3rdmedal-64.png";
+    const partyJson = "src/assets/images/30172-flex-confetti.json"
+    import { Lottie } from 'lottie-svelte';
 	import { onMount } from "svelte"
     import { tweened } from 'svelte/motion';
     export let order: number;
@@ -53,16 +55,23 @@
     })
 
 </script>
-<div style="height: {height}px; width: {width}px" class=" {!showLabel&&"overflow-hidden block"}">
+
+<div style="height: {height}px; width: {width}px" class="relative {!showLabel&&"overflow-hidden block"}">
+    {#if (showLabel&&order===1)}
+    <div class="absolute z-[1000] scale-150 -top-40">
+        <Lottie path={partyJson} speed={0.6}/>
+    </div>
+    {/if}
+    
     <div id={"podium"+order}  class="{init ? "podium":"h-0"} relative flex flex-col items-center gap-7 bg-gradient-to-b {color} rounded-t-3xl">
-        <div class="{!showLabel && "hidden"}  absolute w-full -top-20 flex items-center justify-center text-white  text-4xl {order===1 && "flex-col font-semibold -top-28"}"><img class="{order!==1 && "scale-75"} {(showLabel&&order===1) &&  "winner"}" src={rankingIcon} alt="rank-icon"><div class="z-50 ">{team}</div></div>
+        <div class="{!showLabel ? "hidden":"text-intro"}  absolute w-full -top-20 flex items-center justify-center text-white  text-4xl {order===1 && "flex-col font-semibold -top-28"}"><img class="{order!==1 && "scale-75"} {(showLabel&&order===1) &&  "winner"}" src={rankingIcon} alt="rank-icon"><div class="z-50 ">{team}</div></div>
         
-        <div class="{!showLabel && "hidden"} relative w-full mt-12 {order === 1 ? "h-[140px]": "h-[100px]"}">
+        <div class="{!showLabel ? "hidden":"text-intro"} relative w-full mt-12 {order === 1 ? "h-[140px]": "h-[100px]"}">
             <div class="absolute left-1/2 -translate-x-1/2 leading-none font-bold text-transparent"  style="text-shadow: 0px 4.5478px 4.5478px rgba(0, 0, 0, 0.25); {order === 1 ? "font-size: 140px;": "font-size: 100px;"}">{order}</div>
             <div class="absolute left-1/2 -translate-x-1/2 leading-none font-bold text-transparent bg-clip-text bg-gradient-to-b {gradient}" style="{order === 1 ? "font-size: 140px;": "font-size: 100px;"}">{order}</div>
         </div>
         
-        <div class="{!showLabel && "hidden"} flex justify-center items-center rounded-2xl bg-[rgb(255,255,255,0.2)] px-4">
+        <div class="{!showLabel ? "hidden":"text-intro"} flex justify-center items-center rounded-2xl bg-[rgb(255,255,255,0.2)] px-4">
             <img src={iconsCrystal} alt="icons-crystal" class="scale-[60%]" />
             <div class="text-white text-3xl -translate-x-3">{Math.round($tweenedScore)}</div>
         </div>
@@ -77,6 +86,22 @@
     .winner {
         transition: 0.25s;
         animation: wiggling 1.5s infinite ease-in-out;
+    }
+
+    .text-intro {
+        animation: scaleup 1.5s ease-in-out;
+    }
+
+    @keyframes scaleup {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.3);
+        }
+        100% {
+            transform: scale(1);
+        }
     }
 
     @keyframes increment {
