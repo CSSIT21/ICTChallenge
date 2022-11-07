@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"backend/hub"
+	"backend/loaders/hub"
 	"backend/types/database"
 )
 

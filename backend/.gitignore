@@ -1,15 +1,8 @@
 # Local data
 /local
+/config.yaml
+/data.json
 
 # IDE
 /.idea
 /.vscode
-
-# config
-/config.yaml
-
-# temp
-/tmp
-
-# Sample
-data.json

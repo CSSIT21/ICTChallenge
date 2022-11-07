@@ -1,5 +1,7 @@
 environment: 1
 log_level: 6
-address: :8080
+address: :3000
 cors:
   - http://localhost:3000
+admin_secret: 7GRPpVk04We76CWR
+projector_secret: wdvXuDOytfx84J8d

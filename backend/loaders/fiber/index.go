@@ -35,20 +35,18 @@ func Init() {
 
 	// Register API endpoints
 	apiGroup := app.Group("api/")
-
 	apiGroup.Use(middleware.Limiter)
 	apiGroup.Use(middleware.Cors)
-
 	router.Init(apiGroup)
 
-	websocket.Init(app.Group("ws/"))
+	wsGroup := app.Group("ws/")
+	websocket.Init(wsGroup)
 
 	// Register not found handler
 	app.Use(notfoundHandler)
 
 	// Startup
-	err := app.Listen(config.C.Address)
-	if err != nil {
+	if err := app.Listen(config.C.Address); err != nil {
 		panic(err.Error())
 	}
 }
