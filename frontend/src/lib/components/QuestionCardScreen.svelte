@@ -12,7 +12,6 @@
 
 	export let question: Topic
 	export let selectedId: number
-	export let openCard: (cardCol: number, cardIndex: number) => void
 
 	let icon: string = ''
 	const widthCard: string = '224px'
@@ -42,13 +41,12 @@
 					img={icon}
 					score={card.score}
 					textColor={'text-color-' + (selectedId + 1)}
-					{openCard}
-					cardCol={selectedId}
 					cardIndex={i}
 					{widthCard}
 					{heightCard}
 					{widthImg}
 					{textSize}
+					cardId={card.id}
 				/>
 			{:else}
 				<FlippedCard {widthCard} {heightCard} {iconSize} />

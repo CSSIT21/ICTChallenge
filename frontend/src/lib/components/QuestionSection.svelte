@@ -22,6 +22,12 @@
 	export let openCard: (cardCol: number, cardIndex: number) => void
 	export let getQuestion: (questionId: number) => void
 
+	const widthCard: string = '324px'
+	const heightCard: string = '180px'
+	const widthImg: string = '88px'
+	const textSize: string = '40px'
+	const iconSize: string = '120px'
+
 	const handleOpenModal = (id: number, index: number) => {
 		cardId = id
 		cardIndex = index
@@ -63,15 +69,15 @@
 			<div class={card.opened && 'flipped'}>
 				<div class="flip-card">
 					<div class="flip-card-inner">
-						<div class="flip-card-front -z-50">
+						<div class="flip-card-front">
 							<QuestionCard
 								img={icon}
 								score={card.score}
 								textColor={'text-color-' + (colIndex + 1)}
-								widthCard={'324px'}
-								heightCard={'180px'}
-								widthImg={'88px'}
-								textSize={'40px'}
+								{widthCard}
+								{heightCard}
+								{widthImg}
+								{textSize}
 								cardId={card.id}
 								cardIndex={i}
 								{handleOpenModal}
@@ -82,9 +88,9 @@
 							style="transform: rotateY(180deg);"
 						>
 							<FlippedCard
-								heightCard={'180px'}
-								widthCard={'324px'}
-								iconSize={'120px'}
+								{widthCard}
+								{heightCard}
+								{iconSize}
 								cardId={card.id}
 								cardIndex={i}
 								{handleOpenModal}

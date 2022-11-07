@@ -3,9 +3,9 @@
 	export let widthCard: string
 	export let heightCard: string
 	export let iconSize: string
-	export let cardId: number
-	export let cardIndex: number
-	export let handleOpenModal: (id: number, index: number) => void
+	export let cardId: number = 0
+	export let cardIndex: number = 0
+	export let handleOpenModal: (id: number, index: number) => void = () => {}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->

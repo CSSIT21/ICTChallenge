@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Modal from './QuestionModal.svelte'
 	import iconsCrystal from '../../assets/images/icons-crystal.png'
 
 	export let img: string
@@ -11,19 +10,21 @@
 	export let textSize: string
 	export let cardId: number
 	export let cardIndex: number
-	export let handleOpenModal: (id: number, index: number) => void
+	export let handleOpenModal: (id: number, index: number) => void = () => {}
+
+	console.log(widthCard, heightCard, widthImg)
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 
-<div id="s">
+<div>
 	<div
 		class="bg-white w-[{widthCard}] h-[{heightCard}] rounded-2xl flex flex-col justify-center items-center"
 		on:click={() => {
 			handleOpenModal(cardId, cardIndex)
 		}}
 	>
-		<img src={img} alt="logo" class="w-[{widthImg}] mb-1" />
+		<img src={img} alt="logo" class="w-[{widthImg}] h-[{widthImg}] mb-1" />
 		<div class="flex items-center">
 			<img
 				src={iconsCrystal}
