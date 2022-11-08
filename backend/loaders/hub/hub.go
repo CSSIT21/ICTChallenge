@@ -8,8 +8,9 @@ import (
 var Hub *Model
 
 type Model struct {
-	Teams                    []*database.Team  `json:"teams"`
 	Topics                   []*database.Topic `json:"topics"`
+	Teams                    []*database.Team  `json:"teams"`
+	Turned                   []*database.Team  `json:"-"`
 	AdminConn                *extend.ConnModel `json:"-"`
 	LeaderboardProjectorConn *extend.ConnModel `json:"-"`
 	CardProjectorConn        *extend.ConnModel `json:"-"`

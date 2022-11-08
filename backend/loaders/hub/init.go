@@ -9,14 +9,16 @@ import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/sirupsen/logrus"
 
+	"backend/types/database"
 	"backend/types/extend"
 	"backend/utils/logger"
 )
 
 func Init() {
 	Hub = &Model{
-		Teams:  nil,
 		Topics: nil,
+		Teams:  nil,
+		Turned: nil,
 		AdminConn: &extend.ConnModel{
 			Context: "ADMIN_CONN",
 			Conn:    nil,
@@ -51,6 +53,12 @@ func Load(fn string) error {
 	// * Assign hub
 	Hub.Topics = raw.Topics
 	Hub.Teams = raw.Teams
+
+	if Hub.Turned == nil {
+		Hub.Turned = []*database.Team{
+			Hub.Teams[0],
+		}
+	}
 
 	logger.Log(logrus.Debug, "LOADED HUB DATA")
 
