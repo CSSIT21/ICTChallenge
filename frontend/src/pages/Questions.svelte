@@ -2,9 +2,10 @@
 	import Navbar from 'src/lib/components/Navbar.svelte'
 	import QuestionSection from 'src/lib/components/QuestionSection.svelte'
 
-	import type { Question, OpenQuestion } from 'src/types/question'
+	import { type Question, type OpenQuestion, Mode } from 'src/types/question'
 
 	let questions: Question = {
+		mode: Mode.TOPIC,
 		topics: [
 			{
 				title: 'Web Development',
@@ -106,6 +107,31 @@
 					},
 				],
 			},
+			{
+				title: 'Infrastructure & Database',
+				cards: [
+					{
+						id: 17,
+						score: 100,
+						opened: false,
+					},
+					{
+						id: 18,
+						score: 200,
+						opened: true,
+					},
+					{
+						id: 19,
+						score: 300,
+						opened: true,
+					},
+					{
+						id: 20,
+						score: 400,
+						opened: false,
+					},
+				],
+			},
 		],
 	}
 
@@ -113,6 +139,7 @@
 		question_id: 2,
 		question:
 			'Who do you think he/she is my least favorite professor in SIT@CS?',
+		bonus: true,
 	}
 
 	function getQuestion(id: number) {
@@ -125,16 +152,16 @@
 	}
 </script>
 
-<main class="bg-[#1B2D51] h-screen w-screen px-24 py-12">
-	<Navbar />
-	<div class="flex justify-between px-12 mt-3">
+<main class="bg-[#1B2D51] h-screen w-screen px-16 py-10">
+	<!-- <Navbar /> -->
+	<div class="flex justify-between mt-3">
 		{#each questions.topics as question, i (i)}
 			<QuestionSection
 				{question}
 				colIndex={i}
 				{openCard}
 				{getQuestion}
-				openQuestion={openQuestion.question}
+				{openQuestion}
 			/>
 		{/each}
 	</div>

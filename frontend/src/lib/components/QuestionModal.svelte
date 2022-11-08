@@ -1,9 +1,12 @@
 <script lang="ts">
 	import closeIcon from '../../assets/images/icons-close.svg'
+	import bonusBg from '../../assets/images/bonus-question.png'
+	import type { OpenQuestion } from 'src/types/question'
+
 	export let open: boolean
 	export let cardCol: number
 	export let cardIndex: number
-	export let openQuestion: string
+	export let openQuestion: OpenQuestion
 	export let cardOpened: boolean
 	export let handleCloseModal = (
 		cardCol: number,
@@ -62,8 +65,11 @@
 	<div
 		class="z-50 w-[1600px] h-[872px] {isCardOpen
 			? 'modal-container-slide-in'
-			: 'modal-container-slide-out'}  flex flex-col mx-auto absolute overflow-y-auto question-bg-color rounded-[36px] shadow-xl"
+			: 'modal-container-slide-out'} ml-20 flex flex-col mx-auto absolute overflow-y-auto question-bg-color rounded-[36px] shadow-xl items-center"
 	>
+		{#if openQuestion.bonus}
+			<img src={bonusBg} alt="" class="absolute" />
+		{/if}
 		<div
 			class="px-8 py-5 text-2xl font-extraboldhead absolute top-0 right-0"
 		>
@@ -87,11 +93,11 @@
 			class="h-[678px] px-[200px] pt-12 text-center leading-[96px] flex justify-center items-center"
 		>
 			<p
-				class="text-white {openQuestion.length < 85
+				class="text-white {openQuestion.question.length < 85
 					? 'text-[60px]'
 					: 'text-[48px]'} font-semibold "
 			>
-				{openQuestion}
+				{openQuestion.question}
 			</p>
 		</div>
 		<div class="flex justify-center ">

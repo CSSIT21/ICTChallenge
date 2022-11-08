@@ -7,7 +7,8 @@
 	import iconsTopic4 from '../../assets/images/icons-topic4.png'
 
 	import QuestionCard from 'src/lib/components/QuestionCard.svelte'
-	import type { Topic } from 'src/types/question'
+	import type { Topic, OpenQuestion } from 'src/types/question'
+
 	import Modal from './QuestionModal.svelte'
 	import FlippedCard from './FlippedCard.svelte'
 
@@ -18,7 +19,7 @@
 	let topicColor: string = ''
 	export let question: Topic
 	export let colIndex: number
-	export let openQuestion: string
+	export let openQuestion: OpenQuestion
 	export let openCard: (cardCol: number, cardIndex: number) => void
 	export let getQuestion: (questionId: number) => void
 
@@ -66,13 +67,13 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 
-<div class="w-[324px] h-[874px] flex flex-col">
-	<div class="flex flex-col justify-center h-[150px]">
+<div class="w-[324px] flex flex-col">
+	<div class="flex flex-col justify-center h-[150px] mb-4">
 		<p class="py-2 text-4xl font-semibold text-center {topicColor}">
 			{question.title}
 		</p>
 	</div>
-	<div class="h-[600px] flex flex-col justify-between">
+	<div class="h-[620px] flex flex-col justify-between">
 		{#each question.cards as card, i (i)}
 			<div class={card.opened && 'flipped'}>
 				<div class="flip-card">

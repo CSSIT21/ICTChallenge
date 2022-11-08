@@ -1,4 +1,5 @@
 export interface Question {
+	mode: Mode
 	topics: Topic[]
 }
 
@@ -16,4 +17,10 @@ export interface Card {
 export interface OpenQuestion {
 	question_id: number
 	question: string
+	bonus: boolean
+}
+
+export enum Mode {
+	RULE = 'rule',
+	TOPIC = 'topic',
 }
