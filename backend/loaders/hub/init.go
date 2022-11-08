@@ -9,6 +9,7 @@ import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/sirupsen/logrus"
 
+	"backend/types/extend"
 	"backend/utils/logger"
 )
 
@@ -16,17 +17,17 @@ func Init() {
 	Hub = &Model{
 		Teams:  nil,
 		Topics: nil,
-		AdminConn: &ConnModel{
+		AdminConn: &extend.ConnModel{
 			Context: "ADMIN_CONN",
 			Conn:    nil,
 			Mutex:   &sync.Mutex{},
 		},
-		LeaderboardProjectorConn: &ConnModel{
+		LeaderboardProjectorConn: &extend.ConnModel{
 			Context: "LEADERBOARD_PROJECTOR_CONN",
 			Conn:    nil,
 			Mutex:   &sync.Mutex{},
 		},
-		CardProjectorConn: &ConnModel{
+		CardProjectorConn: &extend.ConnModel{
 			Context: "CARD_PROJECTOR_CONN",
 			Conn:    nil,
 			Mutex:   &sync.Mutex{},

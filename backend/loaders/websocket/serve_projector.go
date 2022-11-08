@@ -5,12 +5,13 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"backend/loaders/hub"
+	"backend/types/extend"
 	"backend/types/message"
 	"backend/utils/logger"
 	"backend/utils/value"
 )
 
-func ServeProjector(model *hub.ConnModel, conn *websocket.Conn, token string) {
+func ServeProjector(model *extend.ConnModel, conn *websocket.Conn, token string) {
 	// * Validate admin token
 	if conn.Query("token") != token {
 		return

@@ -4,12 +4,13 @@ import (
 	"github.com/gofiber/websocket/v2"
 	"github.com/sirupsen/logrus"
 
+	"backend/types/extend"
 	"backend/types/message"
 	"backend/utils/logger"
 	"backend/utils/value"
 )
 
-func HandleConnectionSwitch(conn *ConnModel) {
+func HandleConnectionSwitch(conn *extend.ConnModel) {
 	// * Connection switch
 	if conn.Conn != nil {
 		conn.Emit(&message.OutboundMessage{
