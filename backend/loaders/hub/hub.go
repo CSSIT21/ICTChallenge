@@ -1,8 +1,6 @@
 package hub
 
 import (
-	"time"
-
 	"backend/types/database"
 	"backend/types/extend"
 )
@@ -15,5 +13,4 @@ type Model struct {
 	AdminConn                *extend.ConnModel `json:"-"`
 	LeaderboardProjectorConn *extend.ConnModel `json:"-"`
 	CardProjectorConn        *extend.ConnModel `json:"-"`
-	Interval                 *time.Ticker      `json:"-"`
 }

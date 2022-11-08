@@ -1,7 +1,9 @@
 # Local data
 /local
 /config.yaml
-/data.json
+/data-init.json
+/data-reload.json
+/data-snap.json
 
 # IDE
 /.idea

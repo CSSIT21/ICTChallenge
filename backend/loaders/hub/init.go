@@ -32,18 +32,17 @@ func Init() {
 			Conn:    nil,
 			Mutex:   &sync.Mutex{},
 		},
-		Interval: nil,
 	}
-	if err := Load(); err != nil {
+	if err := Load("./data-init.json"); err != nil {
 		logger.Log(logrus.Panic, "UNABLE TO LOAD HUB: "+err.Error())
 	}
 	Watch()
 }
 
-func Load() error {
+func Load(fn string) error {
 	// * Unmarshal file
 	var raw *Model
-	file, _ := os.ReadFile("./data.json")
+	file, _ := os.ReadFile(fn)
 	err := json.Unmarshal(file, &raw)
 	if err != nil {
 		return err
@@ -75,7 +74,7 @@ func Watch() {
 				}
 
 				if event.Has(fsnotify.Write) {
-					if err := Load(); err != nil {
+					if err := Load("./data-reload.json"); err != nil {
 						logger.Log(logrus.Warn, "UNABLE TO LOAD HUB: "+err.Error())
 					}
 				}
@@ -89,8 +88,19 @@ func Watch() {
 	}()
 
 	// * Add a watch path
-	err = watcher.Add("./data.json")
+	err = watcher.Add("./data-reload.json")
 	if err != nil {
 		log.Fatal(err)
+	}
+}
+
+func Snapshot() {
+	file, err := json.MarshalIndent(Hub, "", "  ")
+	if err != nil {
+		logger.Log(logrus.Warn, "UNABLE TO MARSHAL SNAPSHOT HUB: "+err.Error())
+	}
+
+	if err := os.WriteFile("./data-snap.json", file, 0644); err != nil {
+		logger.Log(logrus.Warn, "UNABLE TO WRITE SNAPSHOT HUB: "+err.Error())
 	}
 }
