@@ -6,4 +6,5 @@ type OutboundEvent string
 const (
 	ConnectionSwitchEvent OutboundEvent = "general/switch"
 	EchoEvent             OutboundEvent = "general/echo"
+	CardCountdown         OutboundEvent = "cd/countdown"
 )

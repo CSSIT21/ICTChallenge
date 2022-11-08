@@ -24,7 +24,7 @@ func (s teamService) GetAllTeams() ([]*database.Team, error) {
 	return a, nil
 }
 
-func (s teamService) ChangeTeamScore(team *database.Team, problem *database.Question, correct bool, bonus bool) error {
+func (s teamService) ChangeTeamScore(team *database.Team, problem *database.Card, correct bool, bonus bool) error {
 	return s.teamEvent.ChangeTeamScore(team.Id, problem.Score)
 }
 

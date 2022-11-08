@@ -1,6 +1,8 @@
 package hub
 
 import (
+	"time"
+
 	"backend/types/database"
 	"backend/types/extend"
 )
@@ -10,7 +12,8 @@ var Hub *Model
 type Model struct {
 	Teams                    []*database.Team  `json:"teams"`
 	Topics                   []*database.Topic `json:"topics"`
-	AdminConn                *extend.ConnModel `json:"admin_conn"`
-	LeaderboardProjectorConn *extend.ConnModel `json:"leaderboard_projector_conn"`
-	CardProjectorConn        *extend.ConnModel `json:"card_projector_conn"`
+	AdminConn                *extend.ConnModel `json:"-"`
+	LeaderboardProjectorConn *extend.ConnModel `json:"-"`
+	CardProjectorConn        *extend.ConnModel `json:"-"`
+	Interval                 *time.Ticker      `json:"-"`
 }

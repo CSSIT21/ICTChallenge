@@ -13,7 +13,7 @@ func NewTopicService(topicRepository repository.TopicRepository) topicService {
 	return topicService{topicEvent: topicRepository}
 }
 
-func (s topicService) OpenCard(card *database.Question) (string, error) {
+func (s topicService) OpenCard(card *database.Card) (string, error) {
 	a, _ := s.topicEvent.OpenCard(card)
 	return a, nil
 }

@@ -32,6 +32,7 @@ func Init() {
 			Conn:    nil,
 			Mutex:   &sync.Mutex{},
 		},
+		Interval: nil,
 	}
 	if err := Load(); err != nil {
 		logger.Log(logrus.Panic, "UNABLE TO LOAD HUB: "+err.Error())

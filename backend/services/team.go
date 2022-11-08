@@ -8,7 +8,7 @@ import (
 type TeamService interface {
 	GetAllTeams() ([]*database.Team, error)
 	GetTeamById(uint64) (*database.Team, error)
-	ChangeTeamScore(team *database.Team, problem *database.Question, correct bool, bonus bool) error
+	ChangeTeamScore(team *database.Team, problem *database.Card, correct bool, bonus bool) error
 	GetPodium() ([]*database.Podium, error)
 	GetRanking() ([]*database.Ranking, error)
 	GetTeamInfo(team *database.Team) (*types.TeamInfo, error)
