@@ -50,7 +50,9 @@
 
 {#if open}
 	<div
-		class="fixed top-0 left-0 z-50 w-full h-full bg-[#000000] opacity-50 modal-overlay"
+		class="fixed top-0 left-0 z-50 w-full h-full bg-[#000000] {isCardOpen
+			? 'opacity-50'
+			: 'opacity-0'} modal-overlay transition-opacity duration-1000"
 	/>
 	<div
 		class="z-50 w-[1600px] h-[872px] {isCardOpen

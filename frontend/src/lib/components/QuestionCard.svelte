@@ -11,8 +11,6 @@
 	export let cardId: number
 	export let cardIndex: number
 	export let handleOpenModal: (id: number, index: number) => void = () => {}
-
-	console.log(widthCard, heightCard, widthImg)
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
