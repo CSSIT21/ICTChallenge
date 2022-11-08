@@ -1,6 +1,7 @@
 package router
 
 import (
+	"backend/handler"
 	"github.com/gofiber/fiber/v2"
 
 	"backend/loaders/fiber/middleware"
@@ -16,12 +17,16 @@ func Init(router fiber.Router) {
 	// * Team
 	teamRepository := repository.NewTeamEvent(hub.Hub)
 	teamService := services.NewTeamService(teamRepository)
-	_ = teamService
-	// teamHandler := handlers.(rankingService)
+	teamHandler := handler.NewTeamHandler(teamService)
+
+	// * Topic
+	topicRepository := repository.NewTopicEvent(hub.Hub)
+	topicService := services.NewTopicService(topicRepository)
+	_ = topicService
 
 	// * Paths
 
 	// * Admin
 	admin := router.Group("am/", middleware.Auth(config.C.AdminSecret))
-	_ = admin
+	admin.Get("info", teamHandler.GetAllTeams)
 }

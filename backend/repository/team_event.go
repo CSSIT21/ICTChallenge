@@ -18,7 +18,7 @@ func (r teamEvent) GetTeamById(id uint64) (*database.Team, error) {
 }
 
 func (r teamEvent) GetTeams() ([]*database.Team, error) {
-	return nil, nil
+	return hub.Hub.Teams, nil
 }
 
 func (r teamEvent) GetPodium() ([]*database.Podium, error) {

@@ -4,6 +4,8 @@ import (
 	"backend/repository"
 	"backend/types"
 	"backend/types/database"
+	"backend/types/response"
+	"backend/utils/value"
 )
 
 type teamService struct {
@@ -20,8 +22,16 @@ func (s teamService) GetTeamById(id uint64) (*database.Team, error) {
 }
 
 func (s teamService) GetAllTeams() ([]*database.Team, error) {
-	a, _ := s.teamEvent.GetTeams()
-	return a, nil
+	teams, _ := s.teamEvent.GetTeams()
+	filteredTeams, _ := value.Iterate(teams, func(team *database.Team) (*database.Team, *response.Error) {
+		return &database.Team{
+			Id:     team.Id,
+			Name:   team.Name,
+			School: team.School,
+			Scores: team.Scores,
+		}, nil
+	})
+	return filteredTeams, nil
 }
 
 func (s teamService) ChangeTeamScore(team *database.Team, problem *database.Card, correct bool, bonus bool) error {
