@@ -5,6 +5,7 @@
 	import iconsTopic2 from '../../assets/images/icons-topic2.png'
 	import iconsTopic3 from '../../assets/images/icons-topic3.png'
 	import iconsTopic4 from '../../assets/images/icons-topic4.png'
+	import iconsTopic5 from '../../assets/images/icons-topic5.png'
 
 	import QuestionCard from 'src/lib/components/QuestionCard.svelte'
 	import type { Topic, OpenQuestion } from 'src/types/question'
@@ -61,6 +62,9 @@
 		} else if (colIndex == 3) {
 			icon = iconsTopic4
 			topicColor = 'topic-color-4'
+		} else if (colIndex == 4) {
+			icon = iconsTopic5
+			topicColor = 'topic-color-5'
 		}
 	})
 </script>
@@ -69,7 +73,12 @@
 
 <div class="w-[324px] flex flex-col">
 	<div class="flex flex-col justify-center h-[150px] mb-4">
-		<p class="py-2 text-4xl font-semibold text-center {topicColor}">
+		<p
+			class="py-2 text-4xl font-semibold text-center {question.title
+				.length < 30
+				? 'leading-[48px]'
+				: 'leading-10'}  {topicColor}"
+		>
 			{question.title}
 		</p>
 	</div>
@@ -163,6 +172,11 @@
 	}
 	.topic-color-4 {
 		background: -webkit-linear-gradient(0deg, #fc6cb9, #ffc7e5);
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+	.topic-color-5 {
+		background: -webkit-linear-gradient(0deg, #0fbc88, #aff4ee);
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}
