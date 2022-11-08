@@ -36,5 +36,4 @@ func Init(router fiber.Router) {
 	router.Get("/student", websocket.New(func(conn *websocket.Conn) {
 		ServeStudent(conn)
 	}))
-
 }

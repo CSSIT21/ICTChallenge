@@ -3,9 +3,11 @@ package router
 import (
 	"github.com/gofiber/fiber/v2"
 
+	"backend/loaders/fiber/middleware"
 	"backend/loaders/hub"
 	"backend/repository"
 	"backend/services"
+	"backend/utils/config"
 )
 
 func Init(router fiber.Router) {
@@ -19,7 +21,7 @@ func Init(router fiber.Router) {
 
 	// * Paths
 
-	// * Team
-	// ranking := router.Group("team/")
-	// ranking.Get("all", teamService)
+	// * Admin
+	admin := router.Group("am/", middleware.Auth(config.C.AdminSecret))
+	_ = admin
 }
