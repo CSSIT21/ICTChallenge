@@ -11,7 +11,8 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 
 <div
-	class="w-[{widthCard}] h-[{heightCard}] rounded-2xl bgColor flex justify-center items-center"
+	class="rounded-2xl bgColor flex justify-center items-center"
+	style="width: {widthCard}; height: {heightCard}"
 	on:click={() => {
 		handleOpenModal(cardId, cardIndex)
 	}}
@@ -19,7 +20,7 @@
 	<img
 		src={CheckCircleIcon}
 		alt="icon"
-		class="w-[{iconSize}] h-[{iconSize}]"
+		style="width: {iconSize}; height: {iconSize}"
 	/>
 </div>
 

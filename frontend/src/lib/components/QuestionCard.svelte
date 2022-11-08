@@ -19,19 +19,30 @@
 
 <div>
 	<div
-		class="bg-white w-[{widthCard}] h-[{heightCard}] rounded-2xl flex flex-col justify-center items-center"
+		class="bg-white rounded-2xl flex flex-col justify-center items-center"
+		style="width: {widthCard}; height: {heightCard}"
 		on:click={() => {
 			handleOpenModal(cardId, cardIndex)
 		}}
 	>
-		<img src={img} alt="logo" class="w-[{widthImg}] h-[{widthImg}] mb-1" />
+		<img
+			src={img}
+			alt="logo"
+			class="mb-1"
+			style="width: {widthImg} ; height: {widthImg}"
+		/>
 		<div class="flex items-center">
 			<img
 				src={iconsCrystal}
 				alt=""
-				class="w-[{textSize}] h-[{textSize}]"
+				style="width: {textSize}; height: {textSize}"
 			/>
-			<p class="text-[{textSize}] font-semibold {textColor}">{score}</p>
+			<p
+				class="font-semibold {textColor}"
+				style="font-size: {textSize} ;"
+			>
+				{score}
+			</p>
 		</div>
 	</div>
 </div>
