@@ -13,7 +13,7 @@
 
 	let showModal = false
 	let cardId: number
-	let cardIndex: number
+	let cardIndex: number = 0
 	let icon: string = ''
 	let topicColor: string = ''
 	export let question: Topic
@@ -34,9 +34,17 @@
 		showModal = true
 		getQuestion(id)
 	}
-	const handleCloseModal = (cardCol: number, cardIndex: number) => {
-		showModal = false
-		openCard(cardCol, cardIndex)
+	const handleCloseModal = (
+		cardCol: number,
+		cardIndex: number,
+		opened: boolean
+	) => {
+		if (!opened) {
+			showModal = false
+			openCard(cardCol, cardIndex)
+		} else {
+			showModal = false
+		}
 	}
 
 	onMount(() => {
@@ -108,6 +116,7 @@
 	open={showModal}
 	{openQuestion}
 	{handleCloseModal}
+	cardOpened={question.cards[cardIndex].opened}
 />
 
 <style>

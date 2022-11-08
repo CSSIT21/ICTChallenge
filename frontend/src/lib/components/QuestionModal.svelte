@@ -4,7 +4,12 @@
 	export let cardCol: number
 	export let cardIndex: number
 	export let openQuestion: string
-	export let handleCloseModal = (cardCol: number, cardIndex: number) => {}
+	export let cardOpened: boolean
+	export let handleCloseModal = (
+		cardCol: number,
+		cardIndex: number,
+		opened: boolean
+	) => {}
 
 	let isCardOpen = true
 	let timer: number = 15
@@ -68,7 +73,7 @@
 					countdownTimer('stop')
 					isCardOpen = false
 					setTimeout(() => {
-						handleCloseModal(cardCol, cardIndex)
+						handleCloseModal(cardCol, cardIndex, cardOpened)
 						isCardOpen = true
 					}, 900)
 					timer = 15
