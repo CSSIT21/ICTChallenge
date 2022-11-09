@@ -3,26 +3,26 @@
     import icons1st from "../../assets/images/icons-1stmedal-64.png";
     import icons2nd from "../../assets/images/icons-2ndmedal-64.png";
     import icons3rd from "../../assets/images/icons-3rdmedal-64.png";
-	import { onMount } from "svelte"
+	  import { onMount } from "svelte"
     export let order: number
     export let name: string
     export let score: number
     export let isHighlighted: boolean
     export let rest: string = ""
 
-    let medal: string = ""
+    let medal: string = ''
     let init = true
     onMount(() => {
-        if (order == 1) {
-            medal = icons1st
-        } else if (order == 2) {
-            medal = icons2nd
-        } else if (order == 3) {
-            medal = icons3rd
-        }
+      if (order == 1) {
+        medal = icons1st
+      } else if (order == 2) {
+        medal = icons2nd
+      } else if (order == 3) {
+        medal = icons3rd
+      }
     })
     setTimeout(() => {
-        init = false
+      init = false
     }, 2000)
 </script>
 
@@ -40,33 +40,33 @@
 </div>
 
 <style>
-    .teamCard {
-        animation: scaleUp;
-    }
-    .color {
-        background-image: linear-gradient(to right,#097FFE, #8534E8);
-        background-color: rgb(255, 255, 255, 0.2);
-        animation: changeColor 250ms;
-    }
-    @keyframes changeColor {
-        0% {
-            background-image: linear-gradient(to right,#097FFE, #8534E8);
-            opacity: 0.7;
-            background-color: rgb(255, 255, 255, 0.2);
-        }
-        100% {
-            background-image: linear-gradient(to right,#097FFE, #8534E8);
-            opacity: 1;
-            background-color: rgb(255, 255, 255, 0.2);
-        }
-    }
+	.teamCard {
+		animation: scaleUp;
+	}
+	.color {
+		background-image: linear-gradient(to right, #097ffe, #8534e8);
+		background-color: rgb(255, 255, 255, 0.2);
+		animation: changeColor 250ms;
+	}
+	@keyframes changeColor {
+		0% {
+			background-image: linear-gradient(to right, #097ffe, #8534e8);
+			opacity: 0.7;
+			background-color: rgb(255, 255, 255, 0.2);
+		}
+		100% {
+			background-image: linear-gradient(to right, #097ffe, #8534e8);
+			opacity: 1;
+			background-color: rgb(255, 255, 255, 0.2);
+		}
+	}
 
-    @keyframes scaleUp {
-        0% {
-            transform: scale(0.8);
-        }
-        100% {
-            transform: scale(1);
-        }
-    }
+	@keyframes scaleUp {
+		0% {
+			transform: scale(0.8);
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
 </style>
