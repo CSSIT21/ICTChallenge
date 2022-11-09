@@ -5,42 +5,16 @@
 	import { onMount } from 'svelte'
 	import { flip } from 'svelte/animate'
 
-	let teams: Array<Team> = []
-	onMount(() => {
-		teams = [
-			{
-				name: 'muumel',
-				school: 'muumel',
-				score: 1000,
-				isHighlighted: true,
-			},
-			{
-				name: 'CYMPATI',
-				school: 'hello',
-				score: 500,
-				isHighlighted: false,
-			},
-			{ name: 'axxn', school: 'hello', score: 200, isHighlighted: false },
-			{
-				name: 'muumel1',
-				school: 'muumel',
-				score: 1000,
-				isHighlighted: false,
-			},
-			{
-				name: 'CYMPATI1',
-				school: 'hello',
-				score: 500,
-				isHighlighted: false,
-			},
-			{
-				name: 'axxn1',
-				school: 'hello',
-				score: 200,
-				isHighlighted: false,
-			},
-		]
-	})
+  let teams: Array<Team> = []
+  onMount(() => {
+      teams = [
+      {name:"muumel", school:"muumel", score:1000, isHighlighted:true, rank: 1},
+      {name:"CYMPATI", school:"hello", score:500, isHighlighted:false, rank: 2},
+      {name:"axxn", school:"hello", score:200, isHighlighted:false, rank: 3},
+      {name:"muumel1", school:"muumel", score:1000, isHighlighted:false, rank: 4},
+      {name:"CYMPATI1", school:"hello", score:500, isHighlighted:false,  rank: 5},
+      {name:"axxn1", school:"hello", score:200, isHighlighted:false,  rank: 6}]
+  })
 
 	function randomTeam() {
 		var random = setInterval(() => {
