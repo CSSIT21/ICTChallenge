@@ -1,21 +1,21 @@
 <script lang="ts">
 	import type { Team } from 'src/types/preview'
+	import { selected } from 'src/store/system'
 
 	import backIcon from '../../assets/images/back-icon.png'
 
 	export let team: Team
-	export let selected: boolean
-	export let handleSelected: (selected: boolean) => void
 </script>
 
 <div
 	class="w-full h-11 pl-[30px] pr-[58px] flex justify-between items-center bg-[#1B2D51] font-semibold text-lg"
 >
 	<div class="flex justify-center items-center w-9">
-		{#if selected == true}
+		{#if $selected != -1}
 			<button
 				on:click={() => {
-					handleSelected(selected)
+					selected.set(-1)
+					document.body.scrollIntoView()
 				}}
 			>
 				<img src={backIcon} alt="backIcon" />
