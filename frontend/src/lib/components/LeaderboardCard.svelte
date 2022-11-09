@@ -8,6 +8,7 @@
 	export let name: string
 	export let score: number
 	export let isHighlighted: boolean
+	export let rest: string = ''
 
 	let medal: string = ''
 	let init = true
@@ -27,7 +28,7 @@
 
 <div
 	style={`animation-duration: ${Math.sqrt(order * 0.5)}s;`}
-	class="flex gap-4 m-10 items-center {init && 'teamCard'}"
+	class="flex gap-4 m-10 items-center {init && 'teamCard'} {rest}"
 >
 	<p class="text-white text-5xl font-semibold">{order}</p>
 	<div

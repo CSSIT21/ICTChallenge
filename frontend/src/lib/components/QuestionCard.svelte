@@ -1,41 +1,48 @@
 <script lang="ts">
-	import Modal from './QuestionModal.svelte'
 	import iconsCrystal from '../../assets/images/icons-crystal.png'
 
 	export let img: string
 	export let score: number
 	export let textColor: string
-	export let cardCol: number
-	export let cardIndex: number
 	export let widthCard: string
 	export let heightCard: string
 	export let widthImg: string
 	export let textSize: string
-	export let openCard: (cardCol: number, cardIndex: number) => void
-	let showModal = false
-	const handleToggleModal = () => {
-		showModal = !showModal
-	}
-	const handleCloseModal = (cardCol: number, cardIndex: number) => {
-		showModal = false
-		openCard(cardCol, cardIndex)
-	}
+	export let cardId: number
+	export let cardIndex: number
+	export let handleOpenModal: (id: number, index: number) => void = () => {}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 
-<div
-	class="bg-white w-[{widthCard}] h-[{heightCard}] rounded-2xl flex flex-col justify-center items-center"
-	on:click={() => {
-		handleToggleModal()
-	}}
->
-	<img src={img} alt="logo" class="w-[{widthImg}] mb-1" />
-	<div class="flex items-center">
-		<img src={iconsCrystal} alt="" class="w-[{textSize}] h-[{textSize}]" />
-		<p class="text-[{textSize}] font-semibold {textColor}">{score}</p>
+<div>
+	<div
+		class="bg-white rounded-2xl flex flex-col justify-center items-center"
+		style="width: {widthCard}; height: {heightCard}"
+		on:click={() => {
+			handleOpenModal(cardId, cardIndex)
+		}}
+	>
+		<img
+			src={img}
+			alt="logo"
+			class="mb-1"
+			style="width: {widthImg} ; height: {widthImg}"
+		/>
+		<div class="flex items-center">
+			<img
+				src={iconsCrystal}
+				alt=""
+				style="width: {textSize}; height: {textSize}"
+			/>
+			<p
+				class="font-semibold {textColor}"
+				style="font-size: {textSize} ;"
+			>
+				{score}
+			</p>
+		</div>
 	</div>
-	<Modal open={showModal} {handleCloseModal} {cardCol} {cardIndex} />
 </div>
 
 <style>
@@ -56,6 +63,11 @@
 	}
 	.text-color-4 {
 		background: -webkit-linear-gradient(0deg, #f162ae, #ffc7e5);
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+	.text-color-5 {
+		background: -webkit-linear-gradient(0deg, #069a8e, #68d6cd);
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}

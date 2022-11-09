@@ -6,6 +6,7 @@
 	import Preview from './pages/Preview.svelte'
 	import Questions from './pages/Questions.svelte'
 	import StudentPage from './pages/StudentPage.svelte'
+	import Podium from './pages/Podium.svelte'
 </script>
 
 <Router>
@@ -17,6 +18,9 @@
 	</Route>
 	<Route path="/preview">
 		<Preview />
+	</Route>
+	<Route path="/podium">
+		<Podium />
 	</Route>
 	<Route path="/leaderboard">
 		<Leaderboard />
