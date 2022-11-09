@@ -1,8 +1,7 @@
 <script lang="ts">
-	import Navbar from 'src/lib/components/Navbar.svelte'
 	import QuestionSection from 'src/lib/components/QuestionSection.svelte'
 
-	import { type Question, type OpenQuestion, Mode } from 'src/types/question'
+	import { type Question, type OpenQuestion, Mode } from '../types/question'
 
 	let questions: Question = {
 		mode: Mode.TOPIC,
