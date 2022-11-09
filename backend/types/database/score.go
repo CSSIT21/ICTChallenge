@@ -1,6 +1,6 @@
 package database
 
 type Score struct {
-	Change int `json:"change"`
-	Total  int `json:"total"`
+	Change int32 `json:"change"`
+	Total  int32 `json:"total"`
 }

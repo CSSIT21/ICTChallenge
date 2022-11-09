@@ -21,14 +21,6 @@ func (r teamEvent) GetTeams() ([]*database.Team, error) {
 	return hub.Hub.Teams, nil
 }
 
-func (r teamEvent) GetPodium() ([]*database.Podium, error) {
-	return nil, nil
-}
-
 func (r teamEvent) ChangeTeamScore(id uint64, score int32) error {
 	return nil
-}
-
-func (r teamEvent) GetRanking() ([]*database.Ranking, error) {
-	return nil, nil
 }

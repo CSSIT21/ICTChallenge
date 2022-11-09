@@ -20,3 +20,7 @@ func (r topicEvent) OpenCard(card *database.Card) (string, error) {
 func (r topicEvent) GetTopics() ([]*database.Topic, error) {
 	return []*database.Topic{}, nil
 }
+
+func (r topicEvent) GetCurrentCard() (*database.Card, error) {
+	return r.hub.CurrentCard, nil
+}

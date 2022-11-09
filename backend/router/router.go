@@ -14,19 +14,20 @@ import (
 func Init(router fiber.Router) {
 	// * Registrations
 
-	// * Team
-	teamRepository := repository.NewTeamEvent(hub.Hub)
-	teamService := services.NewTeamService(teamRepository)
-	teamHandler := handler.NewTeamHandler(teamService)
-
 	// * Topic
 	topicRepository := repository.NewTopicEvent(hub.Hub)
 	topicService := services.NewTopicService(topicRepository)
 	_ = topicService
+
+	// * Team
+	teamRepository := repository.NewTeamEvent(hub.Hub)
+	teamService := services.NewTeamService(teamRepository, topicRepository)
+	teamHandler := handler.NewTeamHandler(teamService)
 
 	// * Paths
 
 	// * Admin
 	admin := router.Group("am/", middleware.Auth(config.C.AdminSecret))
 	admin.Get("info", teamHandler.GetAllTeams)
+	admin.Patch("score", teamHandler.UpdateScore)
 }
