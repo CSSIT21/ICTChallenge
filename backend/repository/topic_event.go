@@ -18,9 +18,13 @@ func (r topicEvent) OpenCard(card *database.Card) (string, error) {
 }
 
 func (r topicEvent) GetTopics() ([]*database.Topic, error) {
-	return []*database.Topic{}, nil
+	return r.hub.Topics, nil
 }
 
-func (r topicEvent) GetCurrentCard() (*database.Card, error) {
-	return r.hub.CurrentCard, nil
+func (r topicEvent) GetCurrentCard() *database.Card {
+	return r.hub.CurrentCard
+}
+
+func (r topicEvent) SetCurrentCard(card *database.Card) {
+	r.hub.CurrentCard = card
 }

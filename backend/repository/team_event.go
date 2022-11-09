@@ -21,6 +21,6 @@ func (r teamEvent) GetTeams() ([]*database.Team, error) {
 	return hub.Hub.Teams, nil
 }
 
-func (r teamEvent) ChangeTeamScore(id uint64, score int32) error {
-	return nil
+func (r teamEvent) GetTurned() ([]*database.Team, error) {
+	return hub.Hub.Turned, nil
 }

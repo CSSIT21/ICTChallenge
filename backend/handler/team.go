@@ -48,3 +48,19 @@ func (h teamHandler) UpdateScore(c *fiber.Ctx) error {
 
 	return c.JSON(response.New("Score updated"))
 }
+
+func (h teamHandler) EndGame(c *fiber.Ctx) error {
+	rankings, err := h.teamService.GetPodium()
+	if err != nil {
+		return err
+	}
+
+	hub.Hub.LeaderboardProjectorConn.Emit(&message.OutboundMessage{
+		Event: message.LeaderboardPodium,
+		Payload: map[string]any{
+			"rankings": rankings,
+		},
+	})
+
+	return c.JSON(response.New("Game has ended"))
+}

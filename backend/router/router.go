@@ -17,7 +17,7 @@ func Init(router fiber.Router) {
 	// * Topic
 	topicRepository := repository.NewTopicEvent(hub.Hub)
 	topicService := services.NewTopicService(topicRepository)
-	_ = topicService
+	topicHandler := handler.NewtopicHandler(topicService)
 
 	// * Team
 	teamRepository := repository.NewTeamEvent(hub.Hub)
@@ -30,4 +30,9 @@ func Init(router fiber.Router) {
 	admin := router.Group("am/", middleware.Auth(config.C.AdminSecret))
 	admin.Get("info", teamHandler.GetAllTeams)
 	admin.Patch("score", teamHandler.UpdateScore)
+	admin.Patch("end", teamHandler.EndGame)
+
+	// * Card
+	card := router.Group("st/")
+	card.Put("open", topicHandler.OpenCard)
 }

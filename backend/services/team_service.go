@@ -7,6 +7,7 @@ import (
 	"backend/types/payload"
 	"backend/types/response"
 	"backend/utils/value"
+	"sort"
 )
 
 type teamService struct {
@@ -36,12 +37,42 @@ func (s teamService) GetAllTeams() ([]*database.Team, error) {
 	return filteredTeams, nil
 }
 
-func (s teamService) ChangeTeamScore(team *database.Team, problem *database.Card, answer bool, correct bool, bonus bool) error {
-	return s.teamEvent.ChangeTeamScore(team.Id, problem.Score)
+func (s teamService) GetCurrentScore(team *database.Team) int32 {
+	return team.Scores[len(team.Scores)-1].Total
 }
 
 func (s teamService) GetPodium() ([]*payload.Podium, error) {
-	return nil, nil
+	teams, err := s.teamEvent.GetTeams()
+	if err != nil {
+		return nil, &response.Error{
+			Message: "Unable to get teams",
+		}
+	}
+
+	var min, max int32
+	for _, team := range teams {
+		if min > s.GetCurrentScore(team) {
+			min = s.GetCurrentScore(team)
+		}
+		if max < s.GetCurrentScore(team) {
+			max = s.GetCurrentScore(team)
+		}
+	}
+
+	var rankings []*payload.Podium
+	for _, team := range teams {
+		rankings = append(rankings, &payload.Podium{
+			Id:         team.Id,
+			Name:       team.Name,
+			Percentile: float32(s.GetCurrentScore(team)-min) / float32(min+max),
+		})
+	}
+
+	sort.Slice(rankings, func(i, j int) bool {
+		return rankings[i].Percentile > rankings[j].Percentile
+	})
+
+	return rankings, nil
 }
 
 func (s teamService) GetRanking() ([]*payload.TeamInfo, error) {
@@ -58,7 +89,7 @@ func (s teamService) GetRanking() ([]*payload.TeamInfo, error) {
 		if len(team.Scores) == 0 {
 			totalScore = 0
 		} else {
-			totalScore = team.Scores[len(team.Scores)-1].Total
+			totalScore = s.GetCurrentScore(team)
 		}
 
 		rankings = append(rankings, &payload.TeamInfo{
@@ -75,12 +106,8 @@ func (s teamService) GetTeamInfos(team *database.Team) (*payload.TeamInfo, error
 }
 
 func (s teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamInfo, error) {
-	currentCard, err := s.topicEvent.GetCurrentCard()
-	if err != nil {
-		return nil, &response.Error{
-			Message: "Unable to get current card",
-		}
-	} else if currentCard == nil {
+	currentCard := s.topicEvent.GetCurrentCard()
+	if currentCard == nil {
 		return nil, &response.Error{
 			Message: "No opening card",
 		}
@@ -93,12 +120,13 @@ func (s teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamInfo
 		}
 	}
 
+	turned, err := s.teamEvent.GetTurned()
 	for i, update := range body.Update {
 		var currentScore int32
 		if len(teams[i].Scores) == 0 {
 			currentScore = 0
 		} else {
-			currentScore = teams[i].Scores[len(teams[i].Scores)-1].Total
+			currentScore = s.GetCurrentScore(teams[i])
 		}
 
 		switch update {
@@ -110,14 +138,19 @@ func (s teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamInfo
 		case 0:
 			teams[i].Scores = append(teams[i].Scores, &database.Score{Change: 0, Total: currentScore})
 		case 1:
+			change := currentCard.Score
+			if teams[i] == turned[len(turned)-1] && currentCard.Bonus {
+				change *= 2
+			}
+
 			teams[i].Scores = append(teams[i].Scores, &database.Score{
-				Change: currentCard.Score,
-				Total:  currentScore + currentCard.Score,
+				Change: change,
+				Total:  currentScore + change,
 			})
 		}
 	}
 
-	currentCard = nil
+	s.topicEvent.SetCurrentCard(nil)
 	hub.Snapshot()
 
 	return s.GetRanking()

@@ -12,6 +12,7 @@ type Card struct {
 	Id       uint64        `json:"id"`
 	Score    int32         `json:"score"`
 	Opened   bool          `json:"opened"`
+	Bonus    bool          `json:"bonus"`
 	Question string        `json:"question"`
 	Duration time.Duration `json:"duration"`
 }

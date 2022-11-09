@@ -1,7 +1,9 @@
 package services
 
-import "backend/types/database"
+import (
+	"backend/types/payload"
+)
 
 type TopicService interface {
-	OpenCard(card *database.Card) (string, error)
+	OpenCard(body *payload.OpenCard) error
 }
