@@ -1,11 +1,9 @@
 package repository
 
 import (
-	"math/rand"
-
 	"backend/loaders/hub"
 	"backend/types/database"
-	"backend/utils/value"
+	"backend/types/extend"
 )
 
 type teamEvent struct {
@@ -16,32 +14,30 @@ func NewTeamEvent(hub *hub.Model) *teamEvent {
 	return &teamEvent{hub: hub}
 }
 
-func (r *teamEvent) GetTeamById(id uint64) (*database.Team, error) {
-	return nil, nil
+func (r *teamEvent) GetTeamById(id uint64) *database.Team {
+	return nil
 }
 
-func (r *teamEvent) GetTeams() ([]*database.Team, error) {
-	return hub.Hub.Teams, nil
+func (r *teamEvent) GetTeams() []*database.Team {
+	return hub.Hub.Teams
 }
 
-func (r *teamEvent) GetTurned() ([]*database.Team, error) {
-	return hub.Hub.Turned, nil
+func (r *teamEvent) GetTurned() []*database.Team {
+	return hub.Hub.Turned
 }
 
-func (r *teamEvent) GetNextTurn() (*database.Team, error) {
-	if len(r.hub.Turned) == 6 {
-		r.hub.Turned = r.hub.Turned[:0]
-	}
+func (r *teamEvent) SetTurned(turn []*database.Team) {
+	hub.Hub.Turned = turn
+}
 
-	var candidates []*database.Team
-	for _, team := range r.hub.Teams {
-		if !value.Contain(r.hub.Turned, team) {
-			candidates = append(candidates, team)
-		}
-	}
+func (r *teamEvent) GetLeaderBoardConn() *extend.ConnModel {
+	return hub.Hub.LeaderboardProjectorConn
+}
 
-	selected := candidates[rand.Intn(len(candidates))]
-	r.hub.Turned = append(r.hub.Turned, selected)
-	
-	return selected, nil
+func (r *teamEvent) GetAdminConn() *extend.ConnModel {
+	return hub.Hub.AdminConn
+}
+
+func (r *teamEvent) GetStudentConns() []*extend.ConnModel {
+	return hub.Hub.StudentConns
 }

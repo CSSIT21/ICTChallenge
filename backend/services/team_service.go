@@ -2,11 +2,14 @@ package services
 
 import (
 	"backend/loaders/hub"
+	"backend/mappers"
 	"backend/repository"
 	"backend/types/database"
+	"backend/types/extend"
 	"backend/types/payload"
 	"backend/types/response"
 	"backend/utils/value"
+	"math/rand"
 	"sort"
 )
 
@@ -15,39 +18,36 @@ type teamService struct {
 	topicEvent repository.TopicRepository
 }
 
-func NewTeamService(teamRepository repository.TeamRepository, topicRepository repository.TopicRepository) teamService {
-	return teamService{teamEvent: teamRepository, topicEvent: topicRepository}
+func NewTeamService(teamRepository repository.TeamRepository, topicRepository repository.TopicRepository) *teamService {
+	return &teamService{teamEvent: teamRepository, topicEvent: topicRepository}
 }
 
-func (s teamService) GetTeamById(id uint64) (*database.Team, error) {
-	a, _ := s.teamEvent.GetTeamById(id)
-	return a, nil
-}
-
-func (s teamService) GetAllTeams() ([]*database.Team, error) {
-	teams, _ := s.teamEvent.GetTeams()
-	filteredTeams, _ := value.Iterate(teams, func(team *database.Team) (*database.Team, *response.Error) {
-		return &database.Team{
+func (s *teamService) GetAllTeamInfos() ([]*payload.TeamInfo, error) {
+	var teamInfos []*payload.TeamInfo
+	for _, team := range s.teamEvent.GetTeams() {
+		teamInfos = append(teamInfos, &payload.TeamInfo{
 			Id:     team.Id,
 			Name:   team.Name,
 			School: team.School,
 			Scores: team.Scores,
-		}, nil
-	})
-	return filteredTeams, nil
-}
-
-func (s teamService) GetCurrentScore(team *database.Team) int32 {
-	return team.Scores[len(team.Scores)-1].Total
-}
-
-func (s teamService) GetPodium() ([]*payload.Podium, error) {
-	teams, err := s.teamEvent.GetTeams()
-	if err != nil {
-		return nil, &response.Error{
-			Message: "Unable to get teams",
-		}
+		})
 	}
+
+	return teamInfos, nil
+}
+
+func (s *teamService) GetCurrentScore(team *database.Team) int32 {
+	var score int32
+	if len(team.Scores) == 0 {
+		score = 0
+	} else {
+		score = team.Scores[len(team.Scores)-1].Total
+	}
+	return score
+}
+
+func (s *teamService) GetPodium() ([]*payload.Podium, error) {
+	teams := s.teamEvent.GetTeams()
 
 	var min, max int32
 	for _, team := range teams {
@@ -75,15 +75,10 @@ func (s teamService) GetPodium() ([]*payload.Podium, error) {
 	return rankings, nil
 }
 
-func (s teamService) GetRanking() ([]*payload.TeamInfo, error) {
-	teams, err := s.teamEvent.GetTeams()
-	if err != nil {
-		return nil, &response.Error{
-			Message: "Unable to get teams",
-		}
-	}
+func (s *teamService) GetRanking() ([]*payload.TeamScore, error) {
+	teams := s.teamEvent.GetTeams()
 
-	var rankings []*payload.TeamInfo
+	var rankings []*payload.TeamScore
 	for _, team := range teams {
 		var totalScore int32
 		if len(team.Scores) == 0 {
@@ -92,7 +87,7 @@ func (s teamService) GetRanking() ([]*payload.TeamInfo, error) {
 			totalScore = s.GetCurrentScore(team)
 		}
 
-		rankings = append(rankings, &payload.TeamInfo{
+		rankings = append(rankings, &payload.TeamScore{
 			Id:    team.Id,
 			Name:  team.Name,
 			Score: totalScore,
@@ -101,11 +96,7 @@ func (s teamService) GetRanking() ([]*payload.TeamInfo, error) {
 	return rankings, nil
 }
 
-func (s teamService) GetTeamInfos(team *database.Team) (*payload.TeamInfo, error) {
-	return nil, nil
-}
-
-func (s teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamInfo, error) {
+func (s *teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamScore, error) {
 	currentCard := s.topicEvent.GetCurrentCard()
 	if currentCard == nil {
 		return nil, &response.Error{
@@ -113,14 +104,9 @@ func (s teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamInfo
 		}
 	}
 
-	teams, err := s.teamEvent.GetTeams()
-	if err != nil {
-		return nil, &response.Error{
-			Message: "Unable to get teams",
-		}
-	}
+	teams := s.teamEvent.GetTeams()
 
-	turned, err := s.teamEvent.GetTurned()
+	turned := s.teamEvent.GetTurned()
 	for i, update := range body.Update {
 		var currentScore int32
 		if len(teams[i].Scores) == 0 {
@@ -154,4 +140,46 @@ func (s teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamInfo
 	hub.Snapshot()
 
 	return s.GetRanking()
+}
+
+func (s *teamService) GetNextTurn() *database.Team {
+	turn := s.teamEvent.GetTurned()
+	if len(turn) == 6 {
+		s.teamEvent.SetTurned(turn[:0])
+	}
+
+	var candidates []*database.Team
+	for _, team := range s.teamEvent.GetTeams() {
+		if !value.Contain(turn, team) {
+			candidates = append(candidates, team)
+		}
+	}
+
+	selected := candidates[rand.Intn(len(candidates))]
+	s.teamEvent.SetTurned(append(turn, selected))
+
+	return selected
+}
+
+func (s *teamService) GetStudentsTurn() *payload.StudentTurn {
+	team := s.GetNextTurn()
+	turn := &payload.StudentTurn{
+		Name:    team.Name,
+		Current: true,
+		Topics:  mappers.DisplayTopic(s.topicEvent.GetTopics()),
+	}
+
+	return turn
+}
+
+func (s *teamService) GetStudentConns() []*extend.ConnModel {
+	return s.teamEvent.GetStudentConns()
+}
+
+func (s *teamService) GetAdminConn() *extend.ConnModel {
+	return s.teamEvent.GetAdminConn()
+}
+
+func (s *teamService) GetLeaderBoardConn() *extend.ConnModel {
+	return s.teamEvent.GetLeaderBoardConn()
 }

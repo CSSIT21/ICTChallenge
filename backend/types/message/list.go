@@ -8,6 +8,8 @@ const (
 	EchoEvent             OutboundEvent = "general/echo"
 	CardCountdown         OutboundEvent = "cd/countdown"
 	CardOpen              OutboundEvent = "cd/open"
+	CardState             OutboundEvent = "cd/state"
 	LeaderboardState      OutboundEvent = "lb/state"
 	LeaderboardPodium     OutboundEvent = "lb/podium"
+	StudentTurn           OutboundEvent = "st/turn"
 )

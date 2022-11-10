@@ -28,11 +28,17 @@ func Init(router fiber.Router) {
 
 	// * Admin
 	admin := router.Group("am/", middleware.Auth(config.C.AdminSecret))
-	admin.Get("info", teamHandler.GetAllTeams)
+	admin.Get("info", teamHandler.GetAllTeamInfos)
 	admin.Patch("score", teamHandler.UpdateScore)
 	admin.Patch("end", teamHandler.EndGame)
 
+	// * Student
+	student := router.Group("st/")
+	student.Put("open", topicHandler.OpenCard)
+	student.Get("info", teamHandler.GetTeam)
+
 	// * Card
-	card := router.Group("st/")
-	card.Put("open", topicHandler.OpenCard)
+	//card := router.Group("cd/")
+	//card.Get("state")
+	//card.Get("open")
 }

@@ -1,10 +1,14 @@
 package repository
 
-import "backend/types/database"
+import (
+	"backend/types/database"
+	"backend/types/extend"
+)
 
 type TopicRepository interface {
-	OpenCard(card *database.Card) (string, error)
-	GetTopics() ([]*database.Topic, error)
+	GetQuestion(card *database.Card) (string, error)
+	GetTopics() []*database.Topic
 	GetCurrentCard() *database.Card
 	SetCurrentCard(card *database.Card)
+	GetCardConn() *extend.ConnModel
 }

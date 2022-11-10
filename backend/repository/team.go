@@ -2,10 +2,15 @@ package repository
 
 import (
 	"backend/types/database"
+	"backend/types/extend"
 )
 
 type TeamRepository interface {
-	GetTeamById(uint64) (*database.Team, error)
-	GetTeams() ([]*database.Team, error)
-	GetTurned() ([]*database.Team, error)
+	GetTeamById(uint64) *database.Team
+	GetTeams() []*database.Team
+	GetTurned() []*database.Team
+	SetTurned([]*database.Team)
+	GetLeaderBoardConn() *extend.ConnModel
+	GetAdminConn() *extend.ConnModel
+	GetStudentConns() []*extend.ConnModel
 }

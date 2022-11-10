@@ -1,9 +1,12 @@
 package services
 
 import (
+	"backend/types/database"
+	"backend/types/extend"
 	"backend/types/payload"
 )
 
 type TopicService interface {
-	OpenCard(body *payload.OpenCard) error
+	OpenCard(body *payload.OpenCard) ([]*database.Topic, []*database.Topic, error)
+	GetCardConn() *extend.ConnModel
 }

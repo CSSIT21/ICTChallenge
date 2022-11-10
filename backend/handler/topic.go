@@ -2,6 +2,7 @@ package handler
 
 import (
 	"backend/services"
+	"backend/types/message"
 	"backend/types/payload"
 	"backend/types/response"
 	"github.com/gofiber/fiber/v2"
@@ -24,11 +25,32 @@ func (h topicHandler) OpenCard(c *fiber.Ctx) error {
 		}
 	}
 
-	if err := h.teamService.OpenCard(body); err != nil {
+	updatedTopics, topics, err := h.teamService.OpenCard(body)
+	if err != nil {
 		return &response.Error{
 			Err: err,
 		}
 	}
+
+	// CardState
+	h.teamService.GetCardConn().Emit(&message.OutboundMessage{
+		Event: message.CardState,
+		Payload: map[string]any{
+			"mode":   "topic",
+			"topics": updatedTopics,
+		},
+	})
+
+	// CardOpen
+	h.teamService.GetCardConn().Emit(&message.OutboundMessage{
+		Event: message.CardOpen,
+		Payload: map[string]any{
+			"card_id":  topics[body.TopicId-1].Cards[body.CardId-1].Id,
+			"topic_id": topics[body.TopicId-1].Id,
+			"question": topics[body.TopicId-1].Cards[body.CardId-1].Question,
+			"bonus":    topics[body.TopicId-1].Cards[body.CardId-1].Bonus,
+		},
+	})
 
 	return c.JSON(response.New("The card has opened"))
 }

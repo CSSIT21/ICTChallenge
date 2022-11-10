@@ -33,4 +33,5 @@ func StartInterval(card *database.Card) {
 
 ended:
 	card.Opened = true
+
 }
