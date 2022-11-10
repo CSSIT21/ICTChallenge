@@ -9,11 +9,11 @@ import (
 )
 
 type topicHandler struct {
-	teamService services.TopicService
+	topicService services.TopicService
 }
 
 func NewtopicHandler(topicService services.TopicService) topicHandler {
-	return topicHandler{teamService: topicService}
+	return topicHandler{topicService: topicService}
 }
 
 func (h topicHandler) OpenCard(c *fiber.Ctx) error {
@@ -25,7 +25,7 @@ func (h topicHandler) OpenCard(c *fiber.Ctx) error {
 		}
 	}
 
-	updatedTopics, topics, err := h.teamService.OpenCard(body)
+	updatedTopics, topics, err := h.topicService.OpenCard(body)
 	if err != nil {
 		return &response.Error{
 			Err: err,
@@ -33,7 +33,7 @@ func (h topicHandler) OpenCard(c *fiber.Ctx) error {
 	}
 
 	// CardState
-	h.teamService.GetCardConn().Emit(&message.OutboundMessage{
+	h.topicService.GetCardConn().Emit(&message.OutboundMessage{
 		Event: message.CardState,
 		Payload: map[string]any{
 			"mode":   "topic",
@@ -42,7 +42,7 @@ func (h topicHandler) OpenCard(c *fiber.Ctx) error {
 	})
 
 	// CardOpen
-	h.teamService.GetCardConn().Emit(&message.OutboundMessage{
+	h.topicService.GetCardConn().Emit(&message.OutboundMessage{
 		Event: message.CardOpen,
 		Payload: map[string]any{
 			"card_id":  topics[body.TopicId-1].Cards[body.CardId-1].Id,

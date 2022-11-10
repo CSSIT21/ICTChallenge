@@ -1,6 +1,7 @@
 package websocket
 
 import (
+	"backend/mappers"
 	"github.com/gofiber/websocket/v2"
 	"github.com/sirupsen/logrus"
 
@@ -29,6 +30,7 @@ func ServeProjector(model *extend.ConnModel, conn *websocket.Conn, token string)
 
 	// * Topic
 	topicRepository := repository.NewTopicEvent(hub.Hub)
+	topicService := services.NewTopicService(topicRepository)
 
 	// * Team
 	teamRepository := repository.NewTeamEvent(hub.Hub)
@@ -46,7 +48,13 @@ func ServeProjector(model *extend.ConnModel, conn *websocket.Conn, token string)
 	}
 
 	if model.Context == "CARD_PROJECTOR_CONN" {
-		// TODO: Card initial emit
+		topicService.GetCardConn().Emit(&message.OutboundMessage{
+			Event: message.CardState,
+			Payload: map[string]any{
+				"mode":   "topic",
+				"topics": mappers.DisplayTopic(topicRepository.GetTopics()),
+			},
+		})
 	}
 
 	for {
