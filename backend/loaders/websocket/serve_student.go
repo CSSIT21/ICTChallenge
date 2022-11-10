@@ -1,33 +1,25 @@
 package websocket
 
 import (
+	"sync"
+
 	"github.com/gofiber/websocket/v2"
 	"github.com/sirupsen/logrus"
 
 	"backend/loaders/hub"
-	"backend/types/database"
 	"backend/types/extend"
 	"backend/types/message"
 	"backend/utils/logger"
 )
 
 func ServeStudent(conn *websocket.Conn) {
-	for _, team := range hub.Hub.Teams {
-		if team.Token == conn.Query("token") {
-			ServeTeam(team, conn)
-			return
-		}
-	}
-}
-
-func ServeTeam(team *database.Team, conn *websocket.Conn) {
 	model := &extend.ConnModel{
-		Context: "",
-		Conn:    nil,
-		Mutex:   nil,
+		Context: "STUDENT_CONN",
+		Conn:    conn,
+		Mutex:   &sync.Mutex{},
 	}
 
-	team.Connections = append(team.Connections, model)
+	hub.Hub.StudentConns = append(hub.Hub.StudentConns, model)
 
 	for {
 		t, p, err := conn.ReadMessage()
@@ -49,12 +41,12 @@ func ServeTeam(team *database.Team, conn *websocket.Conn) {
 		logger.Log(logrus.Warn, "UNHANDLED CONNECTION CLOSE: "+err.Error())
 	}
 
-	// * Reset team connection
+	// * Update student connection
 	var connections []*extend.ConnModel
-	for _, connection := range team.Connections {
+	for _, connection := range hub.Hub.StudentConns {
 		if connection != model {
 			connections = append(connections, connection)
 		}
 	}
-	team.Connections = connections
+	hub.Hub.StudentConns = connections
 }
