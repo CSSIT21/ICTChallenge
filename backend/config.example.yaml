@@ -5,3 +5,4 @@ cors:
   - http://localhost:3000
 admin_secret: 7GRPpVk04We76CWR
 projector_secret: wdvXuDOytfx84J8d
+student_secret: XrO3ole8bS83OQ3p
