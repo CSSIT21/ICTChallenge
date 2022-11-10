@@ -4,27 +4,20 @@
 	import ChoosingScreen from '../lib/components/ChoosingScreen.svelte'
 
 	import type { Team } from 'src/types/preview'
+	import { current } from 'src/store/system'
 
-	let current: boolean = true
-	let selected: boolean = false
 	let team: Team = {
 		name: 'muumel Team',
 		school: 'KMUTT',
 	}
-
-	const handleSelected = (selected: boolean) => {
-		selected = !selected
-		console.log(selected)
-	}
 </script>
 
 <main class=" flex justify-center items-center flex-col">
-	<div class=" w-[390px] h-[750px] pt-1 bg-[#1B2D51]">
-		<TopBar {selected} {team} {handleSelected} />
-
+	<div class=" w-[390px] h-[880px] pt-1 bg-[#1B2D51]">
+		<TopBar {team} />
 		<div>
-			{#if current == true}
-				<ChoosingScreen {handleSelected} {selected} />
+			{#if $current == 1}
+				<ChoosingScreen />
 			{:else}
 				<WaitingScreen />
 			{/if}
