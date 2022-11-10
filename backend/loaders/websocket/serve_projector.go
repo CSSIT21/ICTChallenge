@@ -1,10 +1,11 @@
 package websocket
 
 import (
-	"backend/repository"
-	"backend/services"
 	"github.com/gofiber/websocket/v2"
 	"github.com/sirupsen/logrus"
+
+	"backend/repository"
+	"backend/services"
 
 	"backend/loaders/hub"
 	"backend/types/extend"
@@ -33,13 +34,20 @@ func ServeProjector(model *extend.ConnModel, conn *websocket.Conn, token string)
 	teamRepository := repository.NewTeamEvent(hub.Hub)
 	teamService := services.NewTeamService(teamRepository, topicRepository)
 
-	rankings, _ := teamService.GetRanking()
-	hub.Hub.LeaderboardProjectorConn.Emit(&message.OutboundMessage{
-		Event: message.LeaderboardState,
-		Payload: map[string]any{
-			"rankings": rankings,
-		},
-	})
+	// * Initial emit
+	if model.Context == "LEADERBOARD_PROJECTOR_CONN" {
+		rankings, _ := teamService.GetRanking()
+		hub.Hub.LeaderboardProjectorConn.Emit(&message.OutboundMessage{
+			Event: message.LeaderboardState,
+			Payload: map[string]any{
+				"rankings": rankings,
+			},
+		})
+	}
+
+	if model.Context == "CARD_PROJECTOR_CONN" {
+		// TODO: Card initial emit
+	}
 
 	for {
 		t, p, err := conn.ReadMessage()
