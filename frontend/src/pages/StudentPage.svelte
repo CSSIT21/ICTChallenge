@@ -4,8 +4,8 @@
 	import ChoosingScreen from '../lib/components/ChoosingScreen.svelte'
 
 	import type { Team } from 'src/types/preview'
+	import { current } from 'src/store/system'
 
-	let current: boolean = true
 	let team: Team = {
 		name: 'muumel Team',
 		school: 'KMUTT',
@@ -16,7 +16,7 @@
 	<div class=" w-[390px] h-[880px] pt-1 bg-[#1B2D51]">
 		<TopBar {team} />
 		<div>
-			{#if current}
+			{#if $current == 1}
 				<ChoosingScreen />
 			{:else}
 				<WaitingScreen />

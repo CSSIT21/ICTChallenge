@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import type { Topic } from 'src/types/question'
-	import { selected } from 'src/store/system'
+	import { selected, current } from 'src/store/system'
 
 	import QuestionCard from '../../lib/components/QuestionCard.svelte'
 	import FlippedCard from './FlippedCard.svelte'
@@ -23,9 +23,17 @@
 	const textSize: string = '27px'
 	const iconSize: string = '80px'
 
-	const handleFlipCard = (id: number, index: number) => {
+	const handleFlipCard = async (id: number, index: number) => {
 		cardIndex = index
 		openCard($selected, cardIndex)
+		setTimeout(() => resetStatus(), 3000)
+	}
+
+	const resetStatus = () => {
+		// waiting backend
+		current.set(0)
+		selected.set(-1)
+		document.body.scrollIntoView()
 	}
 
 	onMount(() => {

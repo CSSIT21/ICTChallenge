@@ -23,6 +23,6 @@
 		{/if}
 	</div>
 	<div class="w-[300px] flex justify-center items-center">
-		<span class="text-white">{team.name}</span>
+		<h1 class="text-white">{team.name}</h1>
 	</div>
 </div>
