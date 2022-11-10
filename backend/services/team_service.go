@@ -93,6 +93,11 @@ func (s *teamService) GetRanking() ([]*payload.TeamScore, error) {
 			Score: totalScore,
 		})
 	}
+
+	sort.Slice(rankings, func(i, j int) bool {
+		return rankings[i].Score > rankings[j].Score
+	})
+
 	return rankings, nil
 }
 
