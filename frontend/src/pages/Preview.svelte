@@ -12,8 +12,8 @@
             hr -= 12
             timeSuffix = "PM"
         }
-        
-        formattedTime = `${hr}:${currentTime.getMinutes()} ${timeSuffix}`;
+        var minute = currentTime.getMinutes()/10 > 1 ? currentTime.getMinutes() : "0" + currentTime.getMinutes()
+        formattedTime = `${hr}:${minute} ${timeSuffix}`;
 
     }, 1000);
 
