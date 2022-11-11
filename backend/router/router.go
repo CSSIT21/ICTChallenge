@@ -32,6 +32,7 @@ func Init(router fiber.Router) {
 	admin.Get("info", teamHandler.GetAllTeamInfos)
 	admin.Patch("score", teamHandler.UpdateScore)
 	admin.Patch("end", teamHandler.EndGame)
+	admin.Patch("mode", teamHandler.EndGame)
 
 	// * Student
 	student := router.Group("st/", middleware.Auth(config.C.StudentSecret))

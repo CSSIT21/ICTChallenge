@@ -16,5 +16,5 @@ type TeamService interface {
 	GetStudentsTurn(team *database.Team) *payload.StudentTurn
 	GetStudentConns() []*extend.ConnModel
 	GetAdminConn() *extend.ConnModel
-	GetLeaderBoardConn() *extend.ConnModel
+	GetLeaderboardConn() *extend.ConnModel
 }

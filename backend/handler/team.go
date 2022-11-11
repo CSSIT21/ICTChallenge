@@ -47,7 +47,7 @@ func (h *teamHandler) UpdateScore(c *fiber.Ctx) error {
 
 	next := h.teamService.GetNextTurn()
 
-	h.teamService.GetLeaderBoardConn().Emit(&message.OutboundMessage{
+	h.teamService.GetLeaderboardConn().Emit(&message.OutboundMessage{
 		Event: message.LeaderboardState,
 		Payload: map[string]any{
 			"highlighted_id": next.Id,
@@ -73,7 +73,7 @@ func (h *teamHandler) EndGame(c *fiber.Ctx) error {
 		return err
 	}
 
-	h.teamService.GetLeaderBoardConn().Emit(&message.OutboundMessage{
+	h.teamService.GetLeaderboardConn().Emit(&message.OutboundMessage{
 		Event: message.LeaderboardPodium,
 		Payload: map[string]any{
 			"rankings": rankings,
@@ -81,4 +81,20 @@ func (h *teamHandler) EndGame(c *fiber.Ctx) error {
 	})
 
 	return c.JSON(response.New("Game has ended"))
+}
+
+func (h *teamHandler) SetLeaderboardMode(c *fiber.Ctx) error {
+	var body *payload.LeaderboardMode
+	if err := c.BodyParser(&body); err != nil {
+		return &response.Error{
+			Message: "Unable to parse body",
+			Err:     err,
+		}
+	}
+	//
+	// if body.Mode == "preview" {
+	// 	h.teamService.
+	// }
+
+	return c.JSON(response.New("Successfully updated leaderboard mode"))
 }

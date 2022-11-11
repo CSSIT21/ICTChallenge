@@ -1,6 +1,7 @@
 package hub
 
 import (
+	"math"
 	"time"
 
 	"backend/types/database"
@@ -25,7 +26,7 @@ func StartInterval(card *database.Card) {
 				Event: message.CardCountdown,
 				Payload: map[string]any{
 					"s": card.Duration.Seconds(),
-					"m": card.Duration.Minutes(),
+					"m": math.Floor(card.Duration.Minutes()),
 				},
 			})
 		}

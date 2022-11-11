@@ -33,3 +33,7 @@ func (r *topicEvent) SetCurrentCard(card *database.Card) {
 func (r *topicEvent) GetCardConn() *extend.ConnModel {
 	return hub.Hub.CardProjectorConn
 }
+
+func (r *topicEvent) SetLeaderboardMode(mode string) {
+	r.hub.LeaderboardMode = mode
+}

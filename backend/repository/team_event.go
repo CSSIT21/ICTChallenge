@@ -30,7 +30,7 @@ func (r *teamEvent) SetTurned(turn []*database.Team) {
 	hub.Hub.Turned = turn
 }
 
-func (r *teamEvent) GetLeaderBoardConn() *extend.ConnModel {
+func (r *teamEvent) GetLeaderboardConn() *extend.ConnModel {
 	return hub.Hub.LeaderboardProjectorConn
 }
 

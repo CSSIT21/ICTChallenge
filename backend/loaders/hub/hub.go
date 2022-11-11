@@ -16,4 +16,6 @@ type Model struct {
 	LeaderboardProjectorConn *extend.ConnModel   `json:"-"`
 	CardProjectorConn        *extend.ConnModel   `json:"-"`
 	StudentConns             []*extend.ConnModel `json:"-"`
+	LeaderboardMode          string              `json:"mode"`
+	LeaderboardPreviewCount  uint8               `json:"-"`
 }

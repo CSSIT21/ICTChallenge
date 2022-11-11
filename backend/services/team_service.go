@@ -186,6 +186,10 @@ func (s *teamService) GetAdminConn() *extend.ConnModel {
 	return s.teamEvent.GetAdminConn()
 }
 
-func (s *teamService) GetLeaderBoardConn() *extend.ConnModel {
-	return s.teamEvent.GetLeaderBoardConn()
+func (s *teamService) GetLeaderboardConn() *extend.ConnModel {
+	return s.teamEvent.GetLeaderboardConn()
+}
+
+func (s *teamService) SetLeaderboardMode(mode string) *extend.ConnModel {
+	return s.teamEvent.GetLeaderboardConn()
 }
