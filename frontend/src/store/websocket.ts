@@ -1,7 +1,13 @@
 import { onDestroy } from 'svelte'
 import { writable } from 'svelte/store'
 
-export type IMessageType = 'cd/state' | 'lb/state' | 'lb/podium' | 'lb/turn'
+export type IMessageType =
+	| 'cd/state'
+	| 'lb/state'
+	| 'lb/podium'
+	| 'lb/turn'
+	| 'lb/preview'
+	| 'lb/preview/add'
 
 type IMessageEventHandler<T = any> = (
 	payload: T
