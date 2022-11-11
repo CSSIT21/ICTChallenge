@@ -1,4 +1,4 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
   '@sveltejs/vite-plugin-svelte': ^1.0.2
@@ -21,7 +21,7 @@ specifiers:
 
 dependencies:
   lottie-svelte: 1.3.3
-  svelte-navigator: 3.2.2_svelte@3.52.0+typescript@4.8.4
+  svelte-navigator: 3.2.2_besnmoibwkhwtentvwuriss7pa
 
 devDependencies:
   '@sveltejs/vite-plugin-svelte': 1.0.9_svelte@3.52.0+vite@3.1.8
@@ -30,12 +30,12 @@ devDependencies:
   postcss: 8.4.18
   postcss-load-config: 4.0.1_postcss@8.4.18
   prettier: 2.7.1
-  prettier-plugin-svelte: 2.8.0_prettier@2.7.1+svelte@3.52.0
+  prettier-plugin-svelte: 2.8.0_lrllcp5xtrkmmdzifit4hd52ze
   sass: 1.55.0
   svelte: 3.52.0
-  svelte-check: 2.9.2_f29e77db1c29ca4feb35f1841d751cca
-  svelte-preprocess: 4.10.7_e6b15aabcd932dee603da34c55a92d12
-  tailwindcss: 3.2.1
+  svelte-check: 2.9.2_6kphpwy4fhfe72zv6gcb25i4zi
+  svelte-preprocess: 4.10.7_42yvvk6nsmw64yb5ungflkjnci
+  tailwindcss: 3.2.1_postcss@8.4.18
   tslib: 2.4.0
   typescript: 4.8.4
   vite: 3.1.8_sass@1.55.0
@@ -927,7 +927,7 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
-  /prettier-plugin-svelte/2.8.0_prettier@2.7.1+svelte@3.52.0:
+  /prettier-plugin-svelte/2.8.0_lrllcp5xtrkmmdzifit4hd52ze:
     resolution: {integrity: sha512-QlXv/U3bUszks3XYDPsk1fsaQC+fo2lshwKbcbO+lrSVdJ+40mB1BfL8OCAk1W9y4pJxpqO/4gqm6NtF3zNGCw==}
     peerDependencies:
       prettier: ^1.16.4 || ^2.0.0
@@ -1062,7 +1062,7 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svelte-check/2.9.2_f29e77db1c29ca4feb35f1841d751cca:
+  /svelte-check/2.9.2_6kphpwy4fhfe72zv6gcb25i4zi:
     resolution: {integrity: sha512-DRi8HhnCiqiGR2YF9ervPGvtoYrheE09cXieCTEqeTPOTJzfoa54Py8rovIBv4bH4n5HgZYIyTQ3DDLHQLl2uQ==}
     hasBin: true
     peerDependencies:
@@ -1075,7 +1075,7 @@ packages:
       picocolors: 1.0.0
       sade: 1.8.1
       svelte: 3.52.0
-      svelte-preprocess: 4.10.7_e6b15aabcd932dee603da34c55a92d12
+      svelte-preprocess: 4.10.7_42yvvk6nsmw64yb5ungflkjnci
       typescript: 4.8.4
     transitivePeerDependencies:
       - '@babel/core'
@@ -1099,18 +1099,18 @@ packages:
       svelte: 3.52.0
     dev: true
 
-  /svelte-navigator/3.2.2_svelte@3.52.0+typescript@4.8.4:
+  /svelte-navigator/3.2.2_besnmoibwkhwtentvwuriss7pa:
     resolution: {integrity: sha512-Xio4ohLUG1nQJ+ENNbLphXXu9L189fnI1WGg+2Q3CIMPe8Jm2ipytKQthdBs8t0mN7p3Eb03SE9hq0xZAqwQNQ==}
     peerDependencies:
       svelte: 3.x
     dependencies:
       svelte: 3.52.0
-      svelte2tsx: 0.1.193_svelte@3.52.0+typescript@4.8.4
+      svelte2tsx: 0.1.193_besnmoibwkhwtentvwuriss7pa
     transitivePeerDependencies:
       - typescript
     dev: false
 
-  /svelte-preprocess/4.10.7_e6b15aabcd932dee603da34c55a92d12:
+  /svelte-preprocess/4.10.7_42yvvk6nsmw64yb5ungflkjnci:
     resolution: {integrity: sha512-sNPBnqYD6FnmdBrUmBCaqS00RyCsCpj2BG58A1JBswNF7b0OKviwxqVrOL/CKyJrLSClrSeqQv5BXNg2RUbPOw==}
     engines: {node: '>= 9.11.2'}
     requiresBuild: true
@@ -1167,9 +1167,8 @@ packages:
   /svelte/3.52.0:
     resolution: {integrity: sha512-FxcnEUOAVfr10vDU5dVgJN19IvqeHQCS1zfe8vayTfis9A2t5Fhx+JDe5uv/C3j//bB1umpLJ6quhgs9xyUbCQ==}
     engines: {node: '>= 8'}
-    dev: true
 
-  /svelte2tsx/0.1.193_svelte@3.52.0+typescript@4.8.4:
+  /svelte2tsx/0.1.193_besnmoibwkhwtentvwuriss7pa:
     resolution: {integrity: sha512-vzy4YQNYDnoqp2iZPnJy7kpPAY6y121L0HKrSBjU/IWW7DQ6T7RMJed2VVHFmVYm0zAGYMDl9urPc6R4DDUyhg==}
     peerDependencies:
       svelte: ^3.24
@@ -1181,10 +1180,12 @@ packages:
       typescript: 4.8.4
     dev: false
 
-  /tailwindcss/3.2.1:
+  /tailwindcss/3.2.1_postcss@8.4.18:
     resolution: {integrity: sha512-Uw+GVSxp5CM48krnjHObqoOwlCt5Qo6nw1jlCRwfGy68dSYb/LwS9ZFidYGRiM+w6rMawkZiu1mEMAsHYAfoLg==}
     engines: {node: '>=12.13.0'}
     hasBin: true
+    peerDependencies:
+      postcss: ^8.0.9
     dependencies:
       arg: 5.0.2
       chokidar: 3.5.3
@@ -1227,7 +1228,6 @@ packages:
     resolution: {integrity: sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==}
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: true
 
   /update-browserslist-db/1.0.10_browserslist@4.21.4:
     resolution: {integrity: sha512-OztqDenkfFkbSG+tRxBeAnCVPckDBcvibKd35yDONx6OU8N7sqgwc7rCbkJ/WcYtVRZ4ba68d6byhC21GFh7sQ==}
