@@ -13,7 +13,7 @@ type TeamService interface {
 	GetRanking() ([]*payload.TeamScore, error)
 	UpdateScore(body *payload.UpdateScore) ([]*payload.TeamScore, error)
 	GetNextTurn() *database.Team
-	GetStudentsTurn() *payload.StudentTurn
+	GetStudentsTurn(team *database.Team) *payload.StudentTurn
 	GetStudentConns() []*extend.ConnModel
 	GetAdminConn() *extend.ConnModel
 	GetLeaderBoardConn() *extend.ConnModel

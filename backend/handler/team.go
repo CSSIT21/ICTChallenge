@@ -1,11 +1,12 @@
 package handler
 
 import (
+	"github.com/gofiber/fiber/v2"
+
 	"backend/services"
 	"backend/types/message"
 	"backend/types/payload"
 	"backend/types/response"
-	"github.com/gofiber/fiber/v2"
 )
 
 type teamHandler struct {
@@ -44,19 +45,22 @@ func (h *teamHandler) UpdateScore(c *fiber.Ctx) error {
 		return err
 	}
 
+	next := h.teamService.GetNextTurn()
+
 	h.teamService.GetLeaderBoardConn().Emit(&message.OutboundMessage{
 		Event: message.LeaderboardState,
 		Payload: map[string]any{
-			"rankings": rankings,
+			"highlighted_id": next.Id,
+			"rankings":       rankings,
 		},
 	})
 
 	// Next turn
-	turn := h.teamService.GetStudentsTurn()
+	student := h.teamService.GetStudentsTurn(next)
 	for _, conn := range h.teamService.GetStudentConns() {
 		conn.Emit(&message.OutboundMessage{
 			Event:   message.StudentTurn,
-			Payload: turn,
+			Payload: student,
 		})
 	}
 

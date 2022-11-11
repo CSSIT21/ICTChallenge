@@ -1,6 +1,9 @@
 package services
 
 import (
+	"math/rand"
+	"sort"
+
 	"backend/loaders/hub"
 	"backend/mappers"
 	"backend/repository"
@@ -9,8 +12,6 @@ import (
 	"backend/types/payload"
 	"backend/types/response"
 	"backend/utils/value"
-	"math/rand"
-	"sort"
 )
 
 type teamService struct {
@@ -64,6 +65,7 @@ func (s *teamService) GetPodium() ([]*payload.Podium, error) {
 		rankings = append(rankings, &payload.Podium{
 			Id:         team.Id,
 			Name:       team.Name,
+			Score:      s.GetCurrentScore(team),
 			Percentile: float32(s.GetCurrentScore(team)-min) / float32(min+max),
 		})
 	}
@@ -166,15 +168,14 @@ func (s *teamService) GetNextTurn() *database.Team {
 	return selected
 }
 
-func (s *teamService) GetStudentsTurn() *payload.StudentTurn {
-	team := s.GetNextTurn()
-	turn := &payload.StudentTurn{
+func (s *teamService) GetStudentsTurn(team *database.Team) *payload.StudentTurn {
+	student := &payload.StudentTurn{
 		Name:    team.Name,
 		Current: true,
 		Topics:  mappers.DisplayTopic(s.topicEvent.GetTopics()),
 	}
 
-	return turn
+	return student
 }
 
 func (s *teamService) GetStudentConns() []*extend.ConnModel {
