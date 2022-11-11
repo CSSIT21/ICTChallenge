@@ -1,20 +1,15 @@
 <script lang="ts">
 	import PodiumBoard from "src/lib/components/PodiumBoard.svelte"
     import PodiumSection from "src/lib/components/PodiumSection.svelte";
+	import { ArtWS } from "src/store/websocket"
 	import type { Team } from "src/types/leaderboard"
 	import { onMount } from "svelte"
     let teams: Array<Team> = []
     let teamsPodium: Array<Team> = []
     let teamsBoard: Array<Team> = []
-    onMount(() => {
-        teams = [
-        {name:"muumel", school:"muumel", score:1000, isHighlighted:true, rank: 1},
-        {name:"CYMPATI", school:"hello", score:500, isHighlighted:false, rank: 2},
-        {name:"axxn", school:"hello", score:200, isHighlighted:false, rank: 3},
-        {name:"muumel1", school:"muumel", score:1000, isHighlighted:false, rank: 4},
-        {name:"CYMPATI1", school:"hello", score:500, isHighlighted:false,  rank: 5},
-        {name:"axxn1", school:"hello", score:200, isHighlighted:false,  rank: 6}];
 
+    onMount(() => {
+        
         teamsPodium = [teams[1], teams[0], teams[2]];
         var insert = setInterval(()=>{
             if (teamsBoard.length === teams.length-4) {

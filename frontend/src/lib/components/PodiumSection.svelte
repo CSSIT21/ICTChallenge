@@ -12,7 +12,7 @@
                 <div class="bg-gradient-to-b from-[rgb(255,255,255,0.08)] to-[rgb(255,255,255,0)] absolute bottom-0 left-1/2 -translate-x-1/2 h-[640px] w-[1280px] rounded-t-[960px]" />
         </div>
         
-        {#each teams as team (team.rank)}
+        {#each teams as team (team.id)}
                 <PodiumComponent team={team.name} order={team.rank} score={team.score} />
         {/each}
         

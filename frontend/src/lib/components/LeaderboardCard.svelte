@@ -9,18 +9,22 @@
 	export let score: number
 	export let isHighlighted: boolean
 	export let rest: string = ''
+	
+	let init = true
 
 	let medal: string = ''
-	let init = true
-	onMount(() => {
+	$: {
 		if (order == 1) {
 			medal = icons1st
 		} else if (order == 2) {
 			medal = icons2nd
 		} else if (order == 3) {
 			medal = icons3rd
+		} else {
+			medal = ''
 		}
-	})
+	}	
+
 	setTimeout(() => {
 		init = false
 	}, 2000)

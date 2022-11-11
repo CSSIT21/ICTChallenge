@@ -1,7 +1,8 @@
 export interface Team {
+	id: number
 	name: string
-	rank: number
-	school: string
 	score: number
+	rank: number
+	percentile: number
 	isHighlighted: boolean
 }
