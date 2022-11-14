@@ -19,4 +19,5 @@ type TeamService interface {
 	GetAdminConn() *extend.ConnModel
 	GetLeaderboardConn() *extend.ConnModel
 	SetMode(mode enum.Mode)
+	IncreasePreview()
 }

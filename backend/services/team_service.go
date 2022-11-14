@@ -220,3 +220,15 @@ func (s *teamService) SetMode(mode enum.Mode) {
 		})
 	}
 }
+
+func (s *teamService) IncreasePreview() {
+	if s.topicEvent.GetPreviewCount() < uint8(len(s.teamEvent.GetTeams())) {
+		s.topicEvent.SetPreviewCount(s.topicEvent.GetPreviewCount() + 1)
+		s.teamEvent.GetLeaderboardConn().Emit(&message.OutboundMessage{
+			Event: message.LeaderboardPreviewAdd,
+			Payload: map[string]any{
+				"team": s.teamEvent.GetTeams()[s.topicEvent.GetPreviewCount()-1],
+			},
+		})
+	}
+}

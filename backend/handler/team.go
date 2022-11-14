@@ -93,3 +93,8 @@ func (h *teamHandler) SetLeaderboardMode(c *fiber.Ctx) error {
 
 	return c.JSON(response.New("Successfully updated leaderboard mode"))
 }
+
+func (h *teamHandler) IncrementPreview(c *fiber.Ctx) error {
+
+	return c.JSON(response.New("Successfully updated leaderboard mode"))
+}
