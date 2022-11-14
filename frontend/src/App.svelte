@@ -7,6 +7,7 @@
 	import Questions from './pages/Questions.svelte'
 	import StudentPage from './pages/StudentPage.svelte'
 	import Podium from './pages/Podium.svelte'
+	import AdminPage from './pages/Admin.svelte'
 </script>
 
 <Router>
@@ -27,5 +28,8 @@
 	</Route>
 	<Route path="/student">
 		<StudentPage />
+	</Route>
+	<Route path="/admin">
+		<AdminPage />
 	</Route>
 </Router>
