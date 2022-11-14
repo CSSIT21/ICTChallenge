@@ -3,6 +3,7 @@ package repository
 import (
 	"backend/loaders/hub"
 	"backend/types/database"
+	"backend/types/enum"
 	"backend/types/extend"
 )
 
@@ -32,4 +33,24 @@ func (r *topicEvent) SetCurrentCard(card *database.Card) {
 
 func (r *topicEvent) GetCardConn() *extend.ConnModel {
 	return hub.Hub.CardProjectorConn
+}
+
+func (r *topicEvent) SetMode(mode enum.Mode) {
+	r.hub.Mode = mode
+}
+
+func (r *topicEvent) GetMode() enum.Mode {
+	return r.hub.Mode
+}
+
+func (r *topicEvent) SetPreviewCount(count uint8) {
+	r.hub.PreviewCount = count
+}
+
+func (r *topicEvent) GetPreviewCount() uint8 {
+	return r.hub.PreviewCount
+}
+
+func (r *topicEvent) GetAdminConn() *extend.ConnModel {
+	return r.hub.AdminConn
 }
