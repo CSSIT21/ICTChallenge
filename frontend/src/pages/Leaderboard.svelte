@@ -10,6 +10,7 @@
 
 	let mode = 'preview'
 	let teams: Array<Team> = []
+	let previewTeams: Array<Team> = []
 
 	let teamsPodium: Array<Team> = []
     let teamsBoard: Array<Team> = []
@@ -55,7 +56,7 @@
 
 	const unsubscribeclient4 = client.subscribe('lb/preview/add', (payload) => {
 		mode = 'preview'
-		teams = [...teams, payload.team]
+		previewTeams = [...previewTeams, payload.team]
 	})
 
 	onDestroy(() => {
@@ -151,6 +152,6 @@
 		</div>
 	</main>
 	{:else}
-	 <Preview teams={teams} />
+	 <Preview teams={previewTeams} />
 	{/if}
 	
