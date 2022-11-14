@@ -4,6 +4,7 @@ specifiers:
   '@sveltejs/vite-plugin-svelte': ^1.0.2
   '@tsconfig/svelte': ^3.0.0
   autoprefixer: ^10.4.7
+  lottie-svelte: ^1.3.3
   postcss: ^8.4.14
   postcss-load-config: ^4.0.1
   prettier: ^2.7.1
@@ -19,6 +20,7 @@ specifiers:
   vite: ^3.1.0
 
 dependencies:
+  lottie-svelte: 1.3.3
   svelte-navigator: 3.2.2_besnmoibwkhwtentvwuriss7pa
 
 devDependencies:
@@ -689,6 +691,16 @@ packages:
     resolution: {integrity: sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg==}
     engines: {node: '>=10'}
     dev: true
+
+  /lottie-svelte/1.3.3:
+    resolution: {integrity: sha512-VMmrUNweGJIskttB+zG929OyjG9De4tcLRHwAYzYRDz6p6d/INywRbnISM9SZEr4kY8TlwRoekMgWPIiy6+p+A==}
+    dependencies:
+      lottie-web: 5.9.6
+    dev: false
+
+  /lottie-web/5.9.6:
+    resolution: {integrity: sha512-JFs7KsHwflugH5qIXBpB4905yC1Sub2MZWtl/elvO/QC6qj1ApqbUZJyjzJseJUtVpgiDaXQLjBlIJGS7UUUXA==}
+    dev: false
 
   /lower-case/2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}

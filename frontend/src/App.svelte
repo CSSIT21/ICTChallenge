@@ -4,19 +4,28 @@
 	import Home from './pages/Home.svelte'
 	import Leaderboard from './pages/Leaderboard.svelte'
 	import Preview from './pages/Preview.svelte'
+	import Questions from './pages/Questions.svelte'
+	import StudentPage from './pages/StudentPage.svelte'
+	import Podium from './pages/Podium.svelte'
 </script>
 
 <Router>
 	<Route path="/">
-		<Home />
+		<Preview />
 	</Route>
 	<Route path="/about">
 		<About />
 	</Route>
-	<Route path="/preview">
-		<Preview />
+	<Route path="/podium">
+		<Podium />
 	</Route>
 	<Route path="/leaderboard">
 		<Leaderboard />
+	</Route>
+	<Route path="/question">
+		<Questions />
+	</Route>
+	<Route path="/student">
+		<StudentPage />
 	</Route>
 </Router>
