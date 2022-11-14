@@ -45,7 +45,7 @@
                 break;
         }
 
-        setTimeout(() => {
+        setTimeout(() => {            
             init = true;            
             setTimeout(() => {
                 showLabel = true;

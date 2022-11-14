@@ -11,13 +11,10 @@
 
 <Router>
 	<Route path="/">
-		<Home />
+		<Preview />
 	</Route>
 	<Route path="/about">
 		<About />
-	</Route>
-	<Route path="/preview">
-		<Preview />
 	</Route>
 	<Route path="/podium">
 		<Podium />
