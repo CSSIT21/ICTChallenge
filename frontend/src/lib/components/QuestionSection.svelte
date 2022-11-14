@@ -13,11 +13,16 @@
 	import Modal from './QuestionModal.svelte'
 	import FlippedCard from './FlippedCard.svelte'
 
+	import { ArtWS } from 'src/store/websocket'
+	import { onDestroy } from 'svelte'
+
 	let showModal = false
 	let cardId: number
 	let cardIndex: number = 0
 	let icon: string = ''
 	let topicColor: string = ''
+	let minute = 0
+	let sec = 0
 	export let question: Topic
 	export let colIndex: number
 	export let openQuestion: OpenQuestion
@@ -30,23 +35,38 @@
 	const textSize: string = '40px'
 	const iconSize: string = '120px'
 
-	const handleOpenModal = (id: number, index: number) => {
+	const client = ArtWS.connect(
+		'ws://ictc-int.sit.kmutt.ac.th:3000/ws/projector/card?token=wdvXuDOytfx84J8d',
+		{
+			log: true, // Log for console.warning
+			reconnect: true, // Reconnect on close
+			reconnectInterval: 1000, // Reconnect interval in ms
+			name: 'client', // Name for the client
+		}
+	)
+	const unsubscribeclient2 = client.subscribe('cd/open', (payload) => {
+		openQuestion = payload
+		handleOpenModal(payload.question_id, cardIndex)
+	})
+	const unsubscribeclient3 = client.subscribe('cd/countdown', (payload) => {
+		minute = payload.m
+		sec = payload.s
+	})
+
+	onDestroy(() => {
+		unsubscribeclient2()
+		unsubscribeclient3()
+	})
+
+	const handleOpenModal = (id: number, cardIndex: number) => {
 		cardId = id
-		cardIndex = index
 		showModal = true
+		cardIndex = cardIndex
 		getQuestion(id)
 	}
-	const handleCloseModal = (
-		cardCol: number,
-		cardIndex: number,
-		opened: boolean
-	) => {
-		if (!opened) {
-			showModal = false
-			openCard(cardCol, cardIndex)
-		} else {
-			showModal = false
-		}
+	const handleCloseModal = (cardCol: number, cardIndex: number) => {
+		showModal = false
+		openCard(cardCol, cardIndex)
 	}
 
 	onMount(() => {
@@ -96,23 +116,13 @@
 								{heightCard}
 								{widthImg}
 								{textSize}
-								cardId={card.id}
-								cardIndex={i}
-								{handleOpenModal}
 							/>
 						</div>
 						<div
 							class="flip-card-back"
 							style="transform: rotateY(180deg);"
 						>
-							<FlippedCard
-								{widthCard}
-								{heightCard}
-								{iconSize}
-								cardId={card.id}
-								cardIndex={i}
-								{handleOpenModal}
-							/>
+							<FlippedCard {widthCard} {heightCard} {iconSize} />
 						</div>
 					</div>
 				</div>
@@ -121,12 +131,13 @@
 	</div>
 </div>
 <Modal
-	cardCol={colIndex}
-	{cardIndex}
 	open={showModal}
 	{openQuestion}
+	{minute}
+	{sec}
+	cardCol={colIndex}
+	{cardIndex}
 	{handleCloseModal}
-	cardOpened={question.cards[cardIndex].opened}
 />
 
 <style>

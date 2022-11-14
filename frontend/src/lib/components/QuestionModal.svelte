@@ -2,34 +2,33 @@
 	import closeIcon from '../../assets/images/icons-close.svg'
 	import bonusBg from '../../assets/images/bonus-question.png'
 	import type { OpenQuestion } from 'src/types/question'
+	import { onDestroy, onMount } from 'svelte'
 
 	export let open: boolean
 	export let cardCol: number
 	export let cardIndex: number
 	export let openQuestion: OpenQuestion
-	export let cardOpened: boolean
-	export let handleCloseModal = (
-		cardCol: number,
-		cardIndex: number,
-		opened: boolean
-	) => {}
+
+	export let handleCloseModal = (cardCol: number, cardIndex: number) => {}
 
 	let isCardOpen = true
-	let timer: number = 15
+	export let minute: number
 	let isTimerRunning: boolean = false
 	let isTimerFinish: boolean = false
-	let minute: number = timer - 1
-	let sec: number = 60
+	// let minute: number = timerMinute - 1
+	export let sec: number
+
+	console.log('min', minute, 'sec', sec)
 
 	const countdown = () => {
 		sec--
-		if (sec < 10) {
-			document.getElementById('timer').innerHTML = minute + ' : 0' + sec
-		} else if (sec == 60) {
-			document.getElementById('timer').innerHTML = minute + 1 + ' : 00'
-		} else {
-			document.getElementById('timer').innerHTML = minute + ' : ' + sec
-		}
+		// if (sec < 10) {
+		// 	document.getElementById('timer').innerHTML = minute + ' : 0' + sec
+		// } else if (sec == 60) {
+		// 	document.getElementById('timer').innerHTML = minute + 1 + ' : 00'
+		// } else {
+		// 	document.getElementById('timer').innerHTML = minute + ' : ' + sec
+		// }
 
 		if (sec == 0) {
 			minute--
@@ -39,6 +38,10 @@
 			clearInterval(timerInterval)
 			isTimerRunning = false
 			isTimerFinish = true
+			setTimeout(() => {
+				handleCloseModal(cardCol, cardIndex)
+				isCardOpen = true
+			}, 900)
 		}
 	}
 	let timerInterval: any
@@ -52,6 +55,13 @@
 			clearInterval(timerInterval)
 		}
 	}
+
+	onMount(() => {
+		countdownTimer('start')
+	})
+	onDestroy(() => {
+		countdownTimer('stop')
+	})
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -71,25 +81,6 @@
 			<img src={bonusBg} alt="" class="absolute" />
 		{/if}
 		<div
-			class="px-8 py-5 text-2xl font-extraboldhead absolute top-0 right-0"
-		>
-			<button
-				class="p-2 ml-4 rounded-full cursor-pointer"
-				on:click={() => {
-					countdownTimer('stop')
-					isCardOpen = false
-					setTimeout(() => {
-						handleCloseModal(cardCol, cardIndex, cardOpened)
-						isCardOpen = true
-					}, 900)
-					timer = 15
-					sec = 60
-				}}
-			>
-				<img src={closeIcon} alt="closeIcon" class="w-12 h-12" />
-			</button>
-		</div>
-		<div
 			class="h-[678px] px-[200px] pt-12 text-center leading-[96px] flex justify-center items-center"
 		>
 			<p
@@ -102,26 +93,26 @@
 		</div>
 		<div class="flex justify-center ">
 			<div
-				class="h-[96px] w-[420px] flex flex-row justify-between items-center text-white font-medium"
+				class="h-[96px] w-[420px] flex flex-row justify-center items-center text-white font-medium"
 			>
-				<p
+				<!-- <p
 					class="text-2xl p-3 rounded-[10px] cursor-pointer
 						{!isTimerRunning ? 'opacity-50' : 'opacity-100'} timer-bg"
 					on:click={() =>
 						isTimerRunning ? countdownTimer('stop') : null}
 				>
 					Stop
-				</p>
+				</p> -->
 				<div class="flex justify-center">
 					<div
 						class="rounded-[20px] h-[90px] flex items-center timer-bg"
 					>
 						<p class="text-[48px] px-6 text-center" id="timer">
-							{timer} : 00
+							{minute} : {sec}
 						</p>
 					</div>
 				</div>
-				<p
+				<!-- <p
 					class="text-2xl p-3 rounded-[10px] cursor-pointer {isTimerFinish
 						? 'opacity-50'
 						: isTimerRunning
@@ -133,7 +124,7 @@
 							: null}
 				>
 					Start
-				</p>
+				</p> -->
 			</div>
 		</div>
 	</div>
