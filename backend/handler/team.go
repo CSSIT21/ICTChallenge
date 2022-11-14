@@ -68,10 +68,7 @@ func (h *teamHandler) UpdateScore(c *fiber.Ctx) error {
 }
 
 func (h *teamHandler) EndGame(c *fiber.Ctx) error {
-	rankings, err := h.teamService.GetPodium()
-	if err != nil {
-		return err
-	}
+	rankings := h.teamService.GetPodium()
 
 	h.teamService.GetLeaderboardConn().Emit(&message.OutboundMessage{
 		Event: message.LeaderboardPodium,
@@ -91,6 +88,8 @@ func (h *teamHandler) SetLeaderboardMode(c *fiber.Ctx) error {
 			Err:     err,
 		}
 	}
+
+	h.teamService.SetMode(*body.Mode)
 
 	return c.JSON(response.New("Successfully updated leaderboard mode"))
 }

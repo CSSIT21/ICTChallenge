@@ -10,15 +10,17 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"backend/types/database"
+	"backend/types/enum"
 	"backend/types/extend"
 	"backend/utils/logger"
 )
 
 func Init() {
 	Hub = &Model{
-		Topics: nil,
-		Teams:  nil,
-		Turned: nil,
+		Topics:      nil,
+		Teams:       nil,
+		Turned:      nil,
+		CurrentCard: nil,
 		AdminConn: &extend.ConnModel{
 			Context: "ADMIN_CONN",
 			Conn:    nil,
@@ -34,6 +36,9 @@ func Init() {
 			Conn:    nil,
 			Mutex:   &sync.Mutex{},
 		},
+		StudentConns: nil,
+		Mode:         enum.ModePreview,
+		PreviewCount: 0,
 	}
 	if err := Load("./data-init.json"); err != nil {
 		logger.Log(logrus.Panic, "UNABLE TO LOAD HUB: "+err.Error())

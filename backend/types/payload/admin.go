@@ -1,9 +1,11 @@
 package payload
 
+import "backend/types/enum"
+
 type UpdateScore struct {
 	Update [6]int `json:"update"`
 }
 
 type LeaderboardMode struct {
-	Mode string `json:"mode"`
+	Mode *enum.Mode `json:"mode"`
 }
