@@ -3,6 +3,7 @@ package handler
 import (
 	"github.com/gofiber/fiber/v2"
 
+	"backend/loaders/hub"
 	"backend/services"
 	"backend/types/message"
 	"backend/types/payload"
@@ -97,4 +98,14 @@ func (h *teamHandler) SetLeaderboardMode(c *fiber.Ctx) error {
 func (h *teamHandler) IncrementPreview(c *fiber.Ctx) error {
 
 	return c.JSON(response.New("Successfully updated leaderboard mode"))
+}
+
+func (h *teamHandler) DismissCard(c *fiber.Ctx) error {
+	hub.Skip <- true
+	return c.JSON(response.New("Successfully dismiss the card"))
+}
+
+func (h *teamHandler) PauseCard(c *fiber.Ctx) error {
+	hub.Pause <- true
+	return c.JSON(response.New("Successfully toggle card pausing"))
 }

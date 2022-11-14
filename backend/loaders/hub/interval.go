@@ -8,15 +8,18 @@ import (
 	"backend/types/message"
 )
 
-var skip = make(chan bool)
+var Skip = make(chan bool)
+var Pause = make(chan bool)
 
 func StartInterval(card *database.Card) {
 	ticker := time.NewTicker(1 * time.Second)
 
 	for {
 		select {
-		case <-skip:
+		case <-Skip:
 			goto ended
+		case <-Pause:
+			<-Pause
 		case <-ticker.C:
 			card.Duration -= 1 * time.Second
 			if card.Duration <= 0 {
