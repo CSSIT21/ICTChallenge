@@ -91,10 +91,6 @@ func (h *teamHandler) SetLeaderboardMode(c *fiber.Ctx) error {
 			Err:     err,
 		}
 	}
-	//
-	// if body.Mode == "preview" {
-	// 	h.teamService.
-	// }
 
 	return c.JSON(response.New("Successfully updated leaderboard mode"))
 }

@@ -14,7 +14,7 @@ type topicHandler struct {
 	topicService services.TopicService
 }
 
-func NewtopicHandler(topicService services.TopicService) topicHandler {
+func NewTopicHandler(topicService services.TopicService) topicHandler {
 	return topicHandler{topicService: topicService}
 }
 
@@ -54,7 +54,9 @@ func (h topicHandler) OpenCard(c *fiber.Ctx) error {
 		},
 	})
 
-	hub.StartInterval(topics[body.TopicId-1].Cards[body.CardId-1])
+	go func() {
+		hub.StartInterval(topics[body.TopicId-1].Cards[body.CardId-1])
+	}()
 
 	return c.JSON(response.New("The card has opened"))
 }

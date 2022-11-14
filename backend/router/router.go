@@ -18,7 +18,7 @@ func Init(router fiber.Router) {
 	// * Topic
 	topicRepository := repository.NewTopicEvent(hub.Hub)
 	topicService := services.NewTopicService(topicRepository)
-	topicHandler := handler.NewtopicHandler(topicService)
+	topicHandler := handler.NewTopicHandler(topicService)
 
 	// * Team
 	teamRepository := repository.NewTeamEvent(hub.Hub)
