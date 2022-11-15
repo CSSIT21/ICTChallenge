@@ -1,18 +1,20 @@
 package handler
 
 import (
+	"github.com/gofiber/fiber/v2"
+
+	"backend/loaders/hub"
 	"backend/services"
 	"backend/types/message"
 	"backend/types/payload"
 	"backend/types/response"
-	"github.com/gofiber/fiber/v2"
 )
 
 type topicHandler struct {
 	topicService services.TopicService
 }
 
-func NewtopicHandler(topicService services.TopicService) topicHandler {
+func NewTopicHandler(topicService services.TopicService) topicHandler {
 	return topicHandler{topicService: topicService}
 }
 
@@ -51,6 +53,10 @@ func (h topicHandler) OpenCard(c *fiber.Ctx) error {
 			"bonus":    topics[body.TopicId-1].Cards[body.CardId-1].Bonus,
 		},
 	})
+
+	go func() {
+		hub.StartInterval(topics[body.TopicId-1].Cards[body.CardId-1])
+	}()
 
 	return c.JSON(response.New("The card has opened"))
 }

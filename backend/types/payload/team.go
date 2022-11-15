@@ -18,6 +18,7 @@ type TeamScore struct {
 type Podium struct {
 	Id         uint64  `json:"id"`
 	Name       string  `json:"name"`
+	Score      int32   `json:"score"`
 	Percentile float32 `json:"percentile"`
 }
 

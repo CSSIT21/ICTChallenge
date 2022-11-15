@@ -1,11 +1,13 @@
 package handler
 
 import (
+	"github.com/gofiber/fiber/v2"
+
+	"backend/loaders/hub"
 	"backend/services"
 	"backend/types/message"
 	"backend/types/payload"
 	"backend/types/response"
-	"github.com/gofiber/fiber/v2"
 )
 
 type teamHandler struct {
@@ -44,19 +46,22 @@ func (h *teamHandler) UpdateScore(c *fiber.Ctx) error {
 		return err
 	}
 
-	h.teamService.GetLeaderBoardConn().Emit(&message.OutboundMessage{
+	next := h.teamService.GetNextTurn()
+
+	h.teamService.GetLeaderboardConn().Emit(&message.OutboundMessage{
 		Event: message.LeaderboardState,
 		Payload: map[string]any{
-			"rankings": rankings,
+			"highlighted_id": next.Id,
+			"rankings":       rankings,
 		},
 	})
 
 	// Next turn
-	turn := h.teamService.GetStudentsTurn()
+	student := h.teamService.GetStudentsTurn(next)
 	for _, conn := range h.teamService.GetStudentConns() {
 		conn.Emit(&message.OutboundMessage{
 			Event:   message.StudentTurn,
-			Payload: turn,
+			Payload: student,
 		})
 	}
 
@@ -64,12 +69,9 @@ func (h *teamHandler) UpdateScore(c *fiber.Ctx) error {
 }
 
 func (h *teamHandler) EndGame(c *fiber.Ctx) error {
-	rankings, err := h.teamService.GetPodium()
-	if err != nil {
-		return err
-	}
+	rankings := h.teamService.GetPodium()
 
-	h.teamService.GetLeaderBoardConn().Emit(&message.OutboundMessage{
+	h.teamService.GetLeaderboardConn().Emit(&message.OutboundMessage{
 		Event: message.LeaderboardPodium,
 		Payload: map[string]any{
 			"rankings": rankings,
@@ -77,4 +79,33 @@ func (h *teamHandler) EndGame(c *fiber.Ctx) error {
 	})
 
 	return c.JSON(response.New("Game has ended"))
+}
+
+func (h *teamHandler) SetLeaderboardMode(c *fiber.Ctx) error {
+	var body *payload.LeaderboardMode
+	if err := c.BodyParser(&body); err != nil {
+		return &response.Error{
+			Message: "Unable to parse body",
+			Err:     err,
+		}
+	}
+
+	h.teamService.SetMode(*body.Mode)
+
+	return c.JSON(response.New("Successfully updated leaderboard mode"))
+}
+
+func (h *teamHandler) IncrementPreview(c *fiber.Ctx) error {
+
+	return c.JSON(response.New("Successfully updated leaderboard mode"))
+}
+
+func (h *teamHandler) DismissCard(c *fiber.Ctx) error {
+	hub.Skip <- true
+	return c.JSON(response.New("Successfully dismiss the card"))
+}
+
+func (h *teamHandler) PauseCard(c *fiber.Ctx) error {
+	hub.Pause <- true
+	return c.JSON(response.New("Successfully toggle card pausing"))
 }

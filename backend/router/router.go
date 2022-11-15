@@ -18,7 +18,7 @@ func Init(router fiber.Router) {
 	// * Topic
 	topicRepository := repository.NewTopicEvent(hub.Hub)
 	topicService := services.NewTopicService(topicRepository)
-	topicHandler := handler.NewtopicHandler(topicService)
+	topicHandler := handler.NewTopicHandler(topicService)
 
 	// * Team
 	teamRepository := repository.NewTeamEvent(hub.Hub)
@@ -30,8 +30,12 @@ func Init(router fiber.Router) {
 	// * Admin
 	admin := router.Group("am/", middleware.Auth(config.C.AdminSecret))
 	admin.Get("info", teamHandler.GetAllTeamInfos)
+	admin.Put("preview/increment", teamHandler.IncrementPreview)
 	admin.Patch("score", teamHandler.UpdateScore)
 	admin.Patch("end", teamHandler.EndGame)
+	admin.Patch("mode", teamHandler.SetLeaderboardMode)
+	admin.Patch("card/dismiss", teamHandler.DismissCard)
+	admin.Patch("card/pause", teamHandler.PauseCard)
 
 	// * Student
 	student := router.Group("st/", middleware.Auth(config.C.StudentSecret))

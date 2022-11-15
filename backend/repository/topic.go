@@ -2,6 +2,7 @@ package repository
 
 import (
 	"backend/types/database"
+	"backend/types/enum"
 	"backend/types/extend"
 )
 
@@ -11,4 +12,8 @@ type TopicRepository interface {
 	GetCurrentCard() *database.Card
 	SetCurrentCard(card *database.Card)
 	GetCardConn() *extend.ConnModel
+	GetMode() enum.Mode
+	SetMode(enum.Mode)
+	GetPreviewCount() uint8
+	SetPreviewCount(uint8)
 }

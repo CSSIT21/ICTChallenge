@@ -2,6 +2,7 @@ package hub
 
 import (
 	"backend/types/database"
+	"backend/types/enum"
 	"backend/types/extend"
 )
 
@@ -16,4 +17,6 @@ type Model struct {
 	LeaderboardProjectorConn *extend.ConnModel   `json:"-"`
 	CardProjectorConn        *extend.ConnModel   `json:"-"`
 	StudentConns             []*extend.ConnModel `json:"-"`
+	Mode                     enum.Mode           `json:"mode"`
+	PreviewCount             uint8               `json:"preview_count"`
 }

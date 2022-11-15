@@ -7,6 +7,8 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"backend/loaders/hub"
+	"backend/repository"
+	"backend/services"
 	"backend/types/extend"
 	"backend/types/message"
 	"backend/utils/logger"
@@ -20,6 +22,16 @@ func ServeStudent(conn *websocket.Conn) {
 	}
 
 	hub.Hub.StudentConns = append(hub.Hub.StudentConns, model)
+
+	// * Team
+	topicRepository := repository.NewTopicEvent(hub.Hub)
+	teamRepository := repository.NewTeamEvent(hub.Hub)
+	teamService := services.NewTeamService(teamRepository, topicRepository)
+
+	model.Emit(&message.OutboundMessage{
+		Event:   message.StudentTurn,
+		Payload: teamService.GetStudentsTurn(teamRepository.GetTurned()[len(teamRepository.GetTurned())-1]),
+	})
 
 	for {
 		t, p, err := conn.ReadMessage()

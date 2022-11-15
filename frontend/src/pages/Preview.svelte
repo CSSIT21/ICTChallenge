@@ -1,7 +1,8 @@
 <script lang="ts">
 	import type { Team } from 'src/types/leaderboard'
     import sit_logo from '../assets/images/sit-logo.png';
-    import { fly } from 'svelte/transition';
+    import { fly } from 'svelte/transition';	
+    import { flip } from 'svelte/animate'
     export let teams: Array<Team> = []
     let currentTime: Date
     let formattedTime: string
@@ -25,7 +26,7 @@
     <h1 class="text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#24DECC] to-[#FFFFFF]">SIT ICT CHALLENGE</h1>
     <div class="flex justify-evenly gap-40 flex-wrap p-44">
         {#each teams as team (team.id)}
-            <div transition:fly="{{ y: 200, duration: 2000 }}" class="animate-floating flex flex-col items-center" style="animation-delay: {Math.random()*1500}ms;">
+            <div animate:flip={{ duration: (d) => 30 * Math.sqrt(d) }} transition:fly="{{ y: 200, duration: 2000 }}" class="animate-floating flex flex-col items-center" style="animation-delay: {Math.random()*1500}ms;">
                 <h1 class="text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-b from-[#FFD303] to-[#E67E22]">{team.name}</h1>
                 <h1 class="text-4xl text-zinc-50">{team.school}</h1>
             </div>        
