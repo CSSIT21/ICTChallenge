@@ -7,6 +7,6 @@ import (
 )
 
 type TopicService interface {
-	OpenCard(body *payload.OpenCard) ([]*database.Topic, []*database.Topic, error)
+	OpenCard(body *payload.OpenCard) ([]*database.Topic, error)
 	GetCardConn() *extend.ConnModel
 }
