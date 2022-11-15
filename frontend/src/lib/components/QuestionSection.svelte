@@ -26,8 +26,7 @@
 	export let question: Topic
 	export let colIndex: number
 	export let openQuestion: OpenQuestion
-	export let openCard: (cardCol: number, cardIndex: number) => void
-	export let getQuestion: (questionId: number) => void
+	export let client
 
 	const widthCard: string = '324px'
 	const heightCard: string = '180px'
@@ -35,15 +34,6 @@
 	const textSize: string = '40px'
 	const iconSize: string = '120px'
 
-	const client = ArtWS.connect(
-		'ws://ictc-int.sit.kmutt.ac.th:3000/ws/projector/card?token=wdvXuDOytfx84J8d',
-		{
-			log: true, // Log for console.warning
-			reconnect: true, // Reconnect on close
-			reconnectInterval: 1000, // Reconnect interval in ms
-			name: 'client', // Name for the client
-		}
-	)
 	const unsubscribeclient2 = client.subscribe('cd/open', (payload) => {
 		openQuestion = payload
 		handleOpenModal(payload.question_id, cardIndex)
@@ -62,11 +52,9 @@
 		cardId = id
 		showModal = true
 		cardIndex = cardIndex
-		getQuestion(id)
 	}
-	const handleCloseModal = (cardCol: number, cardIndex: number) => {
+	const handleCloseModal = () => {
 		showModal = false
-		openCard(cardCol, cardIndex)
 	}
 
 	onMount(() => {

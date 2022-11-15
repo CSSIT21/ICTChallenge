@@ -30,15 +30,6 @@
 	onDestroy(() => {
 		unsubscribeclient1()
 	})
-
-	function getQuestion(id: number) {
-		console.log(id)
-	}
-
-	function openCard(cardCol: number, cardIndex: number) {
-		questions.topics[cardCol].cards[cardIndex].opened =
-			!questions.topics[cardCol].cards[cardIndex].opened
-	}
 </script>
 
 <main class="bg-[#1B2D51] h-screen w-screen px-16 py-10">
@@ -48,9 +39,8 @@
 				<QuestionSection
 					{question}
 					colIndex={i}
-					{openCard}
-					{getQuestion}
 					{openQuestion}
+					{client}
 				/>
 			{/each}
 		</div>
