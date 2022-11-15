@@ -11,7 +11,7 @@ type Topic struct {
 type Card struct {
 	Id       uint64        `json:"id,omitempty"`
 	Score    int32         `json:"score,omitempty"`
-	Opened   bool          `json:"opened,omitempty"`
+	Opened   bool          `json:"opened"`
 	Bonus    bool          `json:"bonus,omitempty"`
 	Question string        `json:"question,omitempty"`
 	Duration time.Duration `json:"duration,omitempty"`
