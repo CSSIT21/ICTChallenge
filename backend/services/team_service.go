@@ -1,16 +1,19 @@
 package services
 
 import (
+	"math/rand"
+	"sort"
+
 	"backend/loaders/hub"
 	"backend/mappers"
 	"backend/repository"
 	"backend/types/database"
+	"backend/types/enum"
 	"backend/types/extend"
+	"backend/types/message"
 	"backend/types/payload"
 	"backend/types/response"
 	"backend/utils/value"
-	"math/rand"
-	"sort"
 )
 
 type teamService struct {
@@ -46,7 +49,7 @@ func (s *teamService) GetCurrentScore(team *database.Team) int32 {
 	return score
 }
 
-func (s *teamService) GetPodium() ([]*payload.Podium, error) {
+func (s *teamService) GetPodium() []*payload.Podium {
 	teams := s.teamEvent.GetTeams()
 
 	var min, max int32
@@ -64,6 +67,7 @@ func (s *teamService) GetPodium() ([]*payload.Podium, error) {
 		rankings = append(rankings, &payload.Podium{
 			Id:         team.Id,
 			Name:       team.Name,
+			Score:      s.GetCurrentScore(team),
 			Percentile: float32(s.GetCurrentScore(team)-min) / float32(min+max),
 		})
 	}
@@ -72,10 +76,10 @@ func (s *teamService) GetPodium() ([]*payload.Podium, error) {
 		return rankings[i].Percentile > rankings[j].Percentile
 	})
 
-	return rankings, nil
+	return rankings
 }
 
-func (s *teamService) GetRanking() ([]*payload.TeamScore, error) {
+func (s *teamService) GetRanking() []*payload.TeamScore {
 	teams := s.teamEvent.GetTeams()
 
 	var rankings []*payload.TeamScore
@@ -98,7 +102,7 @@ func (s *teamService) GetRanking() ([]*payload.TeamScore, error) {
 		return rankings[i].Score > rankings[j].Score
 	})
 
-	return rankings, nil
+	return rankings
 }
 
 func (s *teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamScore, error) {
@@ -144,7 +148,7 @@ func (s *teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamSco
 	s.topicEvent.SetCurrentCard(nil)
 	hub.Snapshot()
 
-	return s.GetRanking()
+	return s.GetRanking(), nil
 }
 
 func (s *teamService) GetNextTurn() *database.Team {
@@ -166,15 +170,14 @@ func (s *teamService) GetNextTurn() *database.Team {
 	return selected
 }
 
-func (s *teamService) GetStudentsTurn() *payload.StudentTurn {
-	team := s.GetNextTurn()
-	turn := &payload.StudentTurn{
+func (s *teamService) GetStudentsTurn(team *database.Team) *payload.StudentTurn {
+	student := &payload.StudentTurn{
 		Name:    team.Name,
 		Current: true,
 		Topics:  mappers.DisplayTopic(s.topicEvent.GetTopics()),
 	}
 
-	return turn
+	return student
 }
 
 func (s *teamService) GetStudentConns() []*extend.ConnModel {
@@ -185,6 +188,47 @@ func (s *teamService) GetAdminConn() *extend.ConnModel {
 	return s.teamEvent.GetAdminConn()
 }
 
-func (s *teamService) GetLeaderBoardConn() *extend.ConnModel {
-	return s.teamEvent.GetLeaderBoardConn()
+func (s *teamService) GetLeaderboardConn() *extend.ConnModel {
+	return s.teamEvent.GetLeaderboardConn()
+}
+
+func (s *teamService) SetMode(mode enum.Mode) {
+	s.topicEvent.SetMode(mode)
+	if mode == enum.ModePreview {
+		s.topicEvent.SetPreviewCount(0)
+		s.GetLeaderboardConn().Emit(&message.OutboundMessage{
+			Event:   message.LeaderboardPreview,
+			Payload: map[string]any{},
+		})
+	}
+	if mode == enum.ModeStarted {
+		rankings := s.GetRanking()
+		s.GetLeaderboardConn().Emit(&message.OutboundMessage{
+			Event: message.LeaderboardState,
+			Payload: map[string]any{
+				"rankings": rankings,
+			},
+		})
+	}
+	if mode == enum.ModeEnded {
+		rankings := s.GetPodium()
+		s.GetLeaderboardConn().Emit(&message.OutboundMessage{
+			Event: message.LeaderboardPodium,
+			Payload: map[string]any{
+				"rankings": rankings,
+			},
+		})
+	}
+}
+
+func (s *teamService) IncreasePreview() {
+	if s.topicEvent.GetPreviewCount() < uint8(len(s.teamEvent.GetTeams())) {
+		s.topicEvent.SetPreviewCount(s.topicEvent.GetPreviewCount() + 1)
+		s.teamEvent.GetLeaderboardConn().Emit(&message.OutboundMessage{
+			Event: message.LeaderboardPreviewAdd,
+			Payload: map[string]any{
+				"team": s.teamEvent.GetTeams()[s.topicEvent.GetPreviewCount()-1],
+			},
+		})
+	}
 }

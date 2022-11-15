@@ -10,7 +10,7 @@ type TeamRepository interface {
 	GetTeams() []*database.Team
 	GetTurned() []*database.Team
 	SetTurned([]*database.Team)
-	GetLeaderBoardConn() *extend.ConnModel
+	GetLeaderboardConn() *extend.ConnModel
 	GetAdminConn() *extend.ConnModel
 	GetStudentConns() []*extend.ConnModel
 }

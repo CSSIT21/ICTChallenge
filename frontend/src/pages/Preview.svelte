@@ -1,7 +1,9 @@
 <script lang="ts">
-	import type { Team } from 'src/types/preview'
+	import type { Team } from 'src/types/leaderboard'
     import sit_logo from '../assets/images/sit-logo.png';
-    
+    import { fly } from 'svelte/transition';	
+    import { flip } from 'svelte/animate'
+    export let teams: Array<Team> = []
     let currentTime: Date
     let formattedTime: string
     setInterval(() => {  
@@ -16,15 +18,6 @@
         formattedTime = `${hr}:${minute} ${timeSuffix}`;
 
     }, 1000);
-
-    let teams: Array<Team> = [
-        {name: "LESSERAFIM", school: "Hype School"},
-        {name: "LESSERAFIM", school: "Hype School"},
-        {name: "austapinya", school: "Suksanari School"},
-        {name: "LESSERAFIM", school: "Hype School"},
-        {name: "LESSERAFIM", school: "Hype School"},
-        {name: "LESSERAFIM", school: "Hype School"},
-    ]
 </script>
 
 <main  class="bg-preview-bg w-screen h-screen relative bg-cover bg-no-repeat flex justify-center items-center flex-col" >
@@ -32,8 +25,8 @@
     <h1 class="absolute top-12 right-24  text-zinc-50 text-4xl">{formattedTime}</h1>
     <h1 class="text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#24DECC] to-[#FFFFFF]">SIT ICT CHALLENGE</h1>
     <div class="flex justify-evenly gap-40 flex-wrap p-44">
-        {#each teams as team, i (i)}
-            <div class="animate-floating flex flex-col items-center" style="animation-delay: {Math.random()*1500}ms;">
+        {#each teams as team (team.id)}
+            <div animate:flip={{ duration: (d) => 30 * Math.sqrt(d) }} transition:fly="{{ y: 200, duration: 2000 }}" class="animate-floating flex flex-col items-center" style="animation-delay: {Math.random()*1500}ms;">
                 <h1 class="text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-b from-[#FFD303] to-[#E67E22]">{team.name}</h1>
                 <h1 class="text-4xl text-zinc-50">{team.school}</h1>
             </div>        

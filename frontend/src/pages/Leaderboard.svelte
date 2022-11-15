@@ -6,9 +6,11 @@
 	import type { Team } from 'src/types/leaderboard'
 	import { onDestroy } from 'svelte'
 	import { flip } from 'svelte/animate'
+	import Preview from './Preview.svelte'
 
-	let mode = 'leaderboard'
+	let mode = 'preview'
 	let teams: Array<Team> = []
+	let previewTeams: Array<Team> = []
 
 	let teamsPodium: Array<Team> = []
     let teamsBoard: Array<Team> = []
@@ -23,6 +25,7 @@
 	)	
 
 	const unsubscribeclient1 = client.subscribe('lb/state', (payload) => {
+		mode = 'leaderboard'
 		if (teams.length===0) {
 			teams = payload.rankings.map((team:Team, i:number) => {
 				return {...team, isHighlighted: false, rank: i + 1}
@@ -47,9 +50,20 @@
 		startPodium()
 	})
 
+	const unsubscribeclient3 = client.subscribe('lb/preview', (payload) => {
+		mode = 'preview'
+	})
+
+	const unsubscribeclient4 = client.subscribe('lb/preview/add', (payload) => {
+		mode = 'preview'
+		previewTeams = [...previewTeams, payload.team]
+	})
+
 	onDestroy(() => {
 		unsubscribeclient1()
 		unsubscribeclient2()
+		unsubscribeclient3()
+		unsubscribeclient4()
 	})
 
 	function startPodium() {
@@ -96,16 +110,6 @@
 		})
 	}
 
-	function randomScore() {
-		teams = teams.map((item) => {
-			return {
-				...item,
-				score: Math.floor(Math.random() * 100),
-			}
-		})
-		reorderDecend()
-	}
-
 	function updateScore(newTeams: Array<Team>) {
 		teams = teams.map((team)=>{
 			console.log(team.name,newTeams.find((t:Team)=>t.id === team.id).score);
@@ -115,22 +119,11 @@
 		reorderDecend()
 	}
 
-	function resetScore() {
-		teams = teams.map((item) => {
-			return {
-				...item,
-				score: 0,
-			}
-		})
-		reorderDecend()
-	}
 </script>
 
 	{#if mode === 'leaderboard'}
 	<main class="bg-[#1B2D51] h-screen w-screen px-24 py-12">
-
 		<p
-		on:click={randomScore}
 		class="text-white text-5xl font-semibold text-center mt-5"
 		>
 			Leaderboard
@@ -147,7 +140,7 @@
 		{/each}
 
 	</main>
-	{:else}
+	{:else if mode === 'podium'}
 	<main class="h-screen w-screen overflow-hidden bg-gradient-to-b from-[#3DC3B6] via-[#4F68BF] to-[#1B2D51]">
 		<PodiumSection teams={teamsPodium} />
 		<div class="p-2 mx-24 bg-[rgb(255,255,255,0.3)] rounded-t-3xl h-[421px]">
@@ -158,5 +151,7 @@
 			</div>
 		</div>
 	</main>
+	{:else}
+	 <Preview teams={previewTeams} />
 	{/if}
 	

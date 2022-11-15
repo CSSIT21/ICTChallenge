@@ -8,6 +8,8 @@ export type IMessageType =
 	| 'lb/turn'
 	| 'cd/open'
 	| 'cd/countdown'
+	| 'lb/preview'
+	| 'lb/preview/add'
 
 type IMessageEventHandler<T = any> = (
 	payload: T

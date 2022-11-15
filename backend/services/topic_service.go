@@ -22,7 +22,7 @@ func (s *topicService) OpenCard(body *payload.OpenCard) ([]*database.Topic, []*d
 
 	if s.topicEvent.GetCurrentCard() != nil {
 		return nil, nil, &response.Error{
-			Message: "The card has already opened",
+			Message: "Opened card remaining",
 		}
 	}
 
@@ -37,15 +37,15 @@ func (s *topicService) OpenCard(body *payload.OpenCard) ([]*database.Topic, []*d
 	// Iterate
 	updatedTopics := mappers.DisplayTopic(topics)
 
-	//hub.Hub.CardProjectorConn.Emit(&message.OutboundMessage{
+	// hub.Hub.CardProjectorConn.Emit(&message.OutboundMessage{
 	//	Event: message.CardState,
 	//	Payload: map[string]any{
 	//		"mode":   "topic",
 	//		"topics": updatedTopics,
 	//	},
-	//})
+	// })
 	//
-	//hub.Hub.CardProjectorConn.Emit(&message.OutboundMessage{
+	// hub.Hub.CardProjectorConn.Emit(&message.OutboundMessage{
 	//	Event: message.CardOpen,
 	//	Payload: map[string]any{
 	//		"card_id":  topics[body.TopicId-1].Cards[body.CardId-1].Id,
@@ -53,7 +53,7 @@ func (s *topicService) OpenCard(body *payload.OpenCard) ([]*database.Topic, []*d
 	//		"question": topics[body.TopicId-1].Cards[body.CardId-1].Question,
 	//		"bonus":    topics[body.TopicId-1].Cards[body.CardId-1].Bonus,
 	//	},
-	//})
+	// })
 
 	s.topicEvent.SetCurrentCard(topics[body.TopicId-1].Cards[body.CardId-1])
 

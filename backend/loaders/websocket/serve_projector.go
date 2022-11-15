@@ -1,9 +1,10 @@
 package websocket
 
 import (
-	"backend/mappers"
 	"github.com/gofiber/websocket/v2"
 	"github.com/sirupsen/logrus"
+
+	"backend/mappers"
 
 	"backend/repository"
 	"backend/services"
@@ -38,7 +39,7 @@ func ServeProjector(model *extend.ConnModel, conn *websocket.Conn, token string)
 
 	// * Initial emit
 	if model.Context == "LEADERBOARD_PROJECTOR_CONN" {
-		rankings, _ := teamService.GetRanking()
+		rankings := teamService.GetRanking()
 		hub.Hub.LeaderboardProjectorConn.Emit(&message.OutboundMessage{
 			Event: message.LeaderboardState,
 			Payload: map[string]any{
