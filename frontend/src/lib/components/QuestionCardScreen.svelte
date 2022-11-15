@@ -11,6 +11,7 @@
 	import iconsTopic3 from '../../assets/images/icons-topic3.png'
 	import iconsTopic4 from '../../assets/images/icons-topic4.png'
 	import iconsTopic5 from '../../assets/images/icons-topic5.png'
+	import { ArtWS } from 'src/store/websocket'
 
 	export let question: Topic
 	export let openCard: (cardCol: number, cardIndex: number) => void
@@ -22,6 +23,7 @@
 	const widthImg: string = '60.3px'
 	const textSize: string = '27px'
 	const iconSize: string = '80px'
+	// const axios:
 
 	const handleFlipCard = async (id: number, index: number) => {
 		cardIndex = index
@@ -30,7 +32,13 @@
 	}
 
 	const resetStatus = () => {
-		// waiting backend
+		// http://ictc-int.sit.kmutt.ac.th:3000/api/st/open
+		// Bearer XrO3ole8bS83OQ3p
+		// {
+		//   "topic_id": 3, -> cardId
+		//   "card_id": 1 --> cardIndex
+		// }
+
 		current.set(0)
 		selected.set(-1)
 		document.body.scrollIntoView()

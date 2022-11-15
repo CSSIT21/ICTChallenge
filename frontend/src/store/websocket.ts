@@ -10,6 +10,7 @@ export type IMessageType =
 	| 'cd/countdown'
 	| 'lb/preview'
 	| 'lb/preview/add'
+	| 'st/turn'
 
 type IMessageEventHandler<T = any> = (
 	payload: T
