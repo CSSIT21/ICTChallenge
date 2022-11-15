@@ -8,9 +8,6 @@
 	export let heightCard: string
 	export let widthImg: string
 	export let textSize: string
-	export let cardId: number
-	export let cardIndex: number
-	export let handleOpenModal: (id: number, index: number) => void = () => {}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -19,9 +16,6 @@
 	<div
 		class="bg-white rounded-2xl flex flex-col justify-center items-center"
 		style="width: {widthCard}; height: {heightCard}"
-		on:click={() => {
-			handleOpenModal(cardId, cardIndex)
-		}}
 	>
 		<img
 			src={img}

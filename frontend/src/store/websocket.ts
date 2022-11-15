@@ -6,6 +6,8 @@ export type IMessageType =
 	| 'lb/state'
 	| 'lb/podium'
 	| 'lb/turn'
+	| 'cd/open'
+	| 'cd/countdown'
 	| 'lb/preview'
 	| 'lb/preview/add'
 
