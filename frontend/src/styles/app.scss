@@ -1,1 +1,53 @@
 @import 'typography.scss';
+baseRadius
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+	-moz-appearance: textfield;
+	appearance: none;
+}
+
+$baseRadius: 10000px;
+
+@media screen and (min-width: 550px) {
+	::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+		border-radius: var($baseRadius);
+	}
+
+	::-webkit-scrollbar-track {
+		background: transparent;
+		border-radius: var($baseRadius);
+	}
+
+	::-webkit-scrollbar-thumb {
+		background-color: #a9b4bc80;
+		border-radius: 15px;
+		border: 2px solid transparent;
+		background-clip: padding-box;
+	}
+
+	::-webkit-scrollbar-thumb:hover,
+	::-webkit-scrollbar-thumb:active {
+		background-color: #a9b4bc;
+	}
+
+	html {
+		scrollbar-color: rgba(169, 180, 188, 0.5) transparent;
+		scrollbar-width: auto;
+		scroll-behavior: smooth;
+	}
+
+	html * {
+		scrollbar-width: inherit;
+	}
+}

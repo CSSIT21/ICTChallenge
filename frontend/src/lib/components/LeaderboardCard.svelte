@@ -51,7 +51,7 @@
 			{name}
 		</div>
 		<div class="flex items-center text-4xl text-white w-40">
-			<img src={iconsCrystal} alt="icons-crystal" />{score}
+			<img src={medal} alt="icons-medal" />{score}
 		</div>
 	</div>
 </div>
