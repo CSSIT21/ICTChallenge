@@ -25,16 +25,11 @@
 	onDestroy(() => {
 		unsubscribeclient()
 	})
-
-	function openCard(cardCol: number, cardIndex: number) {
-		questions.topics[cardCol].cards[cardIndex].opened =
-			!questions.topics[cardCol].cards[cardIndex].opened
-	}
 </script>
 
 <div class="flex justify-center items-center flex-col">
 	{#if $selected >= 0}
-		<QuestionCardScreen {openCard} question={questions.topics[$selected]} />
+		<QuestionCardScreen question={questions.topics[$selected]} />
 	{:else}
 		<div class="h-[55px] px-10 mt-10 mb-12 space-y-1.5">
 			<h1 class="font-semibold text-lg text-[#4279E8]">
