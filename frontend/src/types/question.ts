@@ -4,7 +4,7 @@ export interface Question {
 }
 
 export interface Topic {
-	id: number
+	id?: number
 	title: string
 	cards: Card[]
 }

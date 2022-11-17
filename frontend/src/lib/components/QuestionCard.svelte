@@ -3,11 +3,17 @@
 
 	export let img: string
 	export let score: number
+	export let cardId: number = 0
+	export let topicId: number = 0
 	export let textColor: string
 	export let widthCard: string
 	export let heightCard: string
 	export let widthImg: string
 	export let textSize: string
+	export let handleFlipCard: (
+		topicId: number,
+		cardId: number
+	) => void = () => {}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -16,6 +22,9 @@
 	<div
 		class="bg-white rounded-2xl flex flex-col justify-center items-center"
 		style="width: {widthCard}; height: {heightCard}"
+		on:click={() => {
+			handleFlipCard(topicId, cardId)
+		}}
 	>
 		<img
 			src={img}
