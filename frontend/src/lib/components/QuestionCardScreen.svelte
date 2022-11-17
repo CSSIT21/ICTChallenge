@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import type { Topic } from 'src/types/question'
-	import { selected, current, number } from 'src/store/system'
+	import { selected, current } from 'src/store/system'
 	import { axios } from '../../utils/api'
 
 	import QuestionCard from '../../lib/components/QuestionCard.svelte'
@@ -23,10 +23,21 @@
 	const iconSize: string = '80px'
 
 	const handleFlipCard = async (id: number, index: number) => {
-		await axios.put('http://ictc-int.sit.kmutt.ac.th:3000/api/st/open', {
-			topic_id: id,
-			card_id: index,
-		})
+		console.log(id, index)
+
+		await axios.put(
+			'http://ictc-int.sit.kmutt.ac.th:3000/api/st/open',
+			JSON.stringify({
+				topic_id: id,
+				card_id: index,
+			}),
+			{
+				headers: {
+					Authorization: 'Bearer XrO3ole8bS83OQ3p',
+					'Content-Type': 'application/json',
+				},
+			}
+		)
 		setTimeout(() => resetStatus(), 2000)
 	}
 
@@ -68,7 +79,7 @@
 								{textSize}
 								{handleFlipCard}
 								cardId={card.id}
-								topicId={i}
+								topicId={$selected + 1}
 							/>
 						</div>
 						<div
