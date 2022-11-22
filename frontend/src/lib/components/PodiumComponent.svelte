@@ -64,7 +64,7 @@
     {/if}
     
     <div id={"podium"+order}  class="{init ? "podium":"h-0"} relative flex flex-col items-center gap-7 bg-gradient-to-b {color} rounded-t-3xl">
-        <div class="{!showLabel ? "hidden":"text-intro"}  absolute w-full -top-20 flex items-center justify-center text-white  text-4xl {order===1 && "flex-col font-semibold -top-28"}"><img class="{order!==1 && "scale-75"} {(showLabel&&order===1) &&  "winner"}" src={rankingIcon} alt="rank-icon"><div class="z-50 ">{team}</div></div>
+        <div class="{!showLabel ? "hidden":"text-intro"}  absolute w-full -top-20 flex items-center justify-center text-white  text-4xl {order===1 && "flex-col font-semibold -top-28"}"><img class="{order!==1 && "scale-75"} {(showLabel&&order===1) &&  "winner"}" src={rankingIcon} alt="rank-icon"><div class="z-50 text-ellipsis overflow-hidden max-w-[120%] whitespace-nowrap">{team}</div></div>
         
         <div class="{!showLabel ? "hidden":"text-intro"} relative w-full mt-12 {order === 1 ? "h-[140px]": "h-[100px]"}">
             <div class="absolute left-1/2 -translate-x-1/2 leading-none font-bold text-transparent"  style="text-shadow: 0px 4.5478px 4.5478px rgba(0, 0, 0, 0.25); {order === 1 ? "font-size: 140px;": "font-size: 100px;"}">{order}</div>

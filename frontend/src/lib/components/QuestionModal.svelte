@@ -27,38 +27,35 @@
 		class="fixed top-0 left-0 z-50 w-full h-full bg-[rgba(0,0,0,0.3)] opacity-50 modal-overlay transition-opacity duration-1000"
 	/>
 	<div
-		class="z-50 w-[1600px] h-[872px] modal-container-slide-in ml-20 flex flex-col mx-auto absolute overflow-y-auto question-bg-color rounded-[36px] shadow-xl items-center"
+		class="z-50 w-[1600px] h-[972px] modal-container-slide-in ml-20 flex flex-col mx-auto absolute overflow-y-auto question-bg-color rounded-[36px] shadow-xl items-center"
 	>
 		{#if openQuestion.bonus}
 			<img src={bonusBg} alt="" class="absolute -z-50" />
 		{/if}
 		<div
-			class="h-[728px] px-[200px] pt-16 text-center leading-[96px] flex flex-col justify-center items-center z-50"
+			class="h-[850px] px-[200px] text-center leading-[96px] flex flex-col justify-center items-center z-50"
 		>
 			<p
-				class="text-white {openQuestion.question.title.length < 85
+				class="text-white {openQuestion.question.title.length < 100
 					? 'text-[60px]'
-					: openQuestion.question.title.length > 120
-					? 'text-[40px]'
+					: openQuestion.question.title.length > 160
+					? 'text-[36px]'
 					: 'text-[48px]'} font-semibold z-50"
 			>
 				{@html openQuestion.question.title}
 			</p>
 
-			{#if openQuestion.question.image_url}
-				<img
-					src={openQuestion.question.image_url}
-					alt="img"
-					width="1200px"
-					class="mt-16"
-				/>
+			{#if openQuestion.question.image_url != ''}
+				<div class="w-3/4 flex justify-center">
+					<img src={openQuestion.question.image_url} alt="img" />
+				</div>
 			{/if}
 		</div>
-		<div class="flex justify-center ">
+		<div class="flex justify-center">
 			<div
-				class="h-[96px] w-[420px] flex flex-row justify-center items-center text-white font-medium"
+				class="h-[96px] flex flex-row justify-end items-end text-white font-medium"
 			>
-				<div class="flex justify-center">
+				<div class=" flex justify-center">
 					<div
 						class="rounded-[20px] h-[90px] flex items-center timer-bg"
 					>
