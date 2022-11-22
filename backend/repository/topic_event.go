@@ -15,7 +15,7 @@ func NewTopicEvent(hub *hub.Model) *topicEvent {
 	return &topicEvent{hub: hub}
 }
 
-func (r *topicEvent) GetQuestion(card *database.Card) (string, error) {
+func (r *topicEvent) GetQuestion(card *database.Card) (*database.Question, error) {
 	return card.Question, nil
 }
 
