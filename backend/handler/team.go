@@ -11,11 +11,12 @@ import (
 )
 
 type teamHandler struct {
-	teamService services.TeamService
+	teamService  services.TeamService
+	topicService services.TopicService
 }
 
-func NewTeamHandler(teamService services.TeamService) teamHandler {
-	return teamHandler{teamService: teamService}
+func NewTeamHandler(teamService services.TeamService, topicService services.TopicService) teamHandler {
+	return teamHandler{teamService: teamService, topicService: topicService}
 }
 
 func (h *teamHandler) GetTeam(c *fiber.Ctx) error {
@@ -49,7 +50,7 @@ func (h *teamHandler) UpdateScore(c *fiber.Ctx) error {
 	next := h.teamService.GetNextTurn()
 
 	h.teamService.GetLeaderboardConn().Emit(&message.OutboundMessage{
-		Event: message.LeaderboardState,
+		Event: message.LeaderboardRanking,
 		Payload: map[string]any{
 			"highlighted_id": next.Id,
 			"rankings":       rankings,
@@ -100,12 +101,19 @@ func (h *teamHandler) IncrementPreview(c *fiber.Ctx) error {
 	return c.JSON(response.New("Successfully updated leaderboard mode"))
 }
 
-func (h *teamHandler) DismissCard(c *fiber.Ctx) error {
+func (h *teamHandler) SkipCard(c *fiber.Ctx) error {
 	hub.Skip <- true
-	return c.JSON(response.New("Successfully dismiss the card"))
+	return c.JSON(response.New("Successfully skip the card"))
 }
 
 func (h *teamHandler) PauseCard(c *fiber.Ctx) error {
 	hub.Pause <- true
 	return c.JSON(response.New("Successfully toggle card pausing"))
+}
+
+func (h *teamHandler) DismissCard(c *fiber.Ctx) error {
+	h.topicService.GetCardConn().Emit(&message.OutboundMessage{
+		Event: message.CardDismiss,
+	})
+	return c.JSON(response.New("Successfully dismiss the card"))
 }

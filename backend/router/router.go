@@ -34,8 +34,9 @@ func Init(router fiber.Router) {
 	admin.Patch("score", teamHandler.UpdateScore)
 	admin.Patch("end", teamHandler.EndGame)
 	admin.Patch("mode", teamHandler.SetLeaderboardMode)
-	admin.Patch("card/dismiss", teamHandler.DismissCard)
+	admin.Patch("card/skip", teamHandler.SkipCard)
 	admin.Patch("card/pause", teamHandler.PauseCard)
+	admin.Patch("card/dismiss", teamHandler.DismissCard)
 
 	// * Student
 	student := router.Group("st/", middleware.Auth(config.C.StudentSecret))
