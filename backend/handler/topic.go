@@ -4,7 +4,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 
 	"backend/loaders/hub"
-	"backend/mappers"
 	"backend/services"
 	"backend/types/message"
 	"backend/types/payload"
@@ -48,16 +47,6 @@ func (h topicHandler) OpenCard(c *fiber.Ctx) error {
 
 	go func() {
 		hub.StartInterval(topics[body.TopicId-1].Cards[body.CardId-1])
-		updatedTopics := mappers.DisplayTopic(topics)
-
-		// CardState
-		h.topicService.GetCardConn().Emit(&message.OutboundMessage{
-			Event: message.CardState,
-			Payload: map[string]any{
-				"mode":   "topic",
-				"topics": updatedTopics,
-			},
-		})
 	}()
 
 	return c.JSON(response.New("The card has opened"))

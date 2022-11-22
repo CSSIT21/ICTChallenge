@@ -1,9 +1,12 @@
 package handler
 
 import (
+	"time"
+
 	"github.com/gofiber/fiber/v2"
 
 	"backend/loaders/hub"
+	"backend/mappers"
 	"backend/services"
 	"backend/types/message"
 	"backend/types/payload"
@@ -52,8 +55,7 @@ func (h *teamHandler) UpdateScore(c *fiber.Ctx) error {
 	h.teamService.GetLeaderboardConn().Emit(&message.OutboundMessage{
 		Event: message.LeaderboardRanking,
 		Payload: map[string]any{
-			"highlighted_id": next.Id,
-			"rankings":       rankings,
+			"rankings": rankings,
 		},
 	})
 
@@ -112,8 +114,32 @@ func (h *teamHandler) PauseCard(c *fiber.Ctx) error {
 }
 
 func (h *teamHandler) DismissCard(c *fiber.Ctx) error {
+	topics := h.topicService.GetTopics()
 	h.topicService.GetCardConn().Emit(&message.OutboundMessage{
 		Event: message.CardDismiss,
 	})
+
+	updatedTopics := mappers.DisplayTopic(topics)
+
+	// CardState
+	time.Sleep(500 * time.Millisecond)
+	h.topicService.GetCardConn().Emit(&message.OutboundMessage{
+		Event: message.CardState,
+		Payload: map[string]any{
+			"mode":   "topic",
+			"topics": updatedTopics,
+		},
+	})
+
 	return c.JSON(response.New("Successfully dismiss the card"))
+}
+
+func (h *teamHandler) Highlight(c *fiber.Ctx) error {
+	h.teamService.GetLeaderboardConn().Emit(&message.OutboundMessage{
+		Event: message.LeaderboardHighlighted,
+		Payload: map[string]any{
+			"highlighted_id": h.teamService.GetLastTurn().Id,
+		},
+	})
+	return c.JSON(response.New("Successfully random leaderboard"))
 }

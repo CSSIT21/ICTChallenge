@@ -23,14 +23,15 @@ func Init(router fiber.Router) {
 	// * Team
 	teamRepository := repository.NewTeamEvent(hub.Hub)
 	teamService := services.NewTeamService(teamRepository, topicRepository)
-	teamHandler := handler.NewTeamHandler(teamService)
+	teamHandler := handler.NewTeamHandler(teamService, topicService)
 
 	// * Paths
 
 	// * Admin
 	admin := router.Group("am/", middleware.Auth(config.C.AdminSecret))
 	admin.Get("info", teamHandler.GetAllTeamInfos)
-	admin.Put("preview/increment", teamHandler.IncrementPreview)
+	admin.Patch("preview/increment", teamHandler.IncrementPreview)
+	admin.Patch("highlight", teamHandler.Highlight)
 	admin.Patch("score", teamHandler.UpdateScore)
 	admin.Patch("end", teamHandler.EndGame)
 	admin.Patch("mode", teamHandler.SetLeaderboardMode)

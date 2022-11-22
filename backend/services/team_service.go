@@ -153,7 +153,8 @@ func (s *teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamSco
 func (s *teamService) GetNextTurn() *database.Team {
 	turn := s.teamEvent.GetTurned()
 	if len(turn) == 6 {
-		s.teamEvent.SetTurned(turn[:0])
+		s.teamEvent.SetTurned([]*database.Team{})
+		turn = []*database.Team{}
 	}
 
 	var candidates []*database.Team
@@ -237,4 +238,12 @@ func (s *teamService) IncreasePreview() {
 			},
 		})
 	}
+}
+
+func (s *teamService) GetLastTurn() *database.Team {
+	turn := s.teamEvent.GetTurned()
+	if len(turn) == 0 {
+		return nil
+	}
+	return turn[len(turn)-1]
 }
