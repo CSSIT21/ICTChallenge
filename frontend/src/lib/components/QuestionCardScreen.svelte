@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte'
 	import type { Topic } from 'src/types/question'
 	import { selected, current } from 'src/store/system'
+	import { axios } from '../../utils/api'
 
 	import QuestionCard from '../../lib/components/QuestionCard.svelte'
 	import FlippedCard from './FlippedCard.svelte'
@@ -13,10 +14,8 @@
 	import iconsTopic5 from '../../assets/images/icons-topic5.png'
 
 	export let question: Topic
-	export let openCard: (cardCol: number, cardIndex: number) => void
 
 	let icon: string = ''
-	let cardIndex: number = 0
 	const widthCard: string = '224px'
 	const heightCard: string = '124px'
 	const widthImg: string = '60.3px'
@@ -24,13 +23,25 @@
 	const iconSize: string = '80px'
 
 	const handleFlipCard = async (id: number, index: number) => {
-		cardIndex = index
-		openCard($selected, cardIndex)
-		setTimeout(() => resetStatus(), 3000)
+		console.log(id, index)
+
+		await axios.put(
+			'http://ictc-int.sit.kmutt.ac.th:3000/api/st/open',
+			JSON.stringify({
+				topic_id: id,
+				card_id: index,
+			}),
+			{
+				headers: {
+					Authorization: 'Bearer XrO3ole8bS83OQ3p',
+					'Content-Type': 'application/json',
+				},
+			}
+		)
+		setTimeout(() => resetStatus(), 2000)
 	}
 
 	const resetStatus = () => {
-		// waiting backend
 		current.set(0)
 		selected.set(-1)
 		document.body.scrollIntoView()
@@ -66,9 +77,9 @@
 								{heightCard}
 								{widthImg}
 								{textSize}
+								{handleFlipCard}
 								cardId={card.id}
-								cardIndex={i}
-								handleOpenModal={handleFlipCard}
+								topicId={$selected + 1}
 							/>
 						</div>
 						<div

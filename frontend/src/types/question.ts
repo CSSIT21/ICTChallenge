@@ -4,6 +4,7 @@ export interface Question {
 }
 
 export interface Topic {
+	id?: number
 	title: string
 	cards: Card[]
 }
@@ -15,6 +16,7 @@ export interface Card {
 }
 
 export interface OpenQuestion {
+	topic_id: number
 	question_id: number
 	question: string
 	bonus: boolean

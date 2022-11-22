@@ -1,5 +1,12 @@
 <script lang="ts">
 	import waitingImage from '../../assets/images/waiting-image.gif'
+
+	import { selected } from 'src/store/system'
+	import { onMount } from 'svelte'
+
+	onMount(() => {
+		$selected = -1
+	})
 </script>
 
 <div

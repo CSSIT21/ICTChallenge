@@ -1,10 +1,9 @@
 <script lang="ts">
-	import type { Team } from 'src/types/preview'
 	import { selected } from 'src/store/system'
 
 	import backIcon from '../../assets/images/back-icon.png'
 
-	export let team: Team
+	export let name: string = ''
 </script>
 
 <div
@@ -23,6 +22,12 @@
 		{/if}
 	</div>
 	<div class="w-[300px] flex justify-center items-center">
-		<h1 class="text-white">{team.name}</h1>
+		<h1 class="text-white">{name}</h1>
 	</div>
 </div>
+
+<style>
+	h1:focus-visible {
+		outline: none;
+	}
+</style>

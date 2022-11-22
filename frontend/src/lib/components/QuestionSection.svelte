@@ -13,16 +13,20 @@
 	import Modal from './QuestionModal.svelte'
 	import FlippedCard from './FlippedCard.svelte'
 
+	import { ArtWS } from 'src/store/websocket'
+	import { onDestroy } from 'svelte'
+
 	let showModal = false
 	let cardId: number
 	let cardIndex: number = 0
 	let icon: string = ''
 	let topicColor: string = ''
+	let minute = 0
+	let sec = 0
 	export let question: Topic
 	export let colIndex: number
 	export let openQuestion: OpenQuestion
-	export let openCard: (cardCol: number, cardIndex: number) => void
-	export let getQuestion: (questionId: number) => void
+	export let client
 
 	const widthCard: string = '324px'
 	const heightCard: string = '180px'
@@ -30,23 +34,27 @@
 	const textSize: string = '40px'
 	const iconSize: string = '120px'
 
-	const handleOpenModal = (id: number, index: number) => {
+	const unsubscribeclient2 = client.subscribe('cd/open', (payload) => {
+		openQuestion = payload
+		handleOpenModal(payload.question_id, cardIndex)
+	})
+	const unsubscribeclient3 = client.subscribe('cd/countdown', (payload) => {
+		minute = payload.m
+		sec = payload.s
+	})
+
+	onDestroy(() => {
+		unsubscribeclient2()
+		unsubscribeclient3()
+	})
+
+	const handleOpenModal = (id: number, cardIndex: number) => {
 		cardId = id
-		cardIndex = index
 		showModal = true
-		getQuestion(id)
+		cardIndex = cardIndex
 	}
-	const handleCloseModal = (
-		cardCol: number,
-		cardIndex: number,
-		opened: boolean
-	) => {
-		if (!opened) {
-			showModal = false
-			openCard(cardCol, cardIndex)
-		} else {
-			showModal = false
-		}
+	const handleCloseModal = () => {
+		showModal = false
 	}
 
 	onMount(() => {
@@ -96,23 +104,13 @@
 								{heightCard}
 								{widthImg}
 								{textSize}
-								cardId={card.id}
-								cardIndex={i}
-								{handleOpenModal}
 							/>
 						</div>
 						<div
 							class="flip-card-back"
 							style="transform: rotateY(180deg);"
 						>
-							<FlippedCard
-								{widthCard}
-								{heightCard}
-								{iconSize}
-								cardId={card.id}
-								cardIndex={i}
-								{handleOpenModal}
-							/>
+							<FlippedCard {widthCard} {heightCard} {iconSize} />
 						</div>
 					</div>
 				</div>
@@ -121,12 +119,13 @@
 	</div>
 </div>
 <Modal
-	cardCol={colIndex}
-	{cardIndex}
 	open={showModal}
 	{openQuestion}
+	{minute}
+	{sec}
+	cardCol={colIndex}
+	{cardIndex}
 	{handleCloseModal}
-	cardOpened={question.cards[cardIndex].opened}
 />
 
 <style>
