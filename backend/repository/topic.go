@@ -7,7 +7,7 @@ import (
 )
 
 type TopicRepository interface {
-	GetQuestion(card *database.Card) (string, error)
+	GetQuestion(card *database.Card) (*database.Question, error)
 	GetTopics() []*database.Topic
 	GetCurrentCard() *database.Card
 	SetCurrentCard(card *database.Card)

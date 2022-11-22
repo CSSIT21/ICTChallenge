@@ -13,7 +13,6 @@ import (
 	"backend/types/message"
 	"backend/types/payload"
 	"backend/types/response"
-	"backend/utils/value"
 )
 
 type teamService struct {
@@ -154,12 +153,20 @@ func (s *teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamSco
 func (s *teamService) GetNextTurn() *database.Team {
 	turn := s.teamEvent.GetTurned()
 	if len(turn) == 6 {
-		s.teamEvent.SetTurned(turn[:0])
+		s.teamEvent.SetTurned([]*database.Team{})
+		turn = []*database.Team{}
 	}
 
 	var candidates []*database.Team
 	for _, team := range s.teamEvent.GetTeams() {
-		if !value.Contain(turn, team) {
+		exist := false
+		for _, t := range turn {
+			if team.Id == t.Id {
+				exist = true
+				break
+			}
+		}
+		if !exist {
 			candidates = append(candidates, team)
 		}
 	}
@@ -204,7 +211,7 @@ func (s *teamService) SetMode(mode enum.Mode) {
 	if mode == enum.ModeStarted {
 		rankings := s.GetRanking()
 		s.GetLeaderboardConn().Emit(&message.OutboundMessage{
-			Event: message.LeaderboardState,
+			Event: message.LeaderboardRanking,
 			Payload: map[string]any{
 				"rankings": rankings,
 			},
@@ -231,4 +238,12 @@ func (s *teamService) IncreasePreview() {
 			},
 		})
 	}
+}
+
+func (s *teamService) GetLastTurn() *database.Team {
+	turn := s.teamEvent.GetTurned()
+	if len(turn) == 0 {
+		return nil
+	}
+	return turn[len(turn)-1]
 }

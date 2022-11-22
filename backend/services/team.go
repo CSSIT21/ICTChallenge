@@ -20,4 +20,5 @@ type TeamService interface {
 	GetLeaderboardConn() *extend.ConnModel
 	SetMode(mode enum.Mode)
 	IncreasePreview()
+	GetLastTurn() *database.Team
 }

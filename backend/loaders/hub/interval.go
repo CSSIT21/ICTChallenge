@@ -14,6 +14,14 @@ var Pause = make(chan bool)
 func StartInterval(card *database.Card) {
 	ticker := time.NewTicker(1 * time.Second)
 
+	Hub.CardProjectorConn.Emit(&message.OutboundMessage{
+		Event: message.CardCountdown,
+		Payload: map[string]any{
+			"s": int(math.Floor(card.Duration.Seconds())) % 60,
+			"m": math.Floor(card.Duration.Minutes()),
+		},
+	})
+
 	for {
 		select {
 		case <-Skip:

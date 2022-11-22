@@ -57,3 +57,7 @@ func (s *topicService) OpenCard(body *payload.OpenCard) ([]*database.Topic, erro
 func (s *topicService) GetCardConn() *extend.ConnModel {
 	return s.topicEvent.GetCardConn()
 }
+
+func (s *topicService) GetTopics() []*database.Topic {
+	return s.topicEvent.GetTopics()
+}

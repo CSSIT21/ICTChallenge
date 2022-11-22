@@ -41,7 +41,7 @@ func ServeProjector(model *extend.ConnModel, conn *websocket.Conn, token string)
 	if model.Context == "LEADERBOARD_PROJECTOR_CONN" {
 		rankings := teamService.GetRanking()
 		hub.Hub.LeaderboardProjectorConn.Emit(&message.OutboundMessage{
-			Event: message.LeaderboardState,
+			Event: message.LeaderboardRanking,
 			Payload: map[string]any{
 				"rankings": rankings,
 			},
