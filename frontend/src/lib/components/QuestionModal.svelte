@@ -1,9 +1,11 @@
 <script lang="ts">
-	import closeIcon from '../../assets/images/icons-close.svg'
 	import bonusBg from '../../assets/images/bonus-question.png'
 	import type { OpenQuestion } from 'src/types/question'
-	import { onDestroy, onMount } from 'svelte'
+	import { Lottie } from 'lottie-svelte'
+	import { onDestroy } from 'svelte'
+	const sparkle = 'src/assets/images/sparkle.json'
 
+	export let client
 	export let open: boolean
 	export let openQuestion: OpenQuestion
 	export let cardCol: number
@@ -12,12 +14,23 @@
 
 	export let minute: number
 	export let sec: number
+	export let socketRetrieve: boolean
+	$: timerFinish = false
 
 	$: minute = minute
 	$: sec = sec
-	$: if (minute == 0 && sec == 0) {
-		handleCloseModal(cardCol, cardIndex)
+	$: if (minute == 0 && sec == 0 && socketRetrieve) {
+		timerFinish = true
 	}
+
+	const unsubscribeclient4 = client.subscribe('cd/dismiss', (payload) => {
+		timerFinish = false
+		handleCloseModal(cardCol, cardIndex)
+	})
+
+	onDestroy(() => {
+		unsubscribeclient4()
+	})
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -27,10 +40,17 @@
 		class="fixed top-0 left-0 z-50 w-full h-full bg-[rgba(0,0,0,0.3)] opacity-50 modal-overlay transition-opacity duration-1000"
 	/>
 	<div
-		class="z-50 w-[1600px] h-[972px] modal-container-slide-in ml-20 flex flex-col mx-auto absolute overflow-y-auto question-bg-color rounded-[36px] shadow-xl items-center"
+		class="z-50 w-[1600px] h-[972px] modal-container-slide-in ml-20 flex flex-col mx-auto absolute overflow-y-auto {timerFinish
+			? 'question-bg-color-finish'
+			: 'question-bg-color'} rounded-[36px] shadow-xl items-center"
+		style={openQuestion.bonus
+			? 'box-shadow: inset 0 0 20px 0 rgba(255, 255, 255, 1);'
+			: ''}
 	>
 		{#if openQuestion.bonus}
-			<img src={bonusBg} alt="" class="absolute -z-50" />
+			<div class="w-1/12 absolute left-0">
+				<Lottie path={sparkle} speed={1} />
+			</div>
 		{/if}
 		<div
 			class="h-[850px] px-[200px] text-center leading-[96px] flex flex-col justify-center items-center z-50"
@@ -51,7 +71,7 @@
 				</div>
 			{/if}
 		</div>
-		<div class="flex justify-center">
+		<div class="flex justify-center z-50">
 			<div
 				class="h-[96px] flex flex-row justify-end items-end text-white font-medium"
 			>
@@ -72,6 +92,9 @@
 <style>
 	.question-bg-color {
 		background: linear-gradient(105.95deg, #445475, #2b3548);
+	}
+	.question-bg-color-finish {
+		background: linear-gradient(105.95deg, #b63d3d, #482b37);
 	}
 	.timer-bg {
 		background: rgba(0, 0, 0, 0.1);

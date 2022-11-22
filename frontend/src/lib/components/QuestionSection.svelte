@@ -13,7 +13,6 @@
 	import Modal from './QuestionModal.svelte'
 	import FlippedCard from './FlippedCard.svelte'
 
-	import { ArtWS } from 'src/store/websocket'
 	import { onDestroy } from 'svelte'
 
 	let showModal = false
@@ -23,6 +22,7 @@
 	let topicColor: string = ''
 	let minute = 0
 	let sec = 0
+	let socketRetrieve: boolean = false
 	export let question: Topic
 	export let colIndex: number
 	export let openQuestion: OpenQuestion
@@ -41,6 +41,7 @@
 	const unsubscribeclient3 = client.subscribe('cd/countdown', (payload) => {
 		minute = payload.m
 		sec = payload.s
+		socketRetrieve = true
 	})
 
 	onDestroy(() => {
@@ -126,6 +127,8 @@
 	cardCol={colIndex}
 	{cardIndex}
 	{handleCloseModal}
+	{client}
+	{socketRetrieve}
 />
 
 <style>
