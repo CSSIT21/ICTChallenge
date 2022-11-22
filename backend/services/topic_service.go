@@ -1,7 +1,6 @@
 package services
 
 import (
-	"backend/mappers"
 	"backend/repository"
 	"backend/types/database"
 	"backend/types/extend"
@@ -17,25 +16,20 @@ func NewTopicService(topicRepository repository.TopicRepository) *topicService {
 	return &topicService{topicEvent: topicRepository}
 }
 
-func (s *topicService) OpenCard(body *payload.OpenCard) ([]*database.Topic, []*database.Topic, error) {
+func (s *topicService) OpenCard(body *payload.OpenCard) ([]*database.Topic, error) {
 	topics := s.topicEvent.GetTopics()
 
 	if s.topicEvent.GetCurrentCard() != nil {
-		return nil, nil, &response.Error{
+		return nil, &response.Error{
 			Message: "Opened card remaining",
 		}
 	}
 
 	if topics[body.TopicId-1].Cards[body.CardId-1].Opened {
-		return nil, nil, &response.Error{
+		return nil, &response.Error{
 			Message: "The card has already opened",
 		}
 	}
-
-	topics[body.TopicId-1].Cards[body.CardId-1].Opened = true
-
-	// Iterate
-	updatedTopics := mappers.DisplayTopic(topics)
 
 	// hub.Hub.CardProjectorConn.Emit(&message.OutboundMessage{
 	//	Event: message.CardState,
@@ -57,7 +51,7 @@ func (s *topicService) OpenCard(body *payload.OpenCard) ([]*database.Topic, []*d
 
 	s.topicEvent.SetCurrentCard(topics[body.TopicId-1].Cards[body.CardId-1])
 
-	return updatedTopics, topics, nil
+	return topics, nil
 }
 
 func (s *topicService) GetCardConn() *extend.ConnModel {

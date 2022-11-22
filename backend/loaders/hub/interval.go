@@ -36,6 +36,12 @@ func StartInterval(card *database.Card) {
 	}
 
 ended:
+	Hub.CardProjectorConn.Emit(&message.OutboundMessage{
+		Event: message.CardCountdown,
+		Payload: map[string]any{
+			"s": 0,
+			"m": 0,
+		},
+	})
 	card.Opened = true
-
 }

@@ -63,7 +63,6 @@ func Load(fn string) error {
 		Hub.Turned = []*database.Team{
 			Hub.Teams[0],
 		}
-		Hub.CurrentCard = Hub.Topics[0].Cards[0]
 	}
 
 	logger.Log(logrus.Debug, "LOADED HUB DATA")
