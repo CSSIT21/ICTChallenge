@@ -42,6 +42,7 @@
 		}
 	})
 
+
 	const unsubscribeclient2 = client.subscribe('lb/podium', (payload) => {
 		mode = 'podium'
 		teams = payload.rankings.map((team:Team, i:number) => {
@@ -59,11 +60,31 @@
 		previewTeams = [...previewTeams, payload.team]
 	})
 
+	const unsubscribeclient5 = client.subscribe('lb/rankings', (payload) => {
+		mode = 'leaderboard'
+		if (teams.length===0) {
+			teams = payload.rankings.map((team:Team, i:number) => {
+				return {...team, isHighlighted: false, rank: i + 1}
+			})
+		}else {
+			console.log("reordering");
+			updateScore(payload.rankings)
+		}
+	})
+
+	const unsubscribeclient6 = client.subscribe('lb/highlighted', (payload) => {
+		mode = 'leaderboard'
+		resetHighlighted()
+		randomTeam(payload.highlighted_id)
+	})
+
 	onDestroy(() => {
 		unsubscribeclient1()
 		unsubscribeclient2()
 		unsubscribeclient3()
 		unsubscribeclient4()
+		unsubscribeclient5()
+		unsubscribeclient6()
 	})
 
 	function startPodium() {

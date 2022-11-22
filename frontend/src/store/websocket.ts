@@ -11,6 +11,8 @@ export type IMessageType =
 	| 'lb/preview'
 	| 'lb/preview/add'
 	| 'st/turn'
+	| 'lb/rankings'
+	| 'lb/highlighted'
 
 type IMessageEventHandler<T = any> = (
 	payload: T
