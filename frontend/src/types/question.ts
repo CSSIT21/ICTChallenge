@@ -18,8 +18,13 @@ export interface Card {
 export interface OpenQuestion {
 	topic_id: number
 	question_id: number
-	question: string
+	question: QuestionDetail
 	bonus: boolean
+}
+
+export interface QuestionDetail {
+	title: string
+	image_url?: string
 }
 
 export enum Mode {
