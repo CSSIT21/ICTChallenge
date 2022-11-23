@@ -24,7 +24,12 @@
 
 	const handleFlipCard = async (id: number, index: number) => {
 		console.log(id, index)
-
+		axios.patch('http://ictc-int.sit.kmutt.ac.th:3000/api/am/card/pause', {},{
+				headers: {
+					Authorization: 'Bearer 7GRPpVk04We76CWR',
+					'Content-Type': 'application/json',
+				},
+			})
 		await axios.put(
 			'http://ictc-int.sit.kmutt.ac.th:3000/api/st/open',
 			JSON.stringify({
