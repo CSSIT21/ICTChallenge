@@ -1,5 +1,6 @@
 <script lang="ts">
 	export let round = 0
+	export let teams: any
 </script>
 
 <div
@@ -13,7 +14,7 @@
 		Round {round}
 	</div>
 	<div class="flex flex-1 flex-col">
-		{#each [1, 2, 3, 4, 5, 6] as i}
+		{#each teams as team}
 			<div
 				class="flex w-full h-[72px] flex-col items-center justify-center gap-2 px-2"
 				style="border-bottom: 1px solid rgba(217, 217, 217, .5)"
@@ -21,14 +22,18 @@
 				<input
 					type="number"
 					placeholder="Score"
+					value={team.scores[round - 1].change || 0}
 					class="rounded-full bg-white outline-none px-2 w-full text-center text-sm"
 					style="border: 1px solid rgba(217, 217, 217,.4)"
+					readonly
 				/>
 				<input
 					type="number"
 					placeholder="Total"
+					value={team.scores[round - 1].total || 0}
 					class="rounded-full bg-white outline-none px-2 w-full text-center text-sm"
 					style="border: 1px solid rgba(217, 217, 217,.4)"
+					readonly
 				/>
 			</div>
 		{/each}

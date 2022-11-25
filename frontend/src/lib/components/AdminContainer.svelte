@@ -3,6 +3,9 @@
 	import icons1st from '../../assets/images/icons-1stmedal-64.png'
 	import crown from '../../assets/images/icons-medieval-crown.png'
 	import up from '../../assets/images/back-icon.png'
+	import { axios } from '../../utils/api'
+	import Swal from 'sweetalert2'
+	import 'sweetalert2/dist/sweetalert2.min.css'
 	let show = -1
 	let count = 0
 
@@ -13,6 +16,7 @@
 				return
 			}
 			show = n
+			onModeChange()
 		}
 	}
 
@@ -22,6 +26,60 @@
 
 	function decrease() {
 		count--
+	}
+
+	function increment() {
+		axios.patch('/am/preview/increment')
+	}
+
+	function onModeChange() {
+		;[
+			() => {
+				console.log(`set to mode: `, 'preview')
+				axios
+					.patch('/am/mode', {
+						mode: 'preview',
+					})
+					.then((res) => {
+						Swal.fire({
+							timer: 500,
+							icon: 'success',
+							title: 'Success',
+							text: 'Mode changed to preview',
+						})
+					})
+			},
+			() => {
+				console.log(`set to mode: `, 'started')
+				axios
+					.patch('/am/mode', {
+						mode: 'started',
+					})
+					.then((res) => {
+						Swal.fire({
+							timer: 500,
+							icon: 'success',
+							title: 'Success',
+							text: 'Mode changed to started',
+						})
+					})
+			},
+			() => {
+				console.log(`set to mode: `)
+				axios
+					.patch('/am/mode', {
+						mode: 'ended',
+					})
+					.then((res) => {
+						Swal.fire({
+							timer: 500,
+							icon: 'success',
+							title: 'Success',
+							text: 'Mode changed to ended',
+						})
+					})
+			},
+		][show]()
 	}
 </script>
 
@@ -69,7 +127,7 @@
 
 		<button
 			class="transition-all flex gap-2 font-semibold text-2xl items-center justify-between rounded-2xl shadow cursor-pointer p-5 text-white border-4 border- border-white hover:bg-[rgba(255,255,255,.1)] active:bg-[rgba(255,255,255,.2)]"
-			on:click={increase}
+			on:click={increment}
 		>
 			<img
 				width={16}
@@ -79,7 +137,7 @@
 				alt="icons-medal"
 			/> Reveal
 		</button>
-		<button
+		<!-- <button
 			class="transition-all flex gap-2 font-semibold text-2xl items-center justify-between rounded-2xl shadow cursor-pointer p-5 text-white border-4 border- border-white hover:bg-[rgba(255,255,255,.1)] active:bg-[rgba(255,255,255,.2)]"
 			on:click={decrease}
 		>
@@ -90,6 +148,6 @@
 				class="-rotate-90"
 				alt="icons-medal"
 			/> Unreveal
-		</button>
+		</button> -->
 	</div>
 </div>
